@@ -5,6 +5,14 @@ export async function GET() {
   try {
     const notionResponse = await notionRequest<any>(`/data_sources/${process.env.PROJECTS_DATA_SOURCE_ID}/query`, {
       method: "POST",
+      body: {
+        sorts: [
+          {
+            property: "score",
+            direction: "descending",
+          },
+        ],
+      },
     });
 
     const projects = notionResponse.results.map((result: any) => ({
