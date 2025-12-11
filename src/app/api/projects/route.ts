@@ -8,7 +8,15 @@ export async function GET() {
       body: {
         sorts: [
           {
+            property: "isSideProject",
+            direction: "ascending",
+          },
+          {
             property: "score",
+            direction: "descending",
+          },
+          {
+            property: "startDate",
             direction: "descending",
           },
         ],
