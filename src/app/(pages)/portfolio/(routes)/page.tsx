@@ -15,15 +15,15 @@ import {
 } from "../(hooks)/usePortfolio";
 
 export default function PortfolioPage() {
+  useAboutMe();
   useSkills();
-  useProjects();
-  useExperiences();
   useCareers();
-  useCertificates();
+  useExperiences();
   useEducations();
   useAwards();
+  useCertificates();
+  useProjects();
   useActivities();
-  useAboutMe();
 
   return (
     <div className="flex flex-col items-center gap-spacing-400 px-spacing-400 py-spacing-700">
