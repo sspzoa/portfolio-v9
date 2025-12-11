@@ -8,6 +8,10 @@ export async function GET() {
       body: {
         sorts: [
           {
+            property: "category",
+            direction: "ascending",
+          },
+          {
             property: "name",
             direction: "ascending",
           },

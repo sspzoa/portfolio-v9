@@ -1,8 +1,8 @@
 export interface Skill {
   name: string;
-  category?: string;
+  category: string;
   isMain: boolean;
-  icon?: string;
+  icon: string;
   url: string;
 }
 
@@ -22,11 +22,11 @@ export interface Project {
 
 export interface Experience {
   role: string;
-  organization?: string;
-  description?: string;
+  organization: string;
+  description: string;
   startDate: string;
-  endDate?: string;
-  logo?: string;
+  endDate: string;
+  logo: string;
 }
 
 export interface Education {
@@ -40,23 +40,23 @@ export interface Education {
 
 export interface Certification {
   name: string;
-  kind?: string;
-  institution?: string;
+  kind: string;
+  institution: string;
   date: string;
 }
 
 export interface Career {
   role: string;
-  organization?: string;
-  description?: string;
+  organization: string;
+  description: string;
   startDate: string;
-  endDate?: string;
-  logo?: string;
+  endDate: string;
+  logo: string;
 }
 
 export interface Award {
   name: string;
-  tier?: string;
+  tier: string;
   date: string;
   score: number;
 }
@@ -66,7 +66,7 @@ export interface Activity {
   role: string;
   hosts: string[];
   startDate: string;
-  endDate?: string;
+  endDate: string;
 }
 
 export interface AboutMe {
