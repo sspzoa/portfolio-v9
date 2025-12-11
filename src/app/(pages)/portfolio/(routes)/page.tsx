@@ -12,15 +12,17 @@ import {
   ProjectAtom,
   SkillAtom,
 } from "../(atoms)/usePortfolioStore";
-import { useAboutMe } from "../(hooks)/useAboutMe";
-import { useActivities } from "../(hooks)/useActivities";
-import { useAwards } from "../(hooks)/useAwards";
-import { useCareers } from "../(hooks)/useCareers";
-import { useCertificates } from "../(hooks)/useCertificates";
-import { useEducations } from "../(hooks)/useEducations";
-import { useExperiences } from "../(hooks)/useExperiences";
-import { useProjects } from "../(hooks)/useProjects";
-import { useSkills } from "../(hooks)/useSkills";
+import {
+  useAboutMe,
+  useActivities,
+  useAwards,
+  useCareers,
+  useCertificates,
+  useEducations,
+  useExperiences,
+  useProjects,
+  useSkills,
+} from "../(hooks)/usePortfolio";
 
 export default function PortfolioPage() {
   const { isLoading: skillsLoading, isError: skillsError } = useSkills();
