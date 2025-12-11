@@ -1,5 +1,6 @@
 "use client";
 
+import { ContributionsSection } from "@/app/(pages)/portfolio/(components)/contributions";
 import { AboutMeSection } from "../(components)/aboutme";
 import { SkillsSection } from "../(components)/skills";
 import {
@@ -30,6 +31,7 @@ export default function PortfolioPage() {
       <div className="flex w-full max-w-5xl flex-col gap-spacing-400">
         <AboutMeSection />
         <SkillsSection />
+        <ContributionsSection />
       </div>
     </div>
   );
