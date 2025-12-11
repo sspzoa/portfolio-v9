@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex h-dvh flex-col items-center justify-center bg-solid-black">
+    <div className="flex h-dvh flex-col items-center justify-center">
       <div className="flex aspect-square w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent">
         <span className="font-semibold text-display text-solid-black">Seungpyo Suh</span>
         <span className="text-center font-semibold text-body text-solid-black">

@@ -1,6 +1,8 @@
 "use client";
 
 import { useAtomValue } from "jotai";
+import { Description } from "@/shared/components/description";
+import Section from "@/shared/components/section";
 import {
   AboutMeAtom,
   ActivityAtom,
@@ -46,8 +48,12 @@ export default function PortfolioPage() {
   const _aboutme = useAtomValue(AboutMeAtom);
 
   return (
-    <div className="flex flex-col items-center justify-center px-spacing-400 py-spacing-700">
-      <h1 className="font-semibold text-display">Portfolio</h1>
+    <div className="flex flex-col items-center gap-spacing-400 px-spacing-400 py-spacing-700">
+      <div className="flex w-full max-w-5xl flex-col gap-spacing-400">
+        <Section title="About me">
+          <Description>{_aboutme?.content}</Description>
+        </Section>
+      </div>
     </div>
   );
 }

@@ -8,7 +8,7 @@ export async function GET() {
     });
 
     const aboutme = {
-      content: response.results[0].properties.content.title[0].plain_text,
+      content: response.results[0].properties.content.rich_text[0]?.plain_text,
     };
 
     return NextResponse.json(aboutme);
