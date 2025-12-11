@@ -3,12 +3,9 @@ import { notionRequest } from "@/shared/lib/notion";
 
 export async function GET() {
   try {
-    const notionResponse = await notionRequest<any>(
-      `/data_sources/${process.env.CERTIFICATIONS_DATA_SOURCE_ID}/query`,
-      {
-        method: "POST",
-      },
-    );
+    const notionResponse = await notionRequest<any>(`/data_sources/${process.env.CERTIFICATES_DATA_SOURCE_ID}/query`, {
+      method: "POST",
+    });
 
     const certifications = notionResponse.results.map((result: any) => ({
       name: result.properties.name.title[0].plain_text,
