@@ -69,8 +69,8 @@
   --components-translucent-secondary: rgba(121, 124, 138, 0.08);
   --components-translucent-tertiary: rgba(121, 124, 138, 0.04);
 
-  --core-accent: rgba(255, 227, 0, 1);
-  --core-accent-translucent: rgba(255, 227, 0, 0.1);
+  --core-accent: rgba(109, 135, 168, 1);
+  --core-accent-translucent: rgba(109, 135, 168, 0.1);
 
   --core-status-positive: var(--solid-green);
   --core-status-warning: var(--solid-yellow);

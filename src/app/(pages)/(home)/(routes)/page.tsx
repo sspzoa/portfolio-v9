@@ -9,8 +9,8 @@ export default function Home() {
 
   return (
     <div className="flex h-dvh flex-col items-center justify-center">
-      <div className="flex aspect-square w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent dark:bg-background-standard-primary">
-        <span className="font-semibold text-display dark:text-core-accent">Seungpyo Suh</span>
+      <div className="flex aspect-square w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-background-standard-primary">
+        <span className="font-semibold text-display">Seungpyo Suh</span>
         <span className="text-center text-body">
           Mobile & Frontend Engineer
           <br />
