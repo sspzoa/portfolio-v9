@@ -30,9 +30,9 @@ export default function Home() {
 
   return (
     <div className="flex h-dvh flex-col items-center justify-center">
-      <div className="flex h-dvh w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent dark:bg-background-standard-primary md:aspect-square">
+      <div className="flex w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent aspect-square dark:bg-background-standard-primary">
         <span className="font-semibold text-display dark:text-core-accent">Seungpyo Suh</span>
-        <span className="text-center text-body ">
+        <span className="text-center text-body">
           Mobile & Frontend Engineer
           <br />
           belong to{" "}
