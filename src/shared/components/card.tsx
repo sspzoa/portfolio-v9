@@ -14,11 +14,19 @@ export default function Card({ icon, mainText, subText, description }: CardProps
     <div className="flex flex-col gap-spacing-200">
       <div
         className={`flex flex-row items-center gap-spacing-400 ${description ? "rounded-radius-400 bg-components-fill-standard-tertiary p-spacing-400" : ""}`}>
-        {" "}
-        {icon && <Image draggable={false} alt={mainText} src={icon} width={32} height={32} />}
+        {icon && (
+          <Image
+            className="h-8 w-8 object-contain"
+            width={32}
+            height={32}
+            alt={mainText}
+            src={icon}
+            draggable={false}
+          />
+        )}
         <div className="flex flex-col">
           <h3 className="font-semibold text-body">{mainText}</h3>
-          <p className="text-content-standard-secondary text-label">{subText}</p>
+          <p className="text-content-standard-secondary text-footnote">{subText}</p>
         </div>
       </div>
       {description && <Description>{description}</Description>}

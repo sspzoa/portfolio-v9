@@ -10,7 +10,7 @@ export const CareersSection = () => {
 
   return (
     <Section title="Careers">
-      <div className="flex flex-col gap-spacing-400">
+      <div className="flex flex-col gap-spacing-800">
         {careers.map((career, index) => (
           <Card
             key={index}
