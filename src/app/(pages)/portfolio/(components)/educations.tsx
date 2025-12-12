@@ -16,7 +16,7 @@ export const EducationsSection = () => {
             key={index}
             icon={education.logo}
             mainText={`${education.organization} - ${education.department}`}
-            subText={`${education.startDate} - ${education.endDate}`}
+            subText={`${education.startDate} ${education.endDate ? `- ${education.endDate}` : ""}`}
             description={education.description}
           />
         ))}

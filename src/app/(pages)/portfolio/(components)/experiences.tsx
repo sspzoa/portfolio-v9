@@ -16,7 +16,7 @@ export const ExperiencesSection = () => {
             key={index}
             icon={experience.logo}
             mainText={`${experience.organization} - ${experience.role}`}
-            subText={`${experience.startDate} - ${experience.endDate}`}
+            subText={`${experience.startDate} ${experience.endDate ? `- ${experience.endDate}` : ""}`}
             description={experience.description}
           />
         ))}

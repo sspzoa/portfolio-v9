@@ -1,11 +1,13 @@
 "use client";
 
+import { ActivitiesSection } from "@/app/(pages)/portfolio/(components)/activities";
 import { AwardsSection } from "@/app/(pages)/portfolio/(components)/awards";
 import { CareersSection } from "@/app/(pages)/portfolio/(components)/careers";
 import { CertificatesSection } from "@/app/(pages)/portfolio/(components)/certificates";
 import { ContributionsSection } from "@/app/(pages)/portfolio/(components)/contributions";
 import { EducationsSection } from "@/app/(pages)/portfolio/(components)/educations";
 import { ExperiencesSection } from "@/app/(pages)/portfolio/(components)/experiences";
+import { ProjectsSection } from "@/app/(pages)/portfolio/(components)/projects";
 import { AboutMeSection } from "../(components)/aboutme";
 import { SkillsSection } from "../(components)/skills";
 import {
@@ -48,6 +50,8 @@ export default function PortfolioPage() {
           </div>
         </div>
         <ContributionsSection />
+        <ProjectsSection />
+        <ActivitiesSection />
       </div>
     </div>
   );

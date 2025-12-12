@@ -16,7 +16,7 @@ export const CareersSection = () => {
             key={index}
             icon={career.logo}
             mainText={`${career.organization} - ${career.role}`}
-            subText={`${career.startDate} - ${career.endDate}`}
+            subText={`${career.startDate} ${career.endDate ? `- ${career.endDate}` : ""}`}
             description={career.description}
           />
         ))}

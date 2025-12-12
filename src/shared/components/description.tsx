@@ -19,7 +19,7 @@ export function Description({ children }: DescriptionProps) {
   };
 
   return (
-    <p className="whitespace-pre-wrap text-label text-content-standard-secondary leading-spacing-600">
+    <p className="whitespace-pre-wrap text-content-standard-secondary text-label leading-spacing-600">
       {typeof children === "string" ? parseText(children) : children}
     </p>
   );
