@@ -26,12 +26,27 @@ export default function Home() {
 
   return (
     <div className="flex h-dvh flex-col items-center justify-center">
-      <div className="flex aspect-square w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent">
+      <div className="flex h-dvh w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent md:aspect-square">
         <span className="font-semibold text-display text-solid-black">Seungpyo Suh</span>
         <span className="text-center font-semibold text-body text-solid-black">
           Mobile & Frontend Engineer
           <br />
-          belong to @dimipay, @dimigo-din
+          belong to{" "}
+          <Link
+            className="hover:opacity-50 duration-100"
+            href="https://github.com/dimipay"
+            target="_blank"
+            rel="noreferrer noopener">
+            @dimipay
+          </Link>
+          ,{" "}
+          <Link
+            className="hover:opacity-50 duration-100"
+            href="https://github.com/dimigo-din"
+            target="_blank"
+            rel="noreferrer noopener">
+            @dimigo-din
+          </Link>
           <br />
           Korea Digital Media High School 22nd
         </span>
