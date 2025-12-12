@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { notionRequest } from "@/shared/lib/notion";
+import formatDate from "@/shared/utils/formatDate";
 
 export async function GET() {
   try {
@@ -19,8 +20,8 @@ export async function GET() {
       name: result.properties.name.title[0].plain_text,
       role: result.properties.role.select.name,
       hosts: result.properties.host.multi_select.map((h: any) => h.name),
-      startDate: result.properties.date.date.start,
-      endDate: result.properties.date.date.end,
+      startDate: formatDate(result.properties.date.date.start),
+      endDate: formatDate(result.properties.date.date.end),
     }));
 
     return NextResponse.json(activities);

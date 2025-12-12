@@ -40,7 +40,7 @@ export const ProjectsSection = () => {
             key={index}
             image={project.coverImage}
             icon={project.iconImage}
-            mainText={`${project.name} / ${project.startDate} ${project.endDate ? `- ${project.endDate}` : ""}`}
+            mainText={`${project.name} (${project.startDate}${project.endDate ? ` - ${project.endDate}` : ""})`}
             subText={`${project.teamSize}P project / ${project.shortDescription}`}
             tags={project.tags}
             description={project.description}
@@ -55,7 +55,7 @@ export const ProjectsSection = () => {
                   key={`side-${index}`}
                   image={project.coverImage}
                   icon={project.iconImage}
-                  mainText={`${project.name} / ${project.startDate} ${project.endDate ? `- ${project.endDate}` : ""}`}
+                  mainText={`${project.name} (${project.startDate}${project.endDate ? ` - ${project.endDate}` : ""})`}
                   subText={`${project.teamSize}P project / ${project.shortDescription}`}
                   tags={project.tags}
                   description={project.description}

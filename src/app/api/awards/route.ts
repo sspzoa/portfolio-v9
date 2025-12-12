@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { notionRequest } from "@/shared/lib/notion";
+import formatDate from "@/shared/utils/formatDate";
 
 export async function GET() {
   try {
@@ -18,7 +19,7 @@ export async function GET() {
     const awards = notionResponse.results.map((result: any) => ({
       name: result.properties.name.title[0].plain_text,
       tier: result.properties.tier.rich_text[0]?.plain_text,
-      date: result.properties.date.date.start,
+      date: formatDate(result.properties.date.date.start),
       score: result.properties.score.number,
     }));
 

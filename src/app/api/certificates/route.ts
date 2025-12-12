@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { notionRequest } from "@/shared/lib/notion";
+import formatDate from "@/shared/utils/formatDate";
 
 export async function GET() {
   try {
@@ -19,7 +20,7 @@ export async function GET() {
       name: result.properties.name.title[0].plain_text,
       kind: result.properties.kind.rich_text[0]?.plain_text,
       institution: result.properties.institution.rich_text[0]?.plain_text,
-      date: result.properties.date.date.start,
+      date: formatDate(result.properties.date.date.start),
     }));
 
     return NextResponse.json(certifications);

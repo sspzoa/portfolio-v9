@@ -27,7 +27,7 @@ export function Description({ children }: DescriptionProps) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-solid-blue font-semibold underline">
+            className="font-semibold text-solid-blue underline">
             {linkText}
           </Link>
         );
