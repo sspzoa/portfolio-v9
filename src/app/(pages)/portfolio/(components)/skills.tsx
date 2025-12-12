@@ -2,11 +2,14 @@
 
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
+import { useSkills } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Section from "@/shared/components/section";
+import { TagsSkeleton } from "@/shared/components/skeleton";
 import Tag from "@/shared/components/tag";
 import { SkillAtom } from "../(atoms)/usePortfolioStore";
 
 export const SkillsSection = () => {
+  const { isLoading } = useSkills();
   const skills = useAtomValue(SkillAtom);
 
   const groupedSkills = useMemo(() => {
@@ -18,6 +21,21 @@ export const SkillsSection = () => {
       return acc;
     }, {});
   }, [skills]);
+
+  if (isLoading) {
+    return (
+      <Section title="Skills">
+        <div className="flex flex-row flex-wrap gap-spacing-800">
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div key={index} className="flex flex-col gap-spacing-300">
+              <div className="h-[22px] w-16 animate-pulse rounded-radius-full border border-line-outline bg-components-fill-standard-secondary" />
+              <TagsSkeleton />
+            </div>
+          ))}
+        </div>
+      </Section>
+    );
+  }
 
   return (
     <Section title="Skills">

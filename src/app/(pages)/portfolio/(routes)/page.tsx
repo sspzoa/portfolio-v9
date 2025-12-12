@@ -12,29 +12,8 @@ import { ProjectsSection } from "@/app/(pages)/portfolio/(components)/projects";
 import Footer from "@/shared/components/footer";
 import { AboutMeSection } from "../(components)/aboutme";
 import { SkillsSection } from "../(components)/skills";
-import {
-  useAboutMe,
-  useActivities,
-  useAwards,
-  useCareers,
-  useCertificates,
-  useEducations,
-  useExperiences,
-  useProjects,
-  useSkills,
-} from "../(hooks)/usePortfolio";
 
 export default function PortfolioPage() {
-  useAboutMe();
-  useSkills();
-  useCareers();
-  useExperiences();
-  useEducations();
-  useAwards();
-  useCertificates();
-  useProjects();
-  useActivities();
-
   return (
     <div className="flex flex-col items-center gap-spacing-800 px-spacing-400 py-spacing-800">
       <ProfileSection />
