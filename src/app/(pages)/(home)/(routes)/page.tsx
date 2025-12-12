@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useAboutMe,
   useActivities,
@@ -12,6 +13,7 @@ import {
   useProjects,
   useSkills,
 } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
+import Button from "@/shared/components/button";
 
 export default function Home() {
   useAboutMe();
@@ -23,6 +25,8 @@ export default function Home() {
   useCertificates();
   useProjects();
   useActivities();
+
+  const router = useRouter();
 
   return (
     <div className="flex h-dvh flex-col items-center justify-center">
@@ -50,11 +54,9 @@ export default function Home() {
           <br />
           Korea Digital Media High School 22nd
         </span>
-        <Link
-          href="/portfolio"
-          className="flex cursor-pointer flex-row gap-spacing-400 rounded-radius-400 bg-components-translucent-primary p-spacing-400 duration-100 hover:bg-components-interactive-hover focus:bg-components-interactive-focused active:bg-components-interactive-pressed">
-          <span className="text-body text-solid-black">Explore my portfolio!</span>
-        </Link>
+        <div>
+          <Button onClick={() => router.push("/portfolio")} text="Explore my portfolio" />
+        </div>
       </div>
     </div>
   );
