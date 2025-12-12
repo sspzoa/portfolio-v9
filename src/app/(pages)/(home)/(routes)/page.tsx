@@ -32,7 +32,7 @@ export default function Home() {
     <div className="flex h-dvh flex-col items-center justify-center">
       <div className="flex h-dvh w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent md:aspect-square">
         <span className="font-semibold text-display text-solid-black">Seungpyo Suh</span>
-        <span className="text-center font-semibold text-body text-solid-black">
+        <span className="text-center text-body text-solid-black">
           Mobile & Frontend Engineer
           <br />
           belong to{" "}
