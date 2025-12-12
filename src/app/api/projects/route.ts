@@ -16,7 +16,7 @@ export async function GET() {
             direction: "descending",
           },
           {
-            property: "startDate",
+            property: "workPeriod",
             direction: "descending",
           },
         ],
