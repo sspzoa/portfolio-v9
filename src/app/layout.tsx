@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import type React from "react";
@@ -7,10 +7,6 @@ import { Providers } from "@/shared/lib/provider";
 export const metadata: Metadata = {
   title: "Seungpyo Suh",
   description: "Mobile & Frontend Engineer",
-};
-
-export const viewport: Viewport = {
-  themeColor: "#FFE300",
 };
 
 export default function RootLayout({

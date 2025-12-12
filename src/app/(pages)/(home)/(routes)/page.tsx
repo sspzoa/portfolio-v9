@@ -33,7 +33,7 @@ export default function Home() {
           <br />
           belong to{" "}
           <Link
-            className="hover:opacity-50 duration-100"
+            className="duration-100 hover:opacity-50"
             href="https://github.com/dimipay"
             target="_blank"
             rel="noreferrer noopener">
@@ -41,7 +41,7 @@ export default function Home() {
           </Link>
           ,{" "}
           <Link
-            className="hover:opacity-50 duration-100"
+            className="duration-100 hover:opacity-50"
             href="https://github.com/dimigo-din"
             target="_blank"
             rel="noreferrer noopener">
