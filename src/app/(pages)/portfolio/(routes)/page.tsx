@@ -8,6 +8,7 @@ import { ContributionsSection } from "@/app/(pages)/portfolio/(components)/contr
 import { EducationsSection } from "@/app/(pages)/portfolio/(components)/educations";
 import { ExperiencesSection } from "@/app/(pages)/portfolio/(components)/experiences";
 import { ProjectsSection } from "@/app/(pages)/portfolio/(components)/projects";
+import Footer from "@/shared/components/footer";
 import { AboutMeSection } from "../(components)/aboutme";
 import { SkillsSection } from "../(components)/skills";
 import {
@@ -34,7 +35,7 @@ export default function PortfolioPage() {
   useActivities();
 
   return (
-    <div className="flex flex-col items-center gap-spacing-400 px-spacing-400 py-spacing-700">
+    <div className="flex flex-col items-center gap-spacing-800 px-spacing-400 py-spacing-800">
       <div className="flex w-full max-w-5xl flex-col gap-spacing-400">
         <AboutMeSection />
         <SkillsSection />
@@ -53,6 +54,7 @@ export default function PortfolioPage() {
         <ProjectsSection />
         <ActivitiesSection />
       </div>
+      <Footer />
     </div>
   );
 }

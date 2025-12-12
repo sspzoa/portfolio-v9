@@ -1,6 +1,29 @@
+"use client";
+
 import Link from "next/link";
+import {
+  useAboutMe,
+  useActivities,
+  useAwards,
+  useCareers,
+  useCertificates,
+  useEducations,
+  useExperiences,
+  useProjects,
+  useSkills,
+} from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 
 export default function Home() {
+  useAboutMe();
+  useSkills();
+  useCareers();
+  useExperiences();
+  useEducations();
+  useAwards();
+  useCertificates();
+  useProjects();
+  useActivities();
+
   return (
     <div className="flex h-dvh flex-col items-center justify-center">
       <div className="flex aspect-square w-full max-w-dvh flex-col items-center justify-center gap-spacing-800 bg-core-accent">
