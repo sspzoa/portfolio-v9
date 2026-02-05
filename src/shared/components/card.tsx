@@ -49,7 +49,7 @@ export default function Card({ image, icon, mainText, subText, tags, description
             ))}
           </div>
         )}
-        {description && <Description>{description}</Description>}
+        {description && <Description maxHeight={300}>{description}</Description>}
       </div>
     </div>
   );

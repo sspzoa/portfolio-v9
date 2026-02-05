@@ -9,14 +9,14 @@ interface DescriptionProps {
   maxHeight?: number;
 }
 
-export function Description({ children, maxHeight = 300 }: DescriptionProps) {
+export function Description({ children, maxHeight }: DescriptionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsExpansion, setNeedsExpansion] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkHeight = () => {
-      if (contentRef.current) {
+      if (contentRef.current && maxHeight) {
         setNeedsExpansion(contentRef.current.scrollHeight > maxHeight);
       }
     };
