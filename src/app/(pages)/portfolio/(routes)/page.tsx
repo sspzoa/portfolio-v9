@@ -22,11 +22,11 @@ export default function PortfolioPage() {
         <SkillsSection />
         <div className="flex w-full flex-col gap-spacing-400 md:flex-row">
           <div className="flex w-full flex-col gap-spacing-400">
-            <CareersSection />
             <EducationsSection />
             <ExperiencesSection />
           </div>
           <div className="flex w-full flex-col gap-spacing-400">
+            <CareersSection />
             <AwardsSection />
             <CertificatesSection />
           </div>
