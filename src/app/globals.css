@@ -140,3 +140,118 @@ body::selection {
   background-color: var(--core-accent);
   color: var(--solid-black);
 }
+
+/* Home page ambient animations */
+@keyframes aurora-drift {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+    opacity: 0.4;
+  }
+  25% {
+    transform: translate(25%, -30%) scale(1.15);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-15%, 25%) scale(0.9);
+    opacity: 0.35;
+  }
+  75% {
+    transform: translate(-25%, -15%) scale(1.1);
+    opacity: 0.55;
+  }
+}
+
+@keyframes aurora-drift-reverse {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(-30%, 25%) scale(1.12);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(20%, -20%) scale(0.88);
+    opacity: 0.25;
+  }
+  75% {
+    transform: translate(15%, 30%) scale(1.15);
+    opacity: 0.45;
+  }
+}
+
+@keyframes aurora-drift-slow {
+  0%, 100% {
+    transform: translate(0%, 0%) scale(1) rotate(0deg);
+    opacity: 0.2;
+  }
+  33% {
+    transform: translate(35%, -25%) scale(1.2) rotate(4deg);
+    opacity: 0.4;
+  }
+  66% {
+    transform: translate(-25%, 35%) scale(0.85) rotate(-4deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-80px) translateX(20px);
+  }
+}
+
+@keyframes gentle-pulse {
+  0%, 100% {
+    opacity: 0.15;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(1.05);
+  }
+}
+
+.home-aurora-1 {
+  animation: aurora-drift 12s ease-in-out infinite;
+}
+
+.home-aurora-2 {
+  animation: aurora-drift-reverse 15s ease-in-out infinite;
+}
+
+.home-aurora-3 {
+  animation: aurora-drift-slow 20s ease-in-out infinite;
+}
+
+.home-shimmer {
+  animation: shimmer-sweep 3s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.home-particle {
+  animation: float-particle 6s ease-in-out infinite;
+}
+
+.home-glow-ring {
+  animation: gentle-pulse 4s ease-in-out infinite;
+}

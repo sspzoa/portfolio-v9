@@ -3,6 +3,7 @@
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { useSkills } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
+import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
 import Section from "@/shared/components/section";
 import { TagsSkeleton } from "@/shared/components/skeleton";
 import Tag from "@/shared/components/tag";
@@ -39,18 +40,18 @@ export const SkillsSection = () => {
 
   return (
     <Section title="Skills">
-      <div className="flex flex-row flex-wrap gap-spacing-800">
+      <StaggerContainer className="flex flex-row flex-wrap gap-spacing-800" staggerDelay={0.08}>
         {Object.entries(groupedSkills).map(([category, categorySkills]) => (
-          <div key={category} className="flex flex-col gap-spacing-300">
+          <StaggerItem key={category} className="flex flex-col gap-spacing-300">
             <p className="text-content-standard-tertiary text-label">{category}</p>
             <div className="flex flex-row flex-wrap gap-spacing-100">
               {categorySkills.map((skill, index) => (
                 <Tag key={index} icon={skill.icon} name={skill.name} isMain={skill.isMain} />
               ))}
             </div>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </Section>
   );
 };

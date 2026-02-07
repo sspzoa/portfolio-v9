@@ -3,6 +3,7 @@
 import { useAtomValue } from "jotai";
 import { useCertificates } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
+import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
 import { CertificationAtom } from "../(atoms)/usePortfolioStore";
@@ -25,15 +26,16 @@ export const CertificatesSection = () => {
 
   return (
     <Section title="Certificates">
-      <div className="flex flex-col gap-spacing-500">
+      <StaggerContainer className="flex flex-col gap-spacing-500" staggerDelay={0.04}>
         {certificates.map((certificate, index) => (
-          <Card
-            key={index}
-            mainText={certificate.name}
-            subText={`${certificate.date} / ${certificate.kind} / ${certificate.institution}`}
-          />
+          <StaggerItem key={index}>
+            <Card
+              mainText={certificate.name}
+              subText={`${certificate.date} / ${certificate.kind} / ${certificate.institution}`}
+            />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </Section>
   );
 };

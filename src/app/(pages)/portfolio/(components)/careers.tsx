@@ -3,6 +3,7 @@
 import { useAtomValue } from "jotai";
 import { useCareers } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
+import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
 import { CareerAtom } from "../(atoms)/usePortfolioStore";
@@ -25,17 +26,18 @@ export const CareersSection = () => {
 
   return (
     <Section title="Careers">
-      <div className="flex flex-col gap-spacing-800">
+      <StaggerContainer className="flex flex-col gap-spacing-800">
         {careers.map((career, index) => (
-          <Card
-            key={index}
-            icon={career.logo}
-            mainText={`${career.organization} - ${career.role}`}
-            subText={`${career.startDate} ${career.endDate ? `- ${career.endDate}` : ""}`}
-            description={career.description}
-          />
+          <StaggerItem key={index}>
+            <Card
+              icon={career.logo}
+              mainText={`${career.organization} - ${career.role}`}
+              subText={`${career.startDate} ${career.endDate ? `- ${career.endDate}` : ""}`}
+              description={career.description}
+            />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </Section>
   );
 };

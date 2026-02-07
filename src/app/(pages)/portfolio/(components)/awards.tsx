@@ -3,6 +3,7 @@
 import { useAtomValue } from "jotai";
 import { useAwards } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
+import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
 import { AwardAtom } from "../(atoms)/usePortfolioStore";
@@ -25,11 +26,13 @@ export const AwardsSection = () => {
 
   return (
     <Section title="Awards">
-      <div className="flex flex-col gap-spacing-500">
+      <StaggerContainer className="flex flex-col gap-spacing-500" staggerDelay={0.04}>
         {awards.map((award, index) => (
-          <Card key={index} mainText={award.name} subText={`${award.date} / ${award.tier}`} />
+          <StaggerItem key={index}>
+            <Card mainText={award.name} subText={`${award.date} / ${award.tier}`} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </Section>
   );
 };
