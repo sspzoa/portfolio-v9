@@ -3,7 +3,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import { useState } from "react";
-import { useActivities } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Button from "@/shared/components/button";
 import Card from "@/shared/components/card";
 import Section from "@/shared/components/section";
@@ -12,8 +11,7 @@ import { ActivityAtom } from "../(atoms)/usePortfolioStore";
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
-export const ActivitiesSection = () => {
-  const { isLoading } = useActivities();
+export const ActivitiesSection = ({ isLoading }: { isLoading: boolean }) => {
   const activities = useAtomValue(ActivityAtom);
   const [isVisible, setIsVisible] = useState(false);
 

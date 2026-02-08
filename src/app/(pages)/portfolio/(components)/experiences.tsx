@@ -1,15 +1,13 @@
 "use client";
 
 import { useAtomValue } from "jotai";
-import { useExperiences } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
 import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
 import { ExperienceAtom } from "../(atoms)/usePortfolioStore";
 
-export const ExperiencesSection = () => {
-  const { isLoading } = useExperiences();
+export const ExperiencesSection = ({ isLoading }: { isLoading: boolean }) => {
   const experiences = useAtomValue(ExperienceAtom);
 
   if (isLoading) {

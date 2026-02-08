@@ -1,15 +1,13 @@
 "use client";
 
 import { useAtomValue } from "jotai";
-import { useCertificates } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
 import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
 import { CertificationAtom } from "../(atoms)/usePortfolioStore";
 
-export const CertificatesSection = () => {
-  const { isLoading } = useCertificates();
+export const CertificatesSection = ({ isLoading }: { isLoading: boolean }) => {
   const certificates = useAtomValue(CertificationAtom);
 
   if (isLoading) {

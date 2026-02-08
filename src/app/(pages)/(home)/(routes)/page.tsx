@@ -10,7 +10,7 @@ const ease = [0.25, 0.1, 0.25, 1] as const;
 
 const nameLetters = "Seungpyo Suh".split("");
 
-const particles = Array.from({ length: 12 }, (_, i) => ({
+const _particles = Array.from({ length: 12 }, (_, i) => ({
   id: i,
   left: `${8 + Math.random() * 84}%`,
   top: `${8 + Math.random() * 84}%`,
@@ -22,7 +22,7 @@ const particles = Array.from({ length: 12 }, (_, i) => ({
 export default function Home() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
+  const [_mounted, setMounted] = useState(false);
 
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -138,7 +138,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 0.7, delay: 1.0, ease }}
             className="relative">
-            <div className="absolute -inset-1 rounded-radius-400 bg-core-accent/10 blur-xl home-glow-ring" />
+            <div className="-inset-1 home-glow-ring absolute rounded-radius-400 bg-core-accent/10 blur-xl" />
             <div className="relative overflow-hidden rounded-radius-400">
               <Button onClick={() => router.push("/portfolio")} text="Explore my portfolio" />
               <div
