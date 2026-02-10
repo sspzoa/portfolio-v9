@@ -1,12 +1,14 @@
 "use client";
 
 import { useAtomValue } from "jotai";
+import { useAboutMe } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import { Description } from "@/shared/components/description";
 import Section from "@/shared/components/section";
 import { DescriptionSkeleton } from "@/shared/components/skeleton";
 import { AboutMeAtom } from "../(atoms)/usePortfolioStore";
 
-export const AboutMeSection = ({ isLoading }: { isLoading: boolean }) => {
+export const AboutMeSection = () => {
+  const { isLoading } = useAboutMe();
   const aboutme = useAtomValue(AboutMeAtom);
 
   if (isLoading) {

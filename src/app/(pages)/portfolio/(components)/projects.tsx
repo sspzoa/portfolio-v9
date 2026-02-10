@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
+import { useProjects } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Button from "@/shared/components/button";
 import Card from "@/shared/components/card";
 import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
@@ -12,7 +13,8 @@ import { ProjectAtom } from "../(atoms)/usePortfolioStore";
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
-export const ProjectsSection = ({ isLoading }: { isLoading: boolean }) => {
+export const ProjectsSection = () => {
+  const { isLoading } = useProjects();
   const projects = useAtomValue(ProjectAtom);
   const [showSideProjects, setShowSideProjects] = useState(false);
 

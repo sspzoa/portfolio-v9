@@ -2,13 +2,15 @@
 
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
+import { useSkills } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import { StaggerContainer, StaggerItem } from "@/shared/components/motion";
 import Section from "@/shared/components/section";
 import { TagsSkeleton } from "@/shared/components/skeleton";
 import Tag from "@/shared/components/tag";
 import { SkillAtom } from "../(atoms)/usePortfolioStore";
 
-export const SkillsSection = ({ isLoading }: { isLoading: boolean }) => {
+export const SkillsSection = () => {
+  const { isLoading } = useSkills();
   const skills = useAtomValue(SkillAtom);
 
   const groupedSkills = useMemo(() => {
