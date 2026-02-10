@@ -113,24 +113,9 @@ export default function Home() {
             className="text-center text-body">
             Mobile & Frontend Engineer
             <br />
-            belong to{" "}
-            <Link
-              className="duration-100 hover:opacity-50"
-              href="https://github.com/dimipay"
-              target="_blank"
-              rel="noreferrer noopener">
-              @dimipay
-            </Link>
-            ,{" "}
-            <Link
-              className="duration-100 hover:opacity-50"
-              href="https://github.com/dimigo-din"
-              target="_blank"
-              rel="noreferrer noopener">
-              @dimigo-din
-            </Link>
+            Dongguk University Business '26
             <br />
-            Korea Digital Media High School 22nd
+            Korea Digital Media High School HD 22nd
           </motion.span>
 
           <motion.div
