@@ -1,28 +1,17 @@
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import Button from "@/shared/components/button";
 
 const ease = [0.25, 0.1, 0.25, 1] as const;
 
 const nameLetters = "Seungpyo Suh".split("");
 
-const particles = Array.from({ length: 12 }, (_, i) => ({
-  id: i,
-  left: `${8 + Math.random() * 84}%`,
-  top: `${8 + Math.random() * 84}%`,
-  size: 3 + Math.random() * 5,
-  delay: Math.random() * 6,
-  duration: 5 + Math.random() * 4,
-}));
-
 export default function Home() {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
 
   const mouseX = useMotionValue(0.5);
   const mouseY = useMotionValue(0.5);
@@ -33,10 +22,6 @@ export default function Home() {
   const aurora1Y = useTransform(smoothY, [0, 1], [-60, 60]);
   const aurora2X = useTransform(smoothX, [0, 1], [60, -60]);
   const aurora2Y = useTransform(smoothY, [0, 1], [50, -50]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
