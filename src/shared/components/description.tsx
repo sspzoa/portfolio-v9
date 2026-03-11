@@ -1,8 +1,11 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
+
+const ease = [0.25, 0.1, 0.25, 1] as const;
 
 interface DescriptionProps {
   children: React.ReactNode;
@@ -59,21 +62,27 @@ export function Description({ children, maxHeight }: DescriptionProps) {
 
   return (
     <div className="relative">
-      <div
+      <motion.div
         ref={contentRef}
-        className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
-        style={{
-          maxHeight: isExpanded || !needsExpansion ? (contentRef.current?.scrollHeight ?? "none") : maxHeight,
-        }}>
+        className="overflow-hidden"
+        animate={{
+          maxHeight: isExpanded || !needsExpansion ? (contentRef.current?.scrollHeight ?? 9999) : maxHeight,
+        }}
+        transition={{ duration: 0.4, ease }}>
         <p className="whitespace-pre-wrap text-content-standard-secondary text-label leading-spacing-600">
           {typeof children === "string" ? parseText(children) : children}
         </p>
-      </div>
+      </motion.div>
 
       {needsExpansion && (
-        <>
-          {!isExpanded && (
-            <div
+        <AnimatePresence mode="wait">
+          {!isExpanded ? (
+            <motion.div
+              key="overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease }}
               className="absolute right-0 bottom-0 left-0 flex h-24 items-center justify-center"
               style={{
                 background: "linear-gradient(to top, var(--components-fill-standard-primary), transparent)",
@@ -93,10 +102,15 @@ export function Description({ children, maxHeight }: DescriptionProps) {
                 }}>
                 더보기
               </button>
-            </div>
-          )}
-          {isExpanded && (
-            <div className="flex justify-center pt-2">
+            </motion.div>
+          ) : (
+            <motion.div
+              key="collapse"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease }}
+              className="flex justify-center pt-2">
               <button
                 type="button"
                 onClick={() => setIsExpanded(false)}
@@ -112,9 +126,9 @@ export function Description({ children, maxHeight }: DescriptionProps) {
                 }}>
                 접기
               </button>
-            </div>
+            </motion.div>
           )}
-        </>
+        </AnimatePresence>
       )}
     </div>
   );
