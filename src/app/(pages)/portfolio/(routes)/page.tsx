@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ActivitiesSection } from "@/app/(pages)/portfolio/(components)/activities";
 import { AwardsSection } from "@/app/(pages)/portfolio/(components)/awards";
 import { CareersSection } from "@/app/(pages)/portfolio/(components)/careers";
@@ -16,13 +15,9 @@ import { SkillsSection } from "../(components)/skills";
 
 export default function PortfolioPage() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
-      className="flex flex-col items-center gap-spacing-800 px-spacing-400 py-spacing-800">
-      <ProfileSection />
+    <div className="flex flex-col items-center gap-spacing-800 px-spacing-400 py-spacing-800">
       <div className="flex w-full max-w-5xl flex-col gap-spacing-400">
+        <ProfileSection />
         <AboutMeSection />
         <SkillsSection />
         <div className="flex w-full flex-col gap-spacing-400 md:flex-row">
@@ -41,6 +36,6 @@ export default function PortfolioPage() {
         <ActivitiesSection />
       </div>
       <Footer />
-    </motion.div>
+    </div>
   );
 }
