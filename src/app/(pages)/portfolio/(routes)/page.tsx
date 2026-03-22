@@ -1,3 +1,5 @@
+"use client";
+
 import { ActivitiesSection } from "@/app/(pages)/portfolio/(components)/activities";
 import { AwardsSection } from "@/app/(pages)/portfolio/(components)/awards";
 import { CareersSection } from "@/app/(pages)/portfolio/(components)/careers";

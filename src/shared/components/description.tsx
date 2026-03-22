@@ -15,16 +15,16 @@ export function Description({ children, maxHeight }: DescriptionProps) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const element = contentRef.current;
-    if (!element || !maxHeight) return;
+    const checkHeight = () => {
+      if (contentRef.current && maxHeight) {
+        setNeedsExpansion(contentRef.current.scrollHeight > maxHeight);
+      }
+    };
 
-    const observer = new ResizeObserver(() => {
-      setNeedsExpansion(element.scrollHeight > maxHeight);
-    });
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [maxHeight]);
+    checkHeight();
+    window.addEventListener("resize", checkHeight);
+    return () => window.removeEventListener("resize", checkHeight);
+  }, [children, maxHeight]);
 
   const parseText = (text: string): React.ReactNode[] => {
     const pattern = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g;
@@ -70,48 +70,51 @@ export function Description({ children, maxHeight }: DescriptionProps) {
         </p>
       </div>
 
-      {needsExpansion &&
-        (!isExpanded ? (
-          <div
-            className="absolute right-0 bottom-0 left-0 flex h-24 items-center justify-center"
-            style={{
-              background: "linear-gradient(to top, var(--components-fill-standard-primary), transparent)",
-            }}>
-            <button
-              type="button"
-              onClick={() => setIsExpanded(true)}
-              className="cursor-pointer font-medium text-label transition-colors"
+      {needsExpansion && (
+        <>
+          {!isExpanded ? (
+            <div
+              className="absolute right-0 bottom-0 left-0 flex h-24 items-center justify-center"
               style={{
-                color: "var(--content-standard-tertiary)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--content-standard-secondary)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--content-standard-tertiary)";
+                background: "linear-gradient(to top, var(--components-fill-standard-primary), transparent)",
               }}>
-              더보기
-            </button>
-          </div>
-        ) : (
-          <div className="flex justify-center pt-2">
-            <button
-              type="button"
-              onClick={() => setIsExpanded(false)}
-              className="cursor-pointer font-medium text-label transition-colors"
-              style={{
-                color: "var(--content-standard-tertiary)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--content-standard-secondary)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--content-standard-tertiary)";
-              }}>
-              접기
-            </button>
-          </div>
-        ))}
+              <button
+                type="button"
+                onClick={() => setIsExpanded(true)}
+                className="cursor-pointer font-medium text-label transition-colors"
+                style={{
+                  color: "var(--content-standard-tertiary)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "var(--content-standard-secondary)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "var(--content-standard-tertiary)";
+                }}>
+                더보기
+              </button>
+            </div>
+          ) : (
+            <div className="flex justify-center pt-2">
+              <button
+                type="button"
+                onClick={() => setIsExpanded(false)}
+                className="cursor-pointer font-medium text-label transition-colors"
+                style={{
+                  color: "var(--content-standard-tertiary)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "var(--content-standard-secondary)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "var(--content-standard-tertiary)";
+                }}>
+                접기
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

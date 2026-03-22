@@ -1,3 +1,5 @@
+"use client";
+
 export default function Footer() {
   return (
     <span className="text-center font-semibold text-content-standard-secondary text-label">

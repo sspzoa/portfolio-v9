@@ -1,29 +1,24 @@
 "use client";
 
+import { useAtomValue } from "jotai";
 import { useEducations } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
+import { EducationAtom } from "../(atoms)/usePortfolioStore";
 
 export const EducationsSection = () => {
-  const { data: educations = [], isLoading, isError } = useEducations();
+  const { isLoading } = useEducations();
+  const educations = useAtomValue(EducationAtom);
 
   if (isLoading) {
     return (
       <Section title="Educations">
         <div className="flex flex-col gap-spacing-800">
           {Array.from({ length: 1 }).map((_, index) => (
-            <CardSkeleton key={`skeleton-${index}`} hasDescription />
+            <CardSkeleton key={index} hasDescription />
           ))}
         </div>
-      </Section>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Section title="Educations">
-        <p className="text-content-standard-tertiary text-label">데이터를 불러오는 데 실패했습니다.</p>
       </Section>
     );
   }
@@ -31,9 +26,9 @@ export const EducationsSection = () => {
   return (
     <Section title="Educations">
       <div className="flex flex-col gap-spacing-800">
-        {educations.map((education) => (
+        {educations.map((education, index) => (
           <Card
-            key={`${education.organization}-${education.department}`}
+            key={index}
             icon={education.logo}
             mainText={`${education.organization} - ${education.department}`}
             subText={`${education.startDate} ${education.endDate ? `- ${education.endDate}` : ""}`}

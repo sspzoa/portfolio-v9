@@ -1,14 +1,17 @@
 "use client";
 
+import { useAtomValue } from "jotai";
 import { useMemo, useState } from "react";
 import { useProjects } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Button from "@/shared/components/button";
 import Card from "@/shared/components/card";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
+import { ProjectAtom } from "../(atoms)/usePortfolioStore";
 
 export const ProjectsSection = () => {
-  const { data: projects = [], isLoading, isError } = useProjects();
+  const { isLoading } = useProjects();
+  const projects = useAtomValue(ProjectAtom);
   const [showSideProjects, setShowSideProjects] = useState(false);
 
   const { mainProjects, sideProjects } = useMemo(() => {
@@ -37,17 +40,15 @@ export const ProjectsSection = () => {
       <Section title="Projects">
         <div className="flex flex-col gap-spacing-800">
           {Array.from({ length: 5 }).map((_, index) => (
-            <CardSkeleton key={`skeleton-${index}`} hasImage hasTags hasDescription />
+            <CardSkeleton key={index} hasImage hasTags hasDescription />
           ))}
+          {showSideProjects &&
+            Array.from({ length: 5 }).map((_, index) => <CardSkeleton key={index} hasImage hasTags hasDescription />)}
+          <Button
+            text={showSideProjects ? "사이드 프로젝트 숨기기" : `사이드 프로젝트 ${sideProjects.length}개 더보기`}
+            onClick={toggleSideProjects}
+          />
         </div>
-      </Section>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Section title="Projects">
-        <p className="text-content-standard-tertiary text-label">데이터를 불러오는 데 실패했습니다.</p>
       </Section>
     );
   }
@@ -55,9 +56,9 @@ export const ProjectsSection = () => {
   return (
     <Section title="Projects">
       <div className="flex flex-col gap-spacing-800">
-        {mainProjects.map((project) => (
+        {mainProjects.map((project, index) => (
           <Card
-            key={project.name}
+            key={index}
             image={project.coverImage}
             icon={project.iconImage}
             mainText={`${project.name} (${project.startDate}${project.endDate ? ` - ${project.endDate}` : ""})`}
@@ -71,9 +72,9 @@ export const ProjectsSection = () => {
           <>
             {showSideProjects && (
               <div className="flex flex-col gap-spacing-800">
-                {sideProjects.map((project) => (
+                {sideProjects.map((project, index) => (
                   <Card
-                    key={`side-${project.name}`}
+                    key={`side-${index}`}
                     image={project.coverImage}
                     icon={project.iconImage}
                     mainText={`${project.name} (${project.startDate}${project.endDate ? ` - ${project.endDate}` : ""})`}

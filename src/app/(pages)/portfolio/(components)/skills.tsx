@@ -1,13 +1,16 @@
 "use client";
 
+import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { useSkills } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Section from "@/shared/components/section";
 import { TagsSkeleton } from "@/shared/components/skeleton";
 import Tag from "@/shared/components/tag";
+import { SkillAtom } from "../(atoms)/usePortfolioStore";
 
 export const SkillsSection = () => {
-  const { data: skills = [], isLoading, isError } = useSkills();
+  const { isLoading } = useSkills();
+  const skills = useAtomValue(SkillAtom);
 
   const groupedSkills = useMemo(() => {
     return skills.reduce<Record<string, typeof skills>>((acc, skill) => {
@@ -24,20 +27,12 @@ export const SkillsSection = () => {
       <Section title="Skills">
         <div className="flex flex-row flex-wrap gap-spacing-800">
           {Array.from({ length: 5 }).map((_, index) => (
-            <div key={`skeleton-${index}`} className="flex flex-col gap-spacing-300">
+            <div key={index} className="flex flex-col gap-spacing-300">
               <div className="h-[22px] w-16 animate-pulse rounded-radius-full border border-line-outline bg-components-fill-standard-secondary" />
               <TagsSkeleton />
             </div>
           ))}
         </div>
-      </Section>
-    );
-  }
-
-  if (isError) {
-    return (
-      <Section title="Skills">
-        <p className="text-content-standard-tertiary text-label">데이터를 불러오는 데 실패했습니다.</p>
       </Section>
     );
   }
@@ -49,8 +44,8 @@ export const SkillsSection = () => {
           <div key={category} className="flex flex-col gap-spacing-300">
             <p className="text-content-standard-tertiary text-label">{category}</p>
             <div className="flex flex-row flex-wrap gap-spacing-100">
-              {categorySkills.map((skill) => (
-                <Tag key={skill.name} icon={skill.icon} name={skill.name} isMain={skill.isMain} />
+              {categorySkills.map((skill, index) => (
+                <Tag key={index} icon={skill.icon} name={skill.name} isMain={skill.isMain} />
               ))}
             </div>
           </div>
