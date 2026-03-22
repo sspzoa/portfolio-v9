@@ -44,8 +44,8 @@ export default function Card({ image, icon, mainText, subText, tags, description
         </div>
         {tags && (
           <div className="flex flex-row flex-wrap gap-spacing-200">
-            {tags.map((tag, index) => (
-              <Tag key={index} name={tag} />
+            {tags.map((tag) => (
+              <Tag key={tag} name={tag} />
             ))}
           </div>
         )}

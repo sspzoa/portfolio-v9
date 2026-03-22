@@ -1,24 +1,29 @@
 "use client";
 
-import { useAtomValue } from "jotai";
 import { useCareers } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
 import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
-import { CareerAtom } from "../(atoms)/usePortfolioStore";
 
 export const CareersSection = () => {
-  const { isLoading } = useCareers();
-  const careers = useAtomValue(CareerAtom);
+  const { data: careers = [], isLoading, isError } = useCareers();
 
   if (isLoading) {
     return (
       <Section title="Careers">
         <div className="flex flex-col gap-spacing-800">
           {Array.from({ length: 1 }).map((_, index) => (
-            <CardSkeleton key={index} hasDescription />
+            <CardSkeleton key={`skeleton-${index}`} hasDescription />
           ))}
         </div>
+      </Section>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Section title="Careers">
+        <p className="text-content-standard-tertiary text-label">데이터를 불러오는 데 실패했습니다.</p>
       </Section>
     );
   }
@@ -26,9 +31,9 @@ export const CareersSection = () => {
   return (
     <Section title="Careers">
       <div className="flex flex-col gap-spacing-800">
-        {careers.map((career, index) => (
+        {careers.map((career) => (
           <Card
-            key={index}
+            key={`${career.organization}-${career.role}`}
             icon={career.logo}
             mainText={`${career.organization} - ${career.role}`}
             subText={`${career.startDate} ${career.endDate ? `- ${career.endDate}` : ""}`}

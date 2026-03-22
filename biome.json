@@ -22,38 +22,38 @@
       "a11y": {
         "noSvgWithoutTitle": "off",
         "noAutofocus": "off",
-        "useKeyWithClickEvents": "off",
-        "noStaticElementInteractions": "off",
+        "useKeyWithClickEvents": "warn",
+        "noStaticElementInteractions": "warn",
         "useButtonType": "off",
-        "useSemanticElements": "off",
+        "useSemanticElements": "warn",
         "noLabelWithoutControl": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off",
-        "useUniqueElementIds": "off",
+        "useExhaustiveDependencies": "warn",
+        "useUniqueElementIds": "warn",
         "useParseIntRadix": "off",
         "noUnusedImports": "error"
       },
       "security": {
-        "noDangerouslySetInnerHtml": "warn"
+        "noDangerouslySetInnerHtml": "error"
       },
       "style": {
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "warn"
       },
       "complexity": {
         "useLiteralKeys": "off",
         "useArrowFunction": "error"
       },
       "suspicious": {
-        "noExplicitAny": "off",
-        "noImplicitAnyLet": "off",
-        "noArrayIndexKey": "off",
+        "noExplicitAny": "warn",
+        "noImplicitAnyLet": "warn",
+        "noArrayIndexKey": "warn",
         "noShadowRestrictedNames": "off",
         "noUnknownAtRules": "off",
         "noDocumentCookie": "off"
       },
       "performance": {
-        "noImgElement": "off"
+        "noImgElement": "warn"
       },
       "nursery": {
         "useSortedClasses": "warn"

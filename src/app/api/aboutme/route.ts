@@ -1,20 +1,16 @@
-import { NextResponse } from "next/server";
-import { notionRequest } from "@/shared/lib/notion";
+import { createNotionHandler } from "@/shared/lib/createNotionHandler";
 
-export async function GET() {
-  try {
-    const response = await notionRequest<any>(`/data_sources/${process.env.ABOUTME_DATA_SOURCE_ID}/query`, {
-      method: "POST",
-    });
+export const revalidate = 3600;
 
-    const aboutme = {
-      content: response.results[0].properties.content.rich_text[0]?.plain_text,
-    };
-
-    return NextResponse.json(aboutme);
-  } catch (error: any) {
-    return NextResponse.json(error.data || { message: error.message }, {
-      status: (error.status as number) || 500,
-    });
-  }
+interface NotionAboutMeResult {
+  properties: {
+    content: { rich_text: Array<{ plain_text: string }> };
+  };
 }
+
+export const GET = createNotionHandler({
+  dataSourceEnvKey: "ABOUTME_DATA_SOURCE_ID",
+  transformResponse: (response) => ({
+    content: (response.results[0] as NotionAboutMeResult)?.properties.content.rich_text[0]?.plain_text ?? "",
+  }),
+});

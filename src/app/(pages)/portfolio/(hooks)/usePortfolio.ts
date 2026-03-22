@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useSetAtom } from "jotai";
 import type {
   AboutMe,
   Activity,
@@ -11,221 +10,65 @@ import type {
   Project,
   Skill,
 } from "@/shared/types";
-import {
-  AboutMeAtom,
-  ActivityAtom,
-  AwardAtom,
-  CareerAtom,
-  CertificationAtom,
-  EducationAtom,
-  ExperienceAtom,
-  ProjectAtom,
-  SkillAtom,
-} from "../(atoms)/usePortfolioStore";
 
-export const useSkills = () => {
-  const setSkills = useSetAtom(SkillAtom);
+const portfolioFetch = async <T>(endpoint: string): Promise<T> => {
+  const response = await fetch(`/api/${endpoint}`);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${endpoint}`);
+  }
+  return response.json();
+};
 
-  return useQuery<Skill[]>({
+export const useSkills = () =>
+  useQuery<Skill[]>({
     queryKey: ["portfolio", "skills"],
-    queryFn: async () => {
-      const response = await fetch("/api/skills");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setSkills(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Skill[]>("skills"),
   });
-};
 
-export const useProjects = () => {
-  const setProjects = useSetAtom(ProjectAtom);
-
-  return useQuery<Project[]>({
+export const useProjects = () =>
+  useQuery<Project[]>({
     queryKey: ["portfolio", "projects"],
-    queryFn: async () => {
-      const response = await fetch("/api/projects");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setProjects(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Project[]>("projects"),
   });
-};
 
-export const useExperiences = () => {
-  const setExperiences = useSetAtom(ExperienceAtom);
-
-  return useQuery<Experience[]>({
+export const useExperiences = () =>
+  useQuery<Experience[]>({
     queryKey: ["portfolio", "experiences"],
-    queryFn: async () => {
-      const response = await fetch("/api/experiences");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setExperiences(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Experience[]>("experiences"),
   });
-};
 
-export const useCareers = () => {
-  const setCareers = useSetAtom(CareerAtom);
-
-  return useQuery<Career[]>({
+export const useCareers = () =>
+  useQuery<Career[]>({
     queryKey: ["portfolio", "careers"],
-    queryFn: async () => {
-      const response = await fetch("/api/careers");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setCareers(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Career[]>("careers"),
   });
-};
 
-export const useCertificates = () => {
-  const setCertificates = useSetAtom(CertificationAtom);
-
-  return useQuery<Certification[]>({
+export const useCertificates = () =>
+  useQuery<Certification[]>({
     queryKey: ["portfolio", "certificates"],
-    queryFn: async () => {
-      const response = await fetch("/api/certificates");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setCertificates(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Certification[]>("certificates"),
   });
-};
 
-export const useEducations = () => {
-  const setEducations = useSetAtom(EducationAtom);
-
-  return useQuery<Education[]>({
+export const useEducations = () =>
+  useQuery<Education[]>({
     queryKey: ["portfolio", "educations"],
-    queryFn: async () => {
-      const response = await fetch("/api/educations");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setEducations(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Education[]>("educations"),
   });
-};
 
-export const useAwards = () => {
-  const setAwards = useSetAtom(AwardAtom);
-
-  return useQuery<Award[]>({
+export const useAwards = () =>
+  useQuery<Award[]>({
     queryKey: ["portfolio", "awards"],
-    queryFn: async () => {
-      const response = await fetch("/api/awards");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setAwards(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Award[]>("awards"),
   });
-};
 
-export const useActivities = () => {
-  const setActivities = useSetAtom(ActivityAtom);
-
-  return useQuery<Activity[]>({
+export const useActivities = () =>
+  useQuery<Activity[]>({
     queryKey: ["portfolio", "activities"],
-    queryFn: async () => {
-      const response = await fetch("/api/activities");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setActivities(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<Activity[]>("activities"),
   });
-};
 
-export const useAboutMe = () => {
-  const setAboutMe = useSetAtom(AboutMeAtom);
-
-  return useQuery<AboutMe>({
+export const useAboutMe = () =>
+  useQuery<AboutMe>({
     queryKey: ["portfolio", "aboutme"],
-    queryFn: async () => {
-      const response = await fetch("/api/aboutme");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw data;
-      }
-
-      return data;
-    },
-    select: (data) => {
-      setAboutMe(data);
-      return data;
-    },
-    staleTime: 1000 * 60 * 5,
+    queryFn: () => portfolioFetch<AboutMe>("aboutme"),
   });
-};

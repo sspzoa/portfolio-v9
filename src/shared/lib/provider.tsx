@@ -1,8 +1,8 @@
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Provider as JotaiProvider } from "jotai";
 import { type PropsWithChildren, useState } from "react";
+import { QUERY_GC_TIME, QUERY_STALE_TIME } from "@/shared/constants";
 
 export function Providers({ children }: PropsWithChildren) {
   const [queryClient] = useState(
@@ -12,17 +12,12 @@ export function Providers({ children }: PropsWithChildren) {
           queries: {
             refetchOnWindowFocus: false,
             retry: 1,
-          },
-          mutations: {
-            retry: 1,
+            staleTime: QUERY_STALE_TIME,
+            gcTime: QUERY_GC_TIME,
           },
         },
       }),
   );
 
-  return (
-    <JotaiProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </JotaiProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
