@@ -35,14 +35,14 @@ export default function PortfolioPage() {
 
         <div className="flex flex-col gap-spacing-700">
           <AboutMeSection index={1} />
-          <SkillsSection index={2} />
-          <CareersSection index={3} />
-          <ExperiencesSection index={4} />
-          <EducationsSection index={5} />
-          <ProjectsSection index={6} />
-          <ContributionsSection index={7} />
-          <AwardsSection index={8} />
-          <CertificatesSection index={9} />
+          <AwardsSection index={2} />
+          <CertificatesSection index={3} />
+          <SkillsSection index={4} />
+          <CareersSection index={5} />
+          <ExperiencesSection index={6} />
+          <EducationsSection index={7} />
+          <ProjectsSection index={8} />
+          <ContributionsSection index={9} />
           <ActivitiesSection index={10} />
         </div>
 
