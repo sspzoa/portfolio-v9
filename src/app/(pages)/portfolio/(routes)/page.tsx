@@ -1,5 +1,7 @@
 "use client";
 
+import { LucideArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { ActivitiesSection } from "@/app/(pages)/portfolio/(components)/activities";
 import { AwardsSection } from "@/app/(pages)/portfolio/(components)/awards";
 import { CareersSection } from "@/app/(pages)/portfolio/(components)/careers";
@@ -15,27 +17,39 @@ import { SkillsSection } from "../(components)/skills";
 
 export default function PortfolioPage() {
   return (
-    <div className="flex flex-col items-center gap-spacing-800 px-spacing-400 py-spacing-800">
-      <div className="flex w-full max-w-5xl flex-col gap-spacing-400">
+    <main className="flex min-h-dvh flex-col items-center bg-background-standard-primary px-spacing-500 py-spacing-700 md:py-spacing-800">
+      <div className="flex w-full max-w-3xl flex-col">
+        <nav className="flex w-full items-center justify-between">
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-spacing-150 font-medium text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary">
+            <LucideArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
+            Home
+          </Link>
+          <span className="font-medium text-caption text-content-standard-quaternary uppercase tracking-widest">
+            Portfolio · 2026
+          </span>
+        </nav>
+
         <ProfileSection />
-        <AboutMeSection />
-        <SkillsSection />
-        <div className="flex w-full flex-col gap-spacing-400 md:flex-row">
-          <div className="flex w-full flex-col gap-spacing-400">
-            <CareersSection />
-            <EducationsSection />
-            <ExperiencesSection />
-          </div>
-          <div className="flex w-full flex-col gap-spacing-400">
-            <AwardsSection />
-            <CertificatesSection />
-          </div>
+
+        <div className="flex flex-col gap-spacing-700">
+          <AboutMeSection index={1} />
+          <SkillsSection index={2} />
+          <CareersSection index={3} />
+          <ExperiencesSection index={4} />
+          <EducationsSection index={5} />
+          <ProjectsSection index={6} />
+          <ContributionsSection index={7} />
+          <AwardsSection index={8} />
+          <CertificatesSection index={9} />
+          <ActivitiesSection index={10} />
         </div>
-        <ContributionsSection />
-        <ProjectsSection />
-        <ActivitiesSection />
+
+        <div className="mt-spacing-1000">
+          <Footer />
+        </div>
       </div>
-      <Footer />
-    </div>
+    </main>
   );
 }

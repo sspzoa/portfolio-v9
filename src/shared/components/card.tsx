@@ -13,37 +13,38 @@ interface CardProps {
 
 export default function Card({ image, icon, mainText, subText, tags, description }: CardProps) {
   return (
-    <div className="flex w-full flex-col gap-spacing-400 md:flex-row">
+    <article className="group flex w-full flex-col gap-spacing-400 md:flex-row">
       {image && (
-        <Image
-          className="aspect-video w-full rounded-radius-200 border border-line-outline object-cover md:h-54 md:w-96"
-          src={image}
-          width={382}
-          height={214}
-          alt={mainText}
-          draggable={false}
-        />
+        <div className="relative aspect-video w-full shrink-0 self-start overflow-hidden rounded-radius-400 ring-1 ring-line-outline md:w-96">
+          <Image
+            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            src={image}
+            width={382}
+            height={214}
+            alt={mainText}
+            draggable={false}
+          />
+        </div>
       )}
-      <div className="flex w-full flex-col gap-spacing-400">
-        <div
-          className={`flex flex-row items-center gap-spacing-400 ${description || tags ? "rounded-radius-400 bg-components-fill-standard-tertiary p-spacing-400" : ""}`}>
+      <div className="flex w-full flex-col gap-spacing-300">
+        <div className="flex flex-row items-center gap-spacing-300">
           {icon && (
             <Image
-              className="h-8 w-8 rounded-radius-200 object-contain"
-              width={32}
-              height={32}
-              alt={mainText}
+              className="h-9 w-9 shrink-0 rounded-radius-200 object-contain"
+              width={36}
+              height={36}
+              alt=""
               src={icon}
               draggable={false}
             />
           )}
           <div className="flex flex-col">
-            <h3 className="font-semibold text-body">{mainText}</h3>
-            <p className="text-content-standard-secondary text-footnote">{subText}</p>
+            <h3 className="font-semibold text-body text-content-standard-primary leading-snug">{mainText}</h3>
+            <p className="text-content-standard-tertiary text-footnote">{subText}</p>
           </div>
         </div>
-        {tags && (
-          <div className="flex flex-row flex-wrap gap-spacing-200">
+        {tags && tags.length > 0 && (
+          <div className="flex flex-row flex-wrap gap-spacing-150">
             {tags.map((tag, index) => (
               <Tag key={index} name={tag} />
             ))}
@@ -51,6 +52,6 @@ export default function Card({ image, icon, mainText, subText, tags, description
         )}
         {description && <Description maxHeight={300}>{description}</Description>}
       </div>
-    </div>
+    </article>
   );
 }

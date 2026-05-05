@@ -7,24 +7,23 @@ import Section from "@/shared/components/section";
 import { DescriptionSkeleton } from "@/shared/components/skeleton";
 import { AboutMeAtom } from "../(atoms)/usePortfolioStore";
 
-export const AboutMeSection = () => {
+export const AboutMeSection = ({ index }: { index?: number }) => {
   const { isLoading } = useAboutMe();
   const aboutme = useAtomValue(AboutMeAtom);
 
   if (isLoading) {
     return (
-      <Section title="About me">
-        <div className="flex flex-col gap-spacing-200">
-          {Array.from({ length: 2 }).map((_, index) => (
-            <DescriptionSkeleton key={index} />
-          ))}
+      <Section title="About" index={index}>
+        <div className="flex flex-col gap-spacing-300">
+          <DescriptionSkeleton />
+          <DescriptionSkeleton />
         </div>
       </Section>
     );
   }
 
   return (
-    <Section title="About me">
+    <Section title="About" index={index}>
       <Description>{aboutme?.content}</Description>
     </Section>
   );

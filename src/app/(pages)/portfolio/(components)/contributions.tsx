@@ -4,29 +4,30 @@ import Link from "next/link";
 import { GitHubCalendar } from "react-github-calendar";
 import Section from "@/shared/components/section";
 
-export const ContributionsSection = () => {
+export const ContributionsSection = ({ index }: { index?: number }) => {
   return (
-    <Section title="Contributions">
+    <Section title="Contributions" index={index}>
       <Link
         href="https://github.com/sspzoa"
         target="_blank"
         rel="noreferrer noopener"
-        className="flex w-full items-center justify-center rounded-radius-400 border border-line-outline p-spacing-400 duration-100 hover:border-core-accent hover:bg-core-accent-translucent">
+        aria-label="View GitHub profile"
+        className="block w-full transition-opacity hover:opacity-70">
         <GitHubCalendar
           username="sspzoa"
           theme={{
             light: [
-              "var(--components-fill-standard-secondary)",
-              "rgba(109, 135, 168, 0.4)",
-              "rgba(109, 135, 168, 0.6)",
-              "rgba(109, 135, 168, 0.8)",
+              "var(--components-translucent-tertiary)",
+              "rgba(85, 117, 158, 0.3)",
+              "rgba(85, 117, 158, 0.55)",
+              "rgba(85, 117, 158, 0.8)",
               "var(--core-accent)",
             ],
             dark: [
-              "var(--components-fill-standard-secondary)",
-              "rgba(109, 135, 168, 0.4)",
-              "rgba(109, 135, 168, 0.6)",
-              "rgba(109, 135, 168, 0.8)",
+              "var(--components-translucent-tertiary)",
+              "rgba(143, 175, 213, 0.25)",
+              "rgba(143, 175, 213, 0.5)",
+              "rgba(143, 175, 213, 0.75)",
               "var(--core-accent)",
             ],
           }}

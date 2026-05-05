@@ -7,16 +7,16 @@ import Section from "@/shared/components/section";
 import { CardSkeleton } from "@/shared/components/skeleton";
 import { ExperienceAtom } from "../(atoms)/usePortfolioStore";
 
-export const ExperiencesSection = () => {
+export const ExperiencesSection = ({ index }: { index?: number }) => {
   const { isLoading } = useExperiences();
   const experiences = useAtomValue(ExperienceAtom);
 
   if (isLoading) {
     return (
-      <Section title="Experiences">
-        <div className="flex flex-col gap-spacing-800">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <CardSkeleton key={index} hasDescription />
+      <Section title="Experiences" index={index}>
+        <div className="flex flex-col gap-spacing-700">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <CardSkeleton key={i} hasDescription />
           ))}
         </div>
       </Section>
@@ -24,14 +24,14 @@ export const ExperiencesSection = () => {
   }
 
   return (
-    <Section title="Experiences">
-      <div className="flex flex-col gap-spacing-800">
-        {experiences.map((experience, index) => (
+    <Section title="Experiences" index={index} count={experiences.length}>
+      <div className="flex flex-col gap-spacing-700">
+        {experiences.map((experience, i) => (
           <Card
-            key={index}
+            key={i}
             icon={experience.logo}
-            mainText={`${experience.organization} - ${experience.role}`}
-            subText={`${experience.startDate} ${experience.endDate ? `- ${experience.endDate}` : ""}`}
+            mainText={`${experience.organization} · ${experience.role}`}
+            subText={`${experience.startDate}${experience.endDate ? ` – ${experience.endDate}` : " – Present"}`}
             description={experience.description}
           />
         ))}

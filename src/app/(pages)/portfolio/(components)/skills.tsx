@@ -8,7 +8,7 @@ import { TagsSkeleton } from "@/shared/components/skeleton";
 import Tag from "@/shared/components/tag";
 import { SkillAtom } from "../(atoms)/usePortfolioStore";
 
-export const SkillsSection = () => {
+export const SkillsSection = ({ index }: { index?: number }) => {
   const { isLoading } = useSkills();
   const skills = useAtomValue(SkillAtom);
 
@@ -24,11 +24,13 @@ export const SkillsSection = () => {
 
   if (isLoading) {
     return (
-      <Section title="Skills">
-        <div className="flex flex-row flex-wrap gap-spacing-800">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className="flex flex-col gap-spacing-300">
-              <div className="h-[22px] w-16 animate-pulse rounded-radius-full border border-line-outline bg-components-fill-standard-secondary" />
+      <Section title="Skills" index={index}>
+        <div className="flex flex-col">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="grid grid-cols-1 gap-spacing-300 border-line-divider border-b py-spacing-400 md:grid-cols-[140px_1fr]">
+              <div className="h-[20px] w-20 animate-pulse rounded-radius-full bg-components-fill-standard-secondary" />
               <TagsSkeleton />
             </div>
           ))}
@@ -38,14 +40,20 @@ export const SkillsSection = () => {
   }
 
   return (
-    <Section title="Skills">
-      <div className="flex flex-row flex-wrap gap-spacing-800">
-        {Object.entries(groupedSkills).map(([category, categorySkills]) => (
-          <div key={category} className="flex flex-col gap-spacing-300">
-            <p className="text-content-standard-tertiary text-label">{category}</p>
-            <div className="flex flex-row flex-wrap gap-spacing-100">
-              {categorySkills.map((skill, index) => (
-                <Tag key={index} icon={skill.icon} name={skill.name} isMain={skill.isMain} />
+    <Section title="Skills" index={index} count={skills.length}>
+      <div className="flex flex-col">
+        {Object.entries(groupedSkills).map(([category, categorySkills], idx, arr) => (
+          <div
+            key={category}
+            className={`grid grid-cols-1 items-baseline gap-x-spacing-500 gap-y-spacing-300 py-spacing-400 md:grid-cols-[140px_1fr] ${
+              idx < arr.length - 1 ? "border-line-divider border-b" : ""
+            }`}>
+            <p className="font-medium text-content-standard-tertiary text-footnote uppercase tracking-wider">
+              {category}
+            </p>
+            <div className="flex flex-row flex-wrap gap-spacing-150">
+              {categorySkills.map((skill, i) => (
+                <Tag key={i} icon={skill.icon} name={skill.name} isMain={skill.isMain} />
               ))}
             </div>
           </div>

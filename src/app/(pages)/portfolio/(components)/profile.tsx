@@ -5,35 +5,50 @@ import Image from "next/image";
 import Link from "next/link";
 
 const socialLinks = [
-  { href: "https://github.com/sspzoa", icon: LucideGithub },
-  { href: "https://linkedin.com/in/seungpyosuh", icon: LucideLinkedin },
-  { href: "https://www.instagram.com/seuungpyo", icon: LucideInstagram },
-  { href: "mailto:me@sspzoa.io", icon: LucideMail },
+  { href: "https://github.com/sspzoa", icon: LucideGithub, label: "GitHub" },
+  { href: "https://linkedin.com/in/seungpyosuh", icon: LucideLinkedin, label: "LinkedIn" },
+  { href: "https://www.instagram.com/seuungpyo", icon: LucideInstagram, label: "Instagram" },
+  { href: "mailto:me@sspzoa.io", icon: LucideMail, label: "Email" },
 ];
 
 export const ProfileSection = () => {
   return (
-    <section className="flex w-full flex-col items-center gap-spacing-500 rounded-radius-400 bg-components-fill-standard-primary p-spacing-500 md:flex-row md:gap-spacing-600 md:p-spacing-600">
-      <div className="shrink-0 overflow-hidden rounded-radius-400">
-        <Image src="/photo.jpg" alt="Profile Photo" width={180} height={180} className="scale-105" draggable={false} />
-      </div>
-      <div className="flex flex-col items-center gap-spacing-500 md:items-start">
-        <h1 className="font-semibold text-title md:text-display">
-          sspzoa <span className="text-content-standard-secondary">Seungpyo Suh</span>
-        </h1>
-        <div className="flex flex-row gap-spacing-500">
-          {socialLinks.map((link) => (
-            <Link
-              key={link.href}
-              className="duration-100 hover:opacity-50"
-              href={link.href}
-              rel="noopener noreferrer"
-              target="_blank">
-              <link.icon className="text-content-standard-secondary" size={32} />
-            </Link>
-          ))}
+    <header className="flex w-full flex-col gap-spacing-700 py-spacing-800">
+      <div className="flex flex-col-reverse items-start gap-spacing-600 md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col gap-spacing-500">
+          <h1 className="font-semibold text-content-standard-primary text-display tracking-tight md:text-[64px] md:leading-[1.05]">
+            Seungpyo Suh<span className="text-core-accent">.</span>
+          </h1>
+          <p className="max-w-md text-body text-content-standard-secondary md:text-heading">
+            Mobile & Frontend Engineer crafting interfaces that feel like home.
+          </p>
+        </div>
+
+        <div className="h-28 w-28 shrink-0 overflow-hidden rounded-radius-full ring-1 ring-line-outline md:h-40 md:w-40">
+          <Image
+            src="/photo.jpg"
+            alt="Seungpyo Suh"
+            width={160}
+            height={160}
+            className="h-full w-full scale-105 object-cover"
+            draggable={false}
+          />
         </div>
       </div>
-    </section>
+
+      <div className="flex flex-row gap-spacing-300">
+        {socialLinks.map((link) => (
+          <Link
+            key={link.href}
+            aria-label={link.label}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex h-10 w-10 items-center justify-center rounded-radius-full text-content-standard-secondary ring-1 ring-line-outline ring-inset transition-colors hover:bg-components-interactive-hover hover:text-content-standard-primary">
+            <link.icon size={18} />
+          </Link>
+        ))}
+      </div>
+    </header>
   );
 };
