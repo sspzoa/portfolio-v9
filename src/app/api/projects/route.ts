@@ -32,7 +32,6 @@ export async function GET() {
       endDate: formatDate(result.properties.workPeriod.date.end),
       teamSize: result.properties.teamSize.number,
       isSideProject: result.properties.isSideProject.checkbox,
-      isPinned: result.properties.isPinned.checkbox,
       tags: result.properties.tags.multi_select.map((tag: any) => tag.name),
       coverImage: result.cover?.file?.url,
       iconImage: result.icon?.file?.url,

@@ -14,7 +14,6 @@ export interface Project {
   endDate?: string;
   teamSize: number;
   isSideProject: boolean;
-  isPinned: boolean;
   tags: string[];
   coverImage?: string;
   iconImage?: string;
@@ -58,7 +57,6 @@ export interface Award {
   name: string;
   tier: string;
   date: string;
-  isPinned: boolean;
 }
 
 export interface Activity {

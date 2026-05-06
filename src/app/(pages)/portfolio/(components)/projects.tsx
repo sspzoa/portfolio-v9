@@ -59,7 +59,6 @@ export const ProjectsSection = ({ index }: { index?: number }) => {
             subText={`${project.teamSize}P · ${project.shortDescription}`}
             tags={project.tags}
             description={project.description}
-            isPinned={project.isPinned}
           />
         ))}
 
@@ -76,7 +75,6 @@ export const ProjectsSection = ({ index }: { index?: number }) => {
                     subText={`${project.teamSize}P · ${project.shortDescription}`}
                     tags={project.tags}
                     description={project.description}
-                    isPinned={project.isPinned}
                   />
                 ))}
               </div>
