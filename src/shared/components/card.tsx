@@ -9,9 +9,10 @@ interface CardProps {
   subText: string;
   tags?: string[];
   description?: string;
+  isPinned?: boolean;
 }
 
-export default function Card({ image, icon, mainText, subText, tags, description }: CardProps) {
+export default function Card({ image, icon, mainText, subText, tags, description, isPinned }: CardProps) {
   return (
     <article className="group flex w-full flex-col gap-spacing-400 md:flex-row">
       {image && (
@@ -38,8 +39,13 @@ export default function Card({ image, icon, mainText, subText, tags, description
               draggable={false}
             />
           )}
-          <div className="flex flex-col">
-            <h3 className="font-semibold text-body text-content-standard-primary leading-snug">{mainText}</h3>
+          <div className="flex min-w-0 flex-1 flex-col">
+            <h3
+              className={`text-body leading-snug ${
+                isPinned ? "font-bold text-core-accent" : "font-semibold text-content-standard-primary"
+              }`}>
+              {mainText}
+            </h3>
             <p className="text-content-standard-tertiary text-footnote">{subText}</p>
           </div>
         </div>

@@ -27,7 +27,7 @@ export const AwardsSection = ({ index }: { index?: number }) => {
     <Section title="Awards" index={index} count={awards.length}>
       <ul className="flex flex-col">
         {awards.map((award, i) => (
-          <ListItem key={i} title={award.name} meta={award.date} badge={award.tier} />
+          <ListItem key={i} title={award.name} meta={award.date} badge={award.tier} isPinned={award.isPinned} />
         ))}
       </ul>
     </Section>

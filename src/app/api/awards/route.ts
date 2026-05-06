@@ -9,7 +9,11 @@ export async function GET() {
       body: {
         sorts: [
           {
-            property: "score",
+            property: "isPinned",
+            direction: "descending",
+          },
+          {
+            property: "date",
             direction: "descending",
           },
         ],
@@ -20,7 +24,7 @@ export async function GET() {
       name: result.properties.name.title[0].plain_text,
       tier: result.properties.tier.rich_text[0]?.plain_text,
       date: formatDate(result.properties.date.date.start),
-      score: result.properties.score.number,
+      isPinned: result.properties.isPinned.checkbox,
     }));
 
     return NextResponse.json(awards);
