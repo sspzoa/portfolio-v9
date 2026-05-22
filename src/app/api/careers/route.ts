@@ -17,12 +17,12 @@ export async function GET() {
     });
 
     const careers = notionResponse.results.map((result: any) => ({
-      role: result.properties.role.title[0].plain_text,
-      organization: result.properties.organization.rich_text[0]?.plain_text,
-      description: result.properties.description.rich_text[0]?.plain_text,
-      startDate: formatDate(result.properties.date.date.start),
-      endDate: formatDate(result.properties.date.date.end),
-      logo: result.properties.logo.files[0]?.file.url,
+      role: result.properties.role?.title?.[0]?.plain_text ?? "",
+      organization: result.properties.organization?.rich_text?.[0]?.plain_text,
+      description: result.properties.description?.rich_text?.[0]?.plain_text,
+      startDate: formatDate(result.properties.date?.date?.start),
+      endDate: formatDate(result.properties.date?.date?.end),
+      logo: result.properties.logo?.files?.[0]?.file?.url ?? result.properties.logo?.files?.[0]?.external?.url,
     }));
 
     return NextResponse.json(careers);

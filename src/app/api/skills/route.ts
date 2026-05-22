@@ -20,10 +20,10 @@ export async function GET() {
     });
 
     const skills = notionResponse.results.map((result: any) => ({
-      name: result.properties.name.title[0].plain_text,
-      category: result.properties.category.select?.name,
-      isMain: result.properties.isMain.checkbox,
-      icon: result.properties.icon.files[0]?.file?.url,
+      name: result.properties.name?.title?.[0]?.plain_text ?? "",
+      category: result.properties.category?.select?.name,
+      isMain: result.properties.isMain?.checkbox ?? false,
+      icon: result.properties.icon?.files?.[0]?.file?.url ?? result.properties.icon?.files?.[0]?.external?.url,
       url: result.public_url,
     }));
 

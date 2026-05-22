@@ -17,9 +17,9 @@ export async function GET() {
     });
 
     const awards = notionResponse.results.map((result: any) => ({
-      name: result.properties.name.title[0].plain_text,
-      tier: result.properties.tier.rich_text[0]?.plain_text,
-      date: formatDate(result.properties.date.date.start),
+      name: result.properties.name?.title?.[0]?.plain_text ?? "",
+      tier: result.properties.tier?.rich_text?.[0]?.plain_text,
+      date: formatDate(result.properties.date?.date?.start),
     }));
 
     return NextResponse.json(awards);

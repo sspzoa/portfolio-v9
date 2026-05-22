@@ -17,11 +17,11 @@ export async function GET() {
     });
 
     const activities = response.results.map((result: any) => ({
-      name: result.properties.name.title[0].plain_text,
-      role: result.properties.role.select.name,
-      hosts: result.properties.host.multi_select.map((h: any) => h.name),
-      startDate: formatDate(result.properties.date.date.start),
-      endDate: formatDate(result.properties.date.date.end),
+      name: result.properties.name?.title?.[0]?.plain_text ?? "",
+      role: result.properties.role?.select?.name ?? "",
+      hosts: result.properties.host?.multi_select?.map((h: any) => h.name) ?? [],
+      startDate: formatDate(result.properties.date?.date?.start),
+      endDate: formatDate(result.properties.date?.date?.end),
     }));
 
     return NextResponse.json(activities);

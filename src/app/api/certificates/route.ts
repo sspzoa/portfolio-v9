@@ -17,10 +17,10 @@ export async function GET() {
     });
 
     const certifications = notionResponse.results.map((result: any) => ({
-      name: result.properties.name.title[0].plain_text,
-      kind: result.properties.kind.rich_text[0]?.plain_text,
-      institution: result.properties.institution.rich_text[0]?.plain_text,
-      date: formatDate(result.properties.date.date.start),
+      name: result.properties.name?.title?.[0]?.plain_text ?? "",
+      kind: result.properties.kind?.rich_text?.[0]?.plain_text,
+      institution: result.properties.institution?.rich_text?.[0]?.plain_text,
+      date: formatDate(result.properties.date?.date?.start),
     }));
 
     return NextResponse.json(certifications);

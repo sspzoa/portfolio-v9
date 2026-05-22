@@ -21,16 +21,16 @@ export async function GET() {
     });
 
     const projects = notionResponse.results.map((result: any) => ({
-      name: result.properties.name.title[0].plain_text,
-      shortDescription: result.properties.shortDescription.rich_text[0]?.plain_text,
-      description: result.properties.description.rich_text[0]?.plain_text,
-      startDate: formatDate(result.properties.workPeriod.date.start),
-      endDate: formatDate(result.properties.workPeriod.date.end),
-      teamSize: result.properties.teamSize.number,
-      isSideProject: result.properties.isSideProject.checkbox,
-      tags: result.properties.tags.multi_select.map((tag: any) => tag.name),
-      coverImage: result.cover?.file?.url,
-      iconImage: result.icon?.file?.url,
+      name: result.properties.name?.title?.[0]?.plain_text ?? "",
+      shortDescription: result.properties.shortDescription?.rich_text?.[0]?.plain_text,
+      description: result.properties.description?.rich_text?.[0]?.plain_text,
+      startDate: formatDate(result.properties.workPeriod?.date?.start),
+      endDate: formatDate(result.properties.workPeriod?.date?.end),
+      teamSize: result.properties.teamSize?.number ?? null,
+      isSideProject: result.properties.isSideProject?.checkbox ?? false,
+      tags: result.properties.tags?.multi_select?.map((tag: any) => tag.name) ?? [],
+      coverImage: result.cover?.file?.url ?? result.cover?.external?.url,
+      iconImage: result.icon?.file?.url ?? result.icon?.external?.url,
     }));
 
     return NextResponse.json(projects);
