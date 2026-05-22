@@ -9,10 +9,6 @@ export async function GET() {
       body: {
         sorts: [
           {
-            property: "isPinned",
-            direction: "descending",
-          },
-          {
             property: "date",
             direction: "descending",
           },

@@ -13,10 +13,6 @@ export async function GET() {
             direction: "ascending",
           },
           {
-            property: "isPinned",
-            direction: "descending",
-          },
-          {
             property: "workPeriod",
             direction: "descending",
           },
