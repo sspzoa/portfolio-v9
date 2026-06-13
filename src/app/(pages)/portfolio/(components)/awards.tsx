@@ -1,35 +1,29 @@
-"use client";
-
-import { useAtomValue } from "jotai";
-import { useAwards } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import ListItem from "@/shared/components/list-item";
 import Section from "@/shared/components/section";
-import { ListItemSkeleton } from "@/shared/components/skeleton";
-import { AwardAtom } from "../(atoms)/usePortfolioStore";
+import { fetchAwards } from "@/shared/lib/portfolio-data";
 
-export const AwardsSection = ({ index }: { index?: number }) => {
-  const { isLoading } = useAwards();
-  const awards = useAtomValue(AwardAtom);
+interface AwardsSectionProps {
+  index?: number;
+}
 
-  if (isLoading) {
+export async function AwardsSection({ index }: AwardsSectionProps) {
+  try {
+    const awards = await fetchAwards();
+
     return (
-      <Section title="Awards" index={index}>
+      <Section title="Awards" index={index} count={awards.length}>
         <ul className="flex flex-col">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <ListItemSkeleton key={i} />
+          {awards.map((award, i) => (
+            <ListItem key={i} title={award.name} meta={award.date ?? ""} badge={award.tier ?? undefined} />
           ))}
         </ul>
       </Section>
     );
+  } catch {
+    return (
+      <Section title="Awards" index={index}>
+        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+      </Section>
+    );
   }
-
-  return (
-    <Section title="Awards" index={index} count={awards.length}>
-      <ul className="flex flex-col">
-        {awards.map((award, i) => (
-          <ListItem key={i} title={award.name} meta={award.date} badge={award.tier} />
-        ))}
-      </ul>
-    </Section>
-  );
-};
+}

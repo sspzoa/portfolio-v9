@@ -1,41 +1,35 @@
-"use client";
-
-import { useAtomValue } from "jotai";
-import { useCareers } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
 import Section from "@/shared/components/section";
-import { CardSkeleton } from "@/shared/components/skeleton";
-import { CareerAtom } from "../(atoms)/usePortfolioStore";
+import { fetchCareers } from "@/shared/lib/portfolio-data";
 
-export const CareersSection = ({ index }: { index?: number }) => {
-  const { isLoading } = useCareers();
-  const careers = useAtomValue(CareerAtom);
+interface CareersSectionProps {
+  index?: number;
+}
 
-  if (isLoading) {
+export async function CareersSection({ index }: CareersSectionProps) {
+  try {
+    const careers = await fetchCareers();
+
     return (
-      <Section title="Careers" index={index}>
+      <Section title="Careers" index={index} count={careers.length}>
         <div className="flex flex-col gap-spacing-700">
-          {Array.from({ length: 1 }).map((_, i) => (
-            <CardSkeleton key={i} hasDescription />
+          {careers.map((career, i) => (
+            <Card
+              key={i}
+              icon={career.logo ?? undefined}
+              mainText={`${career.organization ?? ""} · ${career.role}`}
+              subText={`${career.startDate ?? ""}${career.endDate ? ` – ${career.endDate}` : " – Present"}`}
+              description={career.description ?? undefined}
+            />
           ))}
         </div>
       </Section>
     );
+  } catch {
+    return (
+      <Section title="Careers" index={index}>
+        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+      </Section>
+    );
   }
-
-  return (
-    <Section title="Careers" index={index} count={careers.length}>
-      <div className="flex flex-col gap-spacing-700">
-        {careers.map((career, i) => (
-          <Card
-            key={i}
-            icon={career.logo}
-            mainText={`${career.organization} · ${career.role}`}
-            subText={`${career.startDate}${career.endDate ? ` – ${career.endDate}` : " – Present"}`}
-            description={career.description}
-          />
-        ))}
-      </div>
-    </Section>
-  );
-};
+}

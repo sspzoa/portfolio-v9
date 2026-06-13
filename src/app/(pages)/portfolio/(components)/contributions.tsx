@@ -1,10 +1,23 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { GitHubCalendar } from "react-github-calendar";
 import Section from "@/shared/components/section";
 
-export const ContributionsSection = ({ index }: { index?: number }) => {
+const GitHubCalendar = dynamic(() => import("react-github-calendar").then((mod) => mod.GitHubCalendar), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-32 w-full animate-pulse items-center justify-center rounded-radius-400 bg-components-fill-standard-secondary">
+      <span className="text-content-standard-tertiary text-footnote">Loading contributions...</span>
+    </div>
+  ),
+});
+
+interface ContributionsSectionProps {
+  index?: number;
+}
+
+export const ContributionsSection = ({ index }: ContributionsSectionProps) => {
   return (
     <Section title="Contributions" index={index}>
       <Link

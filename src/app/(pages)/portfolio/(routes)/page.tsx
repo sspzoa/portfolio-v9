@@ -1,7 +1,6 @@
-"use client";
-
 import { LucideArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { AboutMeSection } from "@/app/(pages)/portfolio/(components)/aboutme";
 import { ActivitiesSection } from "@/app/(pages)/portfolio/(components)/activities";
 import { AwardsSection } from "@/app/(pages)/portfolio/(components)/awards";
 import { CareersSection } from "@/app/(pages)/portfolio/(components)/careers";
@@ -11,13 +10,14 @@ import { EducationsSection } from "@/app/(pages)/portfolio/(components)/educatio
 import { ExperiencesSection } from "@/app/(pages)/portfolio/(components)/experiences";
 import { ProfileSection } from "@/app/(pages)/portfolio/(components)/profile";
 import { ProjectsSection } from "@/app/(pages)/portfolio/(components)/projects";
+import { SkillsSection } from "@/app/(pages)/portfolio/(components)/skills";
 import Footer from "@/shared/components/footer";
-import { AboutMeSection } from "../(components)/aboutme";
-import { SkillsSection } from "../(components)/skills";
 
 export default function PortfolioPage() {
   return (
-    <main className="flex min-h-dvh flex-col items-center bg-background-standard-primary px-spacing-500 py-spacing-700 md:py-spacing-800">
+    <main
+      id="main-content"
+      className="flex min-h-dvh flex-col items-center bg-background-standard-primary px-spacing-500 py-spacing-700 md:py-spacing-800">
       <div className="flex w-full max-w-3xl flex-col">
         <nav className="flex w-full items-center justify-between">
           <Link

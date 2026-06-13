@@ -5,7 +5,9 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-dvh w-full flex-col items-center justify-center bg-background-standard-primary px-spacing-500 py-spacing-1000">
+    <main
+      id="main-content"
+      className="flex min-h-dvh w-full flex-col items-center justify-center bg-background-standard-primary px-spacing-500 py-spacing-1000">
       <div className="flex w-full max-w-3xl flex-col gap-spacing-800">
         <div className="flex flex-col gap-spacing-500">
           <h1 className="font-semibold text-content-standard-primary text-display tracking-tight md:text-[64px] md:leading-[1.05]">

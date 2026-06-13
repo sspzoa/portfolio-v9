@@ -9,7 +9,7 @@ export function CardSkeleton({ hasImage = false, hasTags = false, hasDescription
   return (
     <div className="flex w-full flex-col gap-spacing-400 md:flex-row">
       {hasImage && (
-        <div className="aspect-video w-full max-w-[382px] animate-pulse rounded-radius-400 bg-components-fill-standard-secondary md:h-54 md:w-96" />
+        <div className="aspect-video w-full max-w-[382px] animate-pulse rounded-radius-400 bg-components-fill-standard-secondary md:h-56 md:w-96" />
       )}
       <div className="flex w-full flex-col gap-spacing-300">
         <div className="flex flex-row items-center gap-spacing-300">

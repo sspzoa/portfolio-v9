@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 interface DescriptionProps {
   children: React.ReactNode;
@@ -79,6 +79,7 @@ export function Description({ children, maxHeight }: DescriptionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsExpansion, setNeedsExpansion] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const contentId = useId();
 
   useEffect(() => {
     const checkHeight = () => {
@@ -121,11 +122,12 @@ export function Description({ children, maxHeight }: DescriptionProps) {
     <div className="relative">
       <div
         ref={contentRef}
+        id={contentId}
         className="overflow-hidden"
         style={{
           maxHeight: isExpanded || !needsExpansion ? undefined : maxHeight,
         }}>
-        <div className="flex flex-col gap-spacing-300 text-content-standard-secondary text-label leading-spacing-600">
+        <div className="flex flex-col gap-spacing-300 text-content-standard-secondary text-label leading-7">
           {renderContent()}
         </div>
       </div>
@@ -140,6 +142,8 @@ export function Description({ children, maxHeight }: DescriptionProps) {
             <button
               type="button"
               onClick={() => setIsExpanded(true)}
+              aria-expanded={false}
+              aria-controls={contentId}
               className="cursor-pointer font-medium text-content-standard-tertiary text-label transition-colors hover:text-content-standard-primary">
               더보기
             </button>
@@ -149,6 +153,8 @@ export function Description({ children, maxHeight }: DescriptionProps) {
             <button
               type="button"
               onClick={() => setIsExpanded(false)}
+              aria-expanded={true}
+              aria-controls={contentId}
               className="cursor-pointer font-medium text-content-standard-tertiary text-label transition-colors hover:text-content-standard-primary">
               접기
             </button>

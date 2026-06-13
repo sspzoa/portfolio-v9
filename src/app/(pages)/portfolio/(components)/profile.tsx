@@ -1,5 +1,3 @@
-"use client";
-
 import { LucideGithub, LucideInstagram, LucideLinkedin, LucideMail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -30,6 +28,7 @@ export const ProfileSection = () => {
             alt="Seungpyo Suh"
             width={160}
             height={160}
+            priority
             className="h-full w-full scale-105 object-cover"
             draggable={false}
           />

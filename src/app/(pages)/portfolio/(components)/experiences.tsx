@@ -1,41 +1,35 @@
-"use client";
-
-import { useAtomValue } from "jotai";
-import { useExperiences } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import Card from "@/shared/components/card";
 import Section from "@/shared/components/section";
-import { CardSkeleton } from "@/shared/components/skeleton";
-import { ExperienceAtom } from "../(atoms)/usePortfolioStore";
+import { fetchExperiences } from "@/shared/lib/portfolio-data";
 
-export const ExperiencesSection = ({ index }: { index?: number }) => {
-  const { isLoading } = useExperiences();
-  const experiences = useAtomValue(ExperienceAtom);
+interface ExperiencesSectionProps {
+  index?: number;
+}
 
-  if (isLoading) {
+export async function ExperiencesSection({ index }: ExperiencesSectionProps) {
+  try {
+    const experiences = await fetchExperiences();
+
     return (
-      <Section title="Experiences" index={index}>
+      <Section title="Experiences" index={index} count={experiences.length}>
         <div className="flex flex-col gap-spacing-700">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <CardSkeleton key={i} hasDescription />
+          {experiences.map((experience, i) => (
+            <Card
+              key={i}
+              icon={experience.logo ?? undefined}
+              mainText={`${experience.organization ?? ""} · ${experience.role}`}
+              subText={`${experience.startDate ?? ""}${experience.endDate ? ` – ${experience.endDate}` : " – Present"}`}
+              description={experience.description ?? undefined}
+            />
           ))}
         </div>
       </Section>
     );
+  } catch {
+    return (
+      <Section title="Experiences" index={index}>
+        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+      </Section>
+    );
   }
-
-  return (
-    <Section title="Experiences" index={index} count={experiences.length}>
-      <div className="flex flex-col gap-spacing-700">
-        {experiences.map((experience, i) => (
-          <Card
-            key={i}
-            icon={experience.logo}
-            mainText={`${experience.organization} · ${experience.role}`}
-            subText={`${experience.startDate}${experience.endDate ? ` – ${experience.endDate}` : " – Present"}`}
-            description={experience.description}
-          />
-        ))}
-      </div>
-    </Section>
-  );
-};
+}

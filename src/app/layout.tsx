@@ -8,8 +8,28 @@ import { Providers } from "@/shared/lib/provider";
 export const metadata: Metadata = {
   title: "Seungpyo Suh",
   description: "Mobile & Frontend Engineer",
+  metadataBase: new URL("https://sspzoa.io"),
   openGraph: {
-    images: [{ url: "https://sspzoa.io/og-image.png" }],
+    title: "Seungpyo Suh",
+    description: "Mobile & Frontend Engineer",
+    url: "https://sspzoa.io",
+    siteName: "Seungpyo Suh",
+    images: [{ url: "https://sspzoa.io/og-image.png", width: 1200, height: 630 }],
+    locale: "ko_KR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Seungpyo Suh",
+    description: "Mobile & Frontend Engineer",
+    images: ["https://sspzoa.io/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://sspzoa.io",
   },
 };
 
@@ -28,6 +48,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-spacing-400 focus:left-spacing-400 focus:z-50 focus:rounded-radius-400 focus:bg-content-standard-primary focus:px-spacing-400 focus:py-spacing-300 focus:text-background-standard-primary focus:text-label">
+          본문으로 바로가기
+        </a>
         <Analytics />
         <SpeedInsights />
         <Providers>{children}</Providers>

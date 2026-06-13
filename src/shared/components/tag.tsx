@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 interface TagProps {
-  icon?: string;
+  icon?: string | null;
   name: string;
   isMain?: boolean;
 }
@@ -15,7 +15,7 @@ export default function Tag({ icon, name, isMain = false }: TagProps) {
           : "bg-components-translucent-tertiary text-content-standard-secondary"
       }`}>
       {icon && (
-        <Image className="h-3.5 w-3.5 object-contain" width={14} height={14} src={icon} alt={name} draggable={false} />
+        <Image className="h-3.5 w-3.5 object-contain" width={14} height={14} src={icon} alt="" draggable={false} />
       )}
       <p className="font-medium text-footnote">{name}</p>
     </div>

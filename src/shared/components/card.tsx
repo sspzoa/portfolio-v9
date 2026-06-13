@@ -21,7 +21,8 @@ export default function Card({ image, icon, mainText, subText, tags, description
             src={image}
             width={382}
             height={214}
-            alt={mainText}
+            sizes="(max-width: 768px) 100vw, 384px"
+            alt=""
             draggable={false}
           />
         </div>

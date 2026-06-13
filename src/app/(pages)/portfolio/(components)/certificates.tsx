@@ -1,40 +1,34 @@
-"use client";
-
-import { useAtomValue } from "jotai";
-import { useCertificates } from "@/app/(pages)/portfolio/(hooks)/usePortfolio";
 import ListItem from "@/shared/components/list-item";
 import Section from "@/shared/components/section";
-import { ListItemSkeleton } from "@/shared/components/skeleton";
-import { CertificationAtom } from "../(atoms)/usePortfolioStore";
+import { fetchCertificates } from "@/shared/lib/portfolio-data";
 
-export const CertificatesSection = ({ index }: { index?: number }) => {
-  const { isLoading } = useCertificates();
-  const certificates = useAtomValue(CertificationAtom);
+interface CertificatesSectionProps {
+  index?: number;
+}
 
-  if (isLoading) {
+export async function CertificatesSection({ index }: CertificatesSectionProps) {
+  try {
+    const certificates = await fetchCertificates();
+
     return (
-      <Section title="Certificates" index={index}>
+      <Section title="Certificates" index={index} count={certificates.length}>
         <ul className="flex flex-col">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <ListItemSkeleton key={i} />
+          {certificates.map((certificate, i) => (
+            <ListItem
+              key={i}
+              title={certificate.name}
+              meta={`${certificate.institution ?? ""} · ${certificate.kind ?? ""}`}
+              badge={certificate.date ?? undefined}
+            />
           ))}
         </ul>
       </Section>
     );
+  } catch {
+    return (
+      <Section title="Certificates" index={index}>
+        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+      </Section>
+    );
   }
-
-  return (
-    <Section title="Certificates" index={index} count={certificates.length}>
-      <ul className="flex flex-col">
-        {certificates.map((certificate, i) => (
-          <ListItem
-            key={i}
-            title={certificate.name}
-            meta={`${certificate.institution} · ${certificate.kind}`}
-            badge={certificate.date}
-          />
-        ))}
-      </ul>
-    </Section>
-  );
-};
+}
