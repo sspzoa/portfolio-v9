@@ -1,0 +1,38 @@
+import Image from "next/image";
+import { Socials } from "./socials";
+
+export function Hero() {
+  return (
+    <header id="top" className="reveal flex scroll-mt-spacing-800 flex-col gap-spacing-700 pb-spacing-200">
+      <div className="flex flex-col-reverse gap-spacing-600 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-spacing-500">
+          <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-[0.22em]">
+            Portfolio
+          </p>
+          <h1 className="font-semibold text-[44px] text-content-standard-primary leading-[1.02] tracking-[-0.03em] md:text-[64px] lg:text-[72px]">
+            Seungpyo
+            <br />
+            Suh<span className="text-core-accent">.</span>
+          </h1>
+          <p className="max-w-md text-balance text-body text-content-standard-secondary md:text-heading">
+            Mobile & Frontend Engineer crafting interfaces that feel like home.
+          </p>
+        </div>
+
+        <div className="h-28 w-28 shrink-0 overflow-hidden rounded-radius-700 ring-1 ring-line-outline ring-inset md:h-36 md:w-36">
+          <Image
+            src="/photo.jpg"
+            alt="Seungpyo Suh"
+            width={160}
+            height={160}
+            priority
+            className="h-full w-full scale-105 object-cover"
+            draggable={false}
+          />
+        </div>
+      </div>
+
+      <Socials className="lg:hidden" />
+    </header>
+  );
+}

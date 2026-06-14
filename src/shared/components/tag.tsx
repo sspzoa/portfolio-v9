@@ -6,18 +6,24 @@ interface TagProps {
   isMain?: boolean;
 }
 
+// Inline skill token — icon + name, no pill. Main skills read at full contrast.
 export default function Tag({ icon, name, isMain = false }: TagProps) {
   return (
-    <div
-      className={`flex flex-row items-center gap-spacing-150 rounded-radius-full px-spacing-300 py-spacing-100 ${
-        isMain
-          ? "bg-core-accent-translucent text-core-accent ring-1 ring-core-accent/30 ring-inset"
-          : "bg-components-translucent-tertiary text-content-standard-secondary"
+    <span
+      className={`inline-flex items-center gap-spacing-150 ${
+        isMain ? "font-medium text-content-standard-primary" : "text-content-standard-tertiary"
       }`}>
       {icon && (
-        <Image className="h-3.5 w-3.5 object-contain" width={14} height={14} src={icon} alt="" draggable={false} />
+        <Image
+          className="h-3.5 w-3.5 shrink-0 object-contain"
+          width={14}
+          height={14}
+          src={icon}
+          alt=""
+          draggable={false}
+        />
       )}
-      <p className="font-medium text-footnote">{name}</p>
-    </div>
+      <span className="text-label">{name}</span>
+    </span>
   );
 }

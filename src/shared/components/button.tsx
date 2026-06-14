@@ -1,22 +1,17 @@
 interface ButtonProps {
   text: string;
   onClick?: () => void;
-  variant?: "primary" | "ghost";
   ariaExpanded?: boolean;
 }
 
-export default function Button({ text, onClick, variant = "ghost", ariaExpanded }: ButtonProps) {
-  const styles =
-    variant === "primary"
-      ? "bg-content-standard-primary text-background-standard-primary hover:opacity-90 active:opacity-80"
-      : "border border-line-outline bg-transparent text-content-standard-secondary hover:bg-components-interactive-hover focus:bg-components-interactive-focused active:bg-components-interactive-pressed";
-
+// Editorial text action — a hairline-topped, monospace label that brightens on hover.
+export default function Button({ text, onClick, ariaExpanded }: ButtonProps) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-expanded={ariaExpanded}
-      className={`flex w-full items-center justify-center rounded-radius-400 px-spacing-500 py-spacing-400 font-semibold text-label transition-colors duration-150 ${styles}`}>
+      className="flex w-full items-center justify-center gap-spacing-200 border-line-divider border-t pt-spacing-600 font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest transition-colors duration-150 hover:text-content-standard-primary">
       {text}
     </button>
   );

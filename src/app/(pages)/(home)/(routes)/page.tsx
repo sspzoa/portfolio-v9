@@ -1,48 +1,73 @@
-"use client";
-
-import { LucideArrowRight } from "lucide-react";
 import Link from "next/link";
+import { AboutMeSection } from "@/app/(pages)/(home)/(components)/aboutme";
+import { ActivitiesSection } from "@/app/(pages)/(home)/(components)/activities";
+import { AwardsSection } from "@/app/(pages)/(home)/(components)/awards";
+import { CareersSection } from "@/app/(pages)/(home)/(components)/careers";
+import { CertificatesSection } from "@/app/(pages)/(home)/(components)/certificates";
+import { EducationsSection } from "@/app/(pages)/(home)/(components)/educations";
+import { ExperiencesSection } from "@/app/(pages)/(home)/(components)/experiences";
+import { Hero } from "@/app/(pages)/(home)/(components)/hero";
+import { ProjectsSection } from "@/app/(pages)/(home)/(components)/projects";
+import { SideNav } from "@/app/(pages)/(home)/(components)/side-nav";
+import { SkillsSection } from "@/app/(pages)/(home)/(components)/skills";
+import { Socials } from "@/app/(pages)/(home)/(components)/socials";
+import Footer from "@/shared/components/footer";
+
+const SECTIONS = [
+  { id: "about", label: "About", Component: AboutMeSection },
+  { id: "careers", label: "Careers", Component: CareersSection },
+  { id: "experiences", label: "Experiences", Component: ExperiencesSection },
+  { id: "educations", label: "Educations", Component: EducationsSection },
+  { id: "skills", label: "Skills", Component: SkillsSection },
+  { id: "awards", label: "Awards", Component: AwardsSection },
+  { id: "certificates", label: "Certificates", Component: CertificatesSection },
+  { id: "projects", label: "Projects", Component: ProjectsSection },
+  { id: "activities", label: "Activities", Component: ActivitiesSection },
+] as const;
+
+const navItems = SECTIONS.map(({ id, label }) => ({ id, label }));
 
 export default function Home() {
   return (
-    <main
-      id="main-content"
-      className="flex min-h-dvh w-full flex-col items-center justify-center bg-background-standard-primary px-spacing-500 py-spacing-1000">
-      <div className="flex w-full max-w-3xl flex-col gap-spacing-800">
-        <div className="flex flex-col gap-spacing-500">
-          <h1 className="font-semibold text-content-standard-primary text-display tracking-tight md:text-[64px] md:leading-[1.05]">
-            Seungpyo Suh<span className="text-core-accent">.</span>
-          </h1>
-          <p className="max-w-xl text-body text-content-standard-secondary md:text-heading">
-            Mobile & Frontend Engineer crafting interfaces that feel like home.
-          </p>
-        </div>
-
-        <dl className="grid grid-cols-1 gap-spacing-400 border-line-divider border-y py-spacing-500 md:grid-cols-2">
-          <div className="flex flex-col gap-spacing-50">
-            <dt className="text-content-standard-tertiary text-footnote">Education</dt>
-            <dd className="font-medium text-content-standard-primary text-label">Dongguk University, Business '26</dd>
+    <div className="mx-auto min-h-dvh w-full max-w-5xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+      <div className="lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-x-spacing-850">
+        <aside className="hidden lg:flex lg:sticky lg:top-0 lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
+          <div className="flex flex-col gap-spacing-150">
+            <Link href="#top" className="font-semibold text-content-standard-primary text-label tracking-tight">
+              Seungpyo Suh<span className="text-core-accent">.</span>
+            </Link>
+            <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-[0.22em]">
+              Frontend Engineer
+            </p>
           </div>
-          <div className="flex flex-col gap-spacing-50">
-            <dt className="text-content-standard-tertiary text-footnote">Background</dt>
-            <dd className="font-medium text-content-standard-primary text-label">Korea Digital Media HS, HD 22nd</dd>
-          </div>
-        </dl>
 
-        <div className="flex flex-row items-center gap-spacing-400">
-          <Link
-            href="/portfolio"
-            className="group inline-flex items-center gap-spacing-200 rounded-radius-full bg-content-standard-primary px-spacing-500 py-spacing-300 font-semibold text-background-standard-primary text-label transition-opacity hover:opacity-90">
-            Explore portfolio
-            <LucideArrowRight size={16} className="transition-transform duration-200 group-hover:translate-x-0.5" />
-          </Link>
-          <Link
-            href="mailto:me@sspzoa.io"
-            className="font-medium text-content-standard-secondary text-label underline-offset-4 hover:text-content-standard-primary hover:underline">
-            me@sspzoa.io
-          </Link>
-        </div>
+          <SideNav items={navItems} />
+
+          <div className="flex flex-col gap-spacing-400">
+            <Socials />
+            <Link
+              href="mailto:me@sspzoa.io"
+              className="font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary">
+              me@sspzoa.io
+            </Link>
+            <p className="font-mono text-caption text-content-standard-quaternary">© {new Date().getFullYear()}</p>
+          </div>
+        </aside>
+
+        <main id="main-content" className="flex min-w-0 flex-col py-spacing-700 md:py-spacing-800">
+          <Hero />
+
+          <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-900 md:gap-spacing-900">
+            {SECTIONS.map(({ id, Component }, i) => (
+              <Component key={id} id={id} index={i + 1} />
+            ))}
+          </div>
+
+          <div className="mt-spacing-900">
+            <Footer />
+          </div>
+        </main>
       </div>
-    </main>
+    </div>
   );
 }

@@ -1,266 +1,258 @@
-# Agent Guide for portfolio-v9
+# AGENTS.md
 
-This document is written for AI coding agents working on this project. It summarizes the architecture, conventions, and workflows you need to know before making changes.
-
----
+> AI coding agent guide for `portfolio-v9`. This file describes the project as it actually exists in the repository, so refer to it before making changes.
 
 ## Project overview
 
-`portfolio-v9` is a personal portfolio website for Seungpyo Suh, a mobile & frontend engineer. It is a single-page-style site with two routes:
+This is a personal portfolio website for Seungpyo Suh, a mobile & frontend engineer. It is built with [Next.js](https://nextjs.org/) App Router, [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS v4](https://tailwindcss.com/). The site is a single-page résumé/portfolio that renders sections such as About, Projects, Careers, Experiences, Educations, Skills, Awards, Certificates, and Activities.
 
-- `/` — A minimal landing page with a short intro and a link to the portfolio.
-- `/portfolio` — The full portfolio page showing sections such as About Me, Awards, Certificates, Skills, Careers, Experiences, Educations, Projects, GitHub Contributions, and Activities.
+Key facts:
 
-All dynamic content is fetched from Notion data sources at request time on the server. The project is designed to be deployed on Vercel.
-
----
+- **Package manager/runtime:** Bun is used in local tooling (see `.claude/launch.json`), but standard npm scripts are also available.
+- **Deployment target:** Vercel (evidenced by `@vercel/analytics` and `@vercel/speed-insights`).
+- **Content source:** All résumé content is fetched at request time from [Notion](https://www.notion.so/) via the Notion API. There are no static JSON data files for content.
+- **Language/locale:** The page language is `ko`, but UI labels and most code comments are in English. Some fallback copy is in Korean.
+- **Site URL:** `https://sspzoa.io`
 
 ## Technology stack
 
 | Layer | Technology |
-| --- | --- |
-| Framework | Next.js 16.0.8 (App Router, Turbopack) |
-| Language | TypeScript 5 |
+|-------|------------|
+| Framework | Next.js 16.0.8 (App Router) |
 | UI library | React 19.2.1 |
-| Styling | Tailwind CSS v4 with custom design tokens |
-| Validation | Zod (runtime schema validation for Notion responses) |
-| Icons | `lucide-react` |
-| CMS / data source | Notion API v1 (data sources) |
-| GitHub calendar | `react-github-calendar` |
-| Lint / format | Biome 2.2.0 |
-| Package manager | Bun (`bun.lock`) |
-| Deployment target | Vercel (with `@vercel/analytics` and `@vercel/speed-insights`) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS v4, custom CSS variables |
+| Font | Wanted Sans Variable (loaded from CDN) |
+| Lint/Format | Biome 2.2.0 |
+| Validation | Zod 4 |
+| Analytics | Vercel Analytics + Speed Insights |
+| Icons | lucide-react |
 
-Removed from earlier versions:
+## Directory structure
 
-- Jotai
-- TanStack Query (React Query)
-- `simple-icons`
-
----
-
-## Project structure
-
-```
-.
-├── public/                    # Static assets (photo, logos, og-image)
-├── src/
-│   ├── app/
-│   │   ├── (pages)/           # Route groups
-│   │   │   ├── (home)/
-│   │   │   │   └── (routes)/
-│   │   │   │       └── page.tsx
-│   │   │   └── portfolio/
-│   │   │       ├── (components)/              # Section components
-│   │   │       └── (routes)/
-│   │   │           └── page.tsx
-│   │   ├── favicon.ico
-│   │   ├── globals.css        # Design tokens, dark mode, base styles
-│   │   ├── layout.tsx         # Root layout (metadata, providers)
-│   │   ├── robots.ts          # robots.txt route handler
-│   │   ├── sitemap.ts         # sitemap.xml route handler
-│   │   └── ...
-│   └── shared/
-│       ├── components/        # Reusable UI components
-│       ├── lib/               # Shared libraries
-│       │   ├── env.ts         # Runtime environment variable validation
-│       │   ├── notion.ts      # Notion API client
-│       │   ├── notion-types.ts # Shared Notion property type helpers
-│       │   ├── portfolio-data.ts # Server-side data fetching from Notion
-│       │   └── provider.tsx   # App providers (currently a thin wrapper)
-│       ├── schemas.ts         # Zod schemas and inferred TypeScript types
-│       ├── types.ts           # Re-export of types from schemas.ts
-│       └── utils/             # Utility functions (e.g. formatDate)
-├── biome.json                 # Biome lint/format configuration
-├── next.config.ts             # Next.js configuration (includes security headers)
-├── package.json               # Scripts and dependencies
-├── postcss.config.mjs         # Tailwind PostCSS plugin setup
-├── tailwind.config.ts         # Custom theme (colors, font sizes, spacing, radius)
-└── tsconfig.json              # TypeScript configuration
+```text
+src/
+  app/                 # Next.js App Router pages and global assets
+    (pages)/(home)/    # Route groups (no URL segment)
+      (components)/    # Section-specific React components
+      (routes)/
+        page.tsx       # Home page that composes all sections
+    globals.css        # Design tokens, dark mode, scroll reveal animation
+    layout.tsx         # Root layout with metadata, skip link, providers
+    robots.ts          # /robots.txt route
+    sitemap.ts         # /sitemap.xml route
+  shared/
+    components/        # Reusable UI primitives (Section, TimelineEntry, Tag, etc.)
+    lib/               # Data fetching, Notion client, env validation, provider shell
+    schemas.ts         # Zod schemas for Notion data
+    types.ts           # Re-export of schema-inferred types
+    utils/             # Date/period formatting helpers
+public/                # Static assets (photo, logos, og-image)
 ```
 
-### Routing conventions
+### Routing
 
-- The App Router is used. Pages are grouped under `src/app/(pages)/.../(routes)/page.tsx`.
-- Route groups such as `(pages)`, `(home)`, and `(routes)` do **not** create URL segments; they are used only for code organization.
-- There are **no API routes** for portfolio data. Data is fetched directly from Notion inside server components via `src/shared/lib/portfolio-data.ts`.
+- The only public route is `/`, served by `src/app/(pages)/(home)/(routes)/page.tsx`.
+- `/portfolio` is permanently redirected to `/` via `next.config.ts`.
+- `robots.ts` and `sitemap.ts` are Next.js metadata route handlers.
 
-### Shared components
+## Build and run commands
 
-Components in `src/shared/components/` are reusable building blocks:
-
-- `Section` — A titled section wrapper with an optional index number and count.
-- `Card` — A media + text card used for projects and experiences.
-- `Tag` — A small pill tag (supports an optional icon and a highlighted "main" style).
-- `ListItem` — A compact list row with title, meta, and badge.
-- `Button` — A simple button with primary / ghost variants.
-- `Description` — Collapsible text renderer supporting markdown-like bold/links and bullet lists.
-- `Skeleton` — Loading skeletons for cards, tags, descriptions, and list items.
-- `Footer` — Site footer.
-
----
-
-## Data flow
-
-Portfolio content is stored in Notion. The application fetches it like this:
-
-1. **Notion API client** — `src/shared/lib/notion.ts` provides `notionRequest<T>`, a typed wrapper around `fetch` that sends the required Notion headers. It reads `process.env.NOTION_TOKEN` via `src/shared/lib/env.ts`.
-2. **Environment validation** — `src/shared/lib/env.ts` validates all required environment variables at startup using Zod. The app fails fast if any are missing.
-3. **Schema validation** — `src/shared/schemas.ts` defines Zod schemas for every content type. Inferred TypeScript types are exported from the same file and re-exported from `src/shared/types.ts`.
-4. **Server-side data fetching** — `src/shared/lib/portfolio-data.ts` defines `getPortfolioData()` and individual `fetchXxx()` functions. Each function calls a Notion data source, maps properties to the shared types, and validates the result with Zod.
-5. **Server components** — `src/app/(pages)/portfolio/(routes)/page.tsx` and each section component are server components. They call the appropriate `fetchXxx()` function directly and render the result.
-6. **Error handling** — Each section wraps its fetch in `try/catch` and renders a fallback message if data cannot be loaded.
-
-### Required environment variables
-
-The following environment variables must be present at build/run time (usually in `.env.local`):
-
-- `NOTION_TOKEN` — Notion integration token.
-- `ABOUTME_DATA_SOURCE_ID`
-- `ACTIVITIES_DATA_SOURCE_ID`
-- `AWARDS_DATA_SOURCE_ID`
-- `CAREERS_DATA_SOURCE_ID`
-- `CERTIFICATES_DATA_SOURCE_ID`
-- `EDUCATIONS_DATA_SOURCE_ID`
-- `EXPERIENCES_DATA_SOURCE_ID`
-- `PROJECTS_DATA_SOURCE_ID`
-- `SKILLS_DATA_SOURCE_ID`
-
-These values are read by server-side code only (`portfolio-data.ts`, `notion.ts`, `env.ts`). Do not expose them to the browser.
-
----
-
-## Build and test commands
-
-The project uses Bun. All relevant scripts are in `package.json`:
+Commands are defined in `package.json`:
 
 ```bash
-# Start the development server (Turbopack)
+# Development server (http://localhost:3000)
 bun run dev
+# or
+npm run dev
 
-# Create an optimized production build
+# Production build
 bun run build
+# or
+npm run build
 
-# Start the production server
+# Start production server
 bun run start
+# or
+npm run start
 
-# Run Biome linter
-bun run lint
+# Lint/check everything
+bun run lint        # biome check
 
-# Run Biome formatter
-bun run format
+# Auto-format and fix issues
+bun run format      # biome format --write
 ```
 
-### Notes on commands
+There is no separate test runner configured. `bun test` is not wired up and there are no test files in the repository.
 
-- `next build` generates static pages for `/`, `/robots.txt`, and `/sitemap.xml`, and a dynamic server-rendered page for `/portfolio`.
-- There is no test runner configured. If you add tests, introduce a framework such as Vitest or Jest and add a corresponding `test` script.
-- The build may emit a warning about an outdated `baseline-browser-mapping` package. This is non-fatal.
+## Environment variables
 
----
+The application validates environment variables at startup in `src/shared/lib/env.ts` using Zod. You must provide the following variables, typically via `.env.local` (which is ignored by Git):
+
+| Variable | Purpose |
+|----------|---------|
+| `NOTION_TOKEN` | Notion integration secret token |
+| `ABOUTME_DATA_SOURCE_ID` | Notion data source ID for About content |
+| `ACTIVITIES_DATA_SOURCE_ID` | Data source ID for Activities |
+| `AWARDS_DATA_SOURCE_ID` | Data source ID for Awards |
+| `CAREERS_DATA_SOURCE_ID` | Data source ID for Careers |
+| `CERTIFICATES_DATA_SOURCE_ID` | Data source ID for Certificates |
+| `EDUCATIONS_DATA_SOURCE_ID` | Data source ID for Educations |
+| `EXPERIENCES_DATA_SOURCE_ID` | Data source ID for Experiences |
+| `PROJECTS_DATA_SOURCE_ID` | Data source ID for Projects |
+| `SKILLS_DATA_SOURCE_ID` | Data source ID for Skills |
+
+If any required variable is missing, the app throws at import time with a clear list of validation failures.
+
+### Important notes about environment variables
+
+- Never commit `.env.local` or any file containing `NOTION_TOKEN`.
+- The token needs read access to the Notion data sources referenced by the IDs above.
+- On Vercel, add these values as project environment variables.
+
+## Data architecture
+
+### Notion integration
+
+`src/shared/lib/notion.ts` is a thin fetch wrapper around the Notion REST API:
+
+- Base URL: `https://api.notion.com/v1`
+- API version header: `2025-09-03`
+- Sends `Authorization: Bearer <NOTION_TOKEN>` and `Content-Type: application/json`
+- Uses `cache: "no-store"` so data is fetched at request time
+- Throws `NotionApiError` on non-OK responses
+
+`src/shared/lib/portfolio-data.ts` exposes one async fetcher per section (e.g., `fetchProjects`, `fetchCareers`) and an aggregator `getPortfolioData()`. Each fetcher queries the corresponding data source via `/data_sources/<ID>/query`, maps Notion properties to plain objects, and validates them with Zod schemas from `src/shared/schemas.ts`.
+
+### Server vs. client components
+
+- Almost all section components are **async Server Components** that fetch their own data. They are imported and rendered in `page.tsx`.
+- Interactive UI pieces are marked `"use client"`:
+  - `Description` — expand/collapse long text and parses inline markdown-like syntax (`**bold**` and `[text](url)` links).
+  - `SideNav` — observes section visibility with `IntersectionObserver` and highlights the active section.
+  - `SideProjectToggle` — toggles visibility of side projects.
+- `src/shared/lib/provider.tsx` is a client-shell provider component that currently just renders children, but exists as an extension point.
+
+### Content rendering conventions
+
+- `Description` parses a small subset of Markdown-like syntax: bold wraps (`**text**`) and inline links (`[text](url)`), plus bullet lists starting with `-` or `•`.
+- Do not store arbitrary HTML in Notion and render it with `dangerouslySetInnerHTML`. The codebase intentionally parses text into React nodes.
+- Images are rendered with Next.js `<Image>` and must be served from allowed hostnames. `next.config.ts` currently allows `https://prod-files-secure.s3.us-west-2.amazonaws.com` for Notion-hosted files.
+
+## Styling and design system
+
+### Tailwind CSS setup
+
+- Tailwind CSS v4 is used with the `@tailwindcss/postcss` plugin configured in `postcss.config.mjs`.
+- `src/app/globals.css` imports Tailwind and references `tailwind.config.ts` via `@config`.
+- `tailwind.config.ts` extends the theme with a custom color system, font sizes, spacing scale, and border-radius scale.
+
+### Design tokens
+
+All visual values are defined as CSS custom properties in `:root` (light mode) and overridden in `@media (prefers-color-scheme: dark)`:
+
+- Solid colors (`--solid-*`)
+- Translucent colors (`--solid-translucent-*`)
+- Background colors (`--background-standard-*`, `--background-inverted-*`)
+- Content/text colors (`--content-standard-*`, `--content-inverted-*`)
+- Line/divider colors (`--line-*`)
+- Component fills and interactive states (`--components-*`)
+- Accent/status/syntax colors (`--core-*`, `--syntax-*`)
+
+Tailwind maps these custom properties to classes such as `text-content-standard-primary`, `bg-components-fill-standard-secondary`, `border-line-divider`, etc.
+
+### Typography
+
+- Primary font: `Wanted Sans Variable` / `Wanted Sans`, loaded from `cdn.jsdelivr.net`.
+- Monospace font stack is used for labels, dates, and captions via `font-mono`.
+- Tailwind text sizes: `display`, `title`, `heading`, `body`, `label`, `footnote`, `caption`.
+
+### Motion
+
+- A CSS scroll-driven reveal animation (`reveal`) fades elements in as they enter the viewport.
+- It is wrapped in `@supports (animation-timeline: view())` and respects `prefers-reduced-motion`.
+- Only short leaf-level blocks (cards, rows, headers) should use `reveal`, never tall section wrappers.
 
 ## Code style guidelines
 
-### Formatter / linter
+The project uses **Biome** for linting and formatting. Configuration is in `biome.json`.
 
-Biome handles both linting and formatting. Configuration is in `biome.json`. Key rules:
+### Formatter rules
 
-- Indentation: 2 spaces.
-- Line width: 120 characters.
-- Line ending: LF.
-- Quotes: double quotes, JSX double quotes.
-- Semicolons: always.
-- Trailing commas: all in JavaScript/TypeScript, none in JSON.
-- Bracket same line: true.
-- Organize imports on save/format.
-- CSS files are excluded from formatting (`!**/*.css`).
+- Indent: 2 spaces
+- Line width: 120 characters
+- Line ending: LF
+- Quotes: double
+- Semicolons: always
+- Trailing commas: all
+- JSX quotes: double
+- Arrow parentheses: always
+- Bracket same line: `true`
+- Bracket spacing: `true`
+- CSS files are excluded from formatting (`!**/*.css`)
 
-Important Biome rule overrides:
+### Linter/assist rules
 
-- Accessibility rules for SVG titles, autofocus, key events, static element interactions, button types, semantic elements, and labels are turned off.
+- Auto-organize imports is enabled (`organizeImports: on`).
 - `noUnusedImports` is an error.
 - `useArrowFunction` is an error.
-- `noNonNullAssertion`, `noExplicitAny`, `noImplicitAnyLet`, and `noArrayIndexKey` are off.
 - `noDangerouslySetInnerHtml` is a warning.
+- `useSortedClasses` is a warning (Tailwind class ordering).
+- Several a11y rules are intentionally turned off because the project uses custom interactive patterns; still, prefer semantic HTML and accessible labels when adding new interactive elements.
+- `noNonNullAssertion` is off, so `!` is allowed, but prefer safer patterns.
 
-### Naming and file conventions
+### Naming and organization
 
-- Prefer kebab-case for file names (e.g., `portfolio-data.ts`, `list-item.tsx`).
-- React components are exported as named or default exports depending on usage.
-- Client components must include `"use client";` at the top.
-- Type imports should use `import type`.
+- Default export for most components (e.g., `export default function Footer()`).
+- Named exports for section async components (e.g., `export async function ProjectsSection()`).
+- File names are lowercase; component files use kebab-case.
+- Path alias `@/*` maps to `src/*`.
+- Date helpers are default exports from `src/shared/utils/`.
 
-### Styling conventions
+### Component patterns
 
-- Tailwind CSS utility classes are used exclusively.
-- Custom design tokens are defined in `tailwind.config.ts` and `globals.css`.
-- Colors are semantic: `background-*`, `content-*`, `components-*`, `core-*`, `syntax-*`, `solid-*`, `line-*`.
-- Dark mode is implemented with `prefers-color-scheme: dark` in `globals.css`; there is no theme toggle.
-- Spacing and radius use numbered tokens: `spacing-100` (4px), `radius-400` (12px), etc.
-- Typography uses custom text sizes: `text-display`, `text-title`, `text-heading`, `text-body`, `text-label`, `text-footnote`, `text-caption`.
-
----
-
-## Development conventions
-
-### State management pattern
-
-- There is **no global client state library**.
-- Data is fetched on the server inside section components.
-- Any client-only UI state (e.g., the side-project toggle) uses local `useState`.
-
-### Data fetching pattern
-
-Server components fetch data directly:
-
-```ts
-import { fetchSkills } from "@/shared/lib/portfolio-data";
-
-export async function SkillsSection({ index }: { index?: number }) {
-  try {
-    const skills = await fetchSkills();
-    return <Section title="Skills">{/* ... */}</Section>;
-  } catch {
-    return <Section title="Skills"><p>Failed to load skills.</p></Section>;
-  }
-}
-```
-
-### Section component pattern
-
-- Accept an optional `index?: number` prop for the numbered section title.
-- Fetch data in the component body.
-- Render a fallback UI on error.
-- Use the `Section` component for consistent spacing and title styling.
-
----
+- Section components accept `id?: string` and `index?: number` and render inside `Section`.
+- Server Components should fetch data with `try/catch` and render a Korean fallback message on error: `일시적으로 데이터를 불러올 수 없습니다.`.
+- If a section has no items, return `null` instead of an empty section.
+- Use `formatPeriod(start, end, { present: true })` for careers/experiences/educations to show "Present" when there is no end date.
 
 ## Testing instructions
 
-There is currently no test suite in this project. To verify changes:
+There is **no automated test suite** in this project (no Jest, Vitest, Playwright, or Cypress configured).
 
-1. Run `bun run lint` to ensure code passes Biome checks.
-2. Run `bun run build` to verify TypeScript compilation and page generation succeed.
-3. Run `bun run start` and manually test `/` and `/portfolio` in a browser.
-4. If you are working on Notion data fetching, verify that `NOTION_TOKEN` and the relevant `*_DATA_SOURCE_ID` values are set and the Notion data source is accessible.
+Recommended manual checks when making changes:
 
----
+1. Run `bun run build` and confirm the production build succeeds.
+2. Run `bun run lint` and resolve any errors or warnings.
+3. Run `bun run format` before committing.
+4. Verify all Notion data source IDs are present in `.env.local` before testing data-heavy pages.
+5. Check both light and dark mode appearance in the browser.
+6. Check responsive breakpoints (mobile, tablet, desktop).
+7. Verify the skip link, side-nav highlight, and expand/collapse interactions are keyboard accessible.
 
 ## Security considerations
 
-- Notion credentials (`NOTION_TOKEN` and `*_DATA_SOURCE_ID`) are server secrets. They are only read in `src/shared/lib/env.ts`, `src/shared/lib/notion.ts`, and `src/shared/lib/portfolio-data.ts`.
-- `.env*` files are ignored by `.gitignore` and must never be committed.
-- Security headers are configured in `next.config.ts`:
-  - `Content-Security-Policy`
-  - `Strict-Transport-Security`
-  - `X-Frame-Options: DENY`
-  - `X-Content-Type-Options: nosniff`
-  - `Referrer-Policy: strict-origin-when-cross-origin`
-  - `Permissions-Policy`
-- `dangerouslySetInnerHTML` is allowed only as a warning; avoid introducing raw HTML rendering of untrusted content.
-
----
+- **Secrets:** `NOTION_TOKEN` and Notion data source IDs are sensitive. They are read from environment variables, validated by Zod, and never sent to the client.
+- **CSP:** `next.config.ts` sets a strict `Content-Security-Policy` header. It allows scripts/styles from `'self'`, inline scripts/styles for Next.js, `va.vercel-scripts.com` for Vercel scripts, and `cdn.jsdelivr.net` for the font. Images are restricted to `'self'`, `data:`, and the Notion S3 hostname. If you add a new external script, font, image domain, or iframe source, update the CSP accordingly.
+- **Security headers:** The app also sends `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, and a restrictive `Permissions-Policy`.
+- **XSS prevention:** The app avoids `dangerouslySetInnerHTML`. Rich text from Notion is treated as plain text and optionally parsed into safe React nodes by `Description`.
+- **Environment isolation:** `.env*` files and `.next/` output are ignored by Git.
 
 ## Deployment
 
-The project is intended for deployment on Vercel. Make sure to configure the environment variables listed above in the Vercel project dashboard. Static output is not enabled; the build produces both static pages and a server-rendered `/portfolio` page.
+The site is intended to be deployed on Vercel:
+
+1. Push to the connected Git repository.
+2. Set all required environment variables in the Vercel dashboard.
+3. Vercel runs `next build` automatically.
+4. `next start` is the production server entry point.
+
+Because data is fetched at request time from Notion, the build does not need to pre-fetch content at build time, but runtime requests will fail if the Notion integration token is missing or invalid.
+
+## Common gotchas
+
+- The Notion API version is pinned. If you upgrade it, verify that property shapes in `src/shared/lib/notion-types.ts` still match the API responses.
+- Data source fetchers run independently per section. If you want to reduce API calls, consider using `getPortfolioData()` and passing the result down, but this will change the streaming behavior of the page.
+- `Provider` currently does nothing but is the intended place for future context providers.
+- `description` text supports a tiny Markdown subset; do not assume full Markdown support.
+- The side-project toggle uses a composite key that includes the project type; avoid relying on array index alone for keyed lists of mixed main/side projects.

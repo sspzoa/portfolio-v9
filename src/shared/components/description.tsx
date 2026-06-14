@@ -7,6 +7,7 @@ import { useEffect, useId, useRef, useState } from "react";
 interface DescriptionProps {
   children: React.ReactNode;
   maxHeight?: number;
+  lead?: boolean;
 }
 
 type Block = { type: "list"; items: string[] } | { type: "text"; lines: string[] };
@@ -30,7 +31,7 @@ const parseInline = (text: string): React.ReactNode[] => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-core-accent underline-offset-2 hover:underline">
+          className="font-medium text-core-accent decoration-core-accent/40 underline-offset-2 transition-colors hover:underline">
           {linkText}
         </Link>
       );
@@ -75,7 +76,7 @@ const parseBlocks = (text: string): Block[] => {
   return blocks;
 };
 
-export function Description({ children, maxHeight }: DescriptionProps) {
+export function Description({ children, maxHeight, lead = false }: DescriptionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsExpansion, setNeedsExpansion] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -118,6 +119,8 @@ export function Description({ children, maxHeight }: DescriptionProps) {
     });
   };
 
+  const textClass = lead ? "text-body leading-8 md:text-heading md:leading-9" : "text-label leading-7";
+
   return (
     <div className="relative">
       <div
@@ -127,7 +130,7 @@ export function Description({ children, maxHeight }: DescriptionProps) {
         style={{
           maxHeight: isExpanded || !needsExpansion ? undefined : maxHeight,
         }}>
-        <div className="flex flex-col gap-spacing-300 text-content-standard-secondary text-label leading-7">
+        <div className={`flex flex-col gap-spacing-300 text-content-standard-secondary ${textClass}`}>
           {renderContent()}
         </div>
       </div>
@@ -135,28 +138,28 @@ export function Description({ children, maxHeight }: DescriptionProps) {
       {needsExpansion &&
         (!isExpanded ? (
           <div
-            className="absolute right-0 bottom-0 left-0 flex h-24 items-end justify-center pb-spacing-100"
+            className="absolute right-0 bottom-0 left-0 flex h-24 items-end justify-start pb-spacing-50"
             style={{
-              background: "linear-gradient(to top, var(--background-standard-primary) 30%, transparent)",
+              background: "linear-gradient(to top, var(--background-standard-primary) 35%, transparent)",
             }}>
             <button
               type="button"
               onClick={() => setIsExpanded(true)}
               aria-expanded={false}
               aria-controls={contentId}
-              className="cursor-pointer font-medium text-content-standard-tertiary text-label transition-colors hover:text-content-standard-primary">
-              더보기
+              className="cursor-pointer font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest transition-colors hover:text-content-standard-primary">
+              더보기 +
             </button>
           </div>
         ) : (
-          <div className="flex justify-center pt-spacing-300">
+          <div className="flex justify-start pt-spacing-300">
             <button
               type="button"
               onClick={() => setIsExpanded(false)}
               aria-expanded={true}
               aria-controls={contentId}
-              className="cursor-pointer font-medium text-content-standard-tertiary text-label transition-colors hover:text-content-standard-primary">
-              접기
+              className="cursor-pointer font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest transition-colors hover:text-content-standard-primary">
+              접기 −
             </button>
           </div>
         ))}
