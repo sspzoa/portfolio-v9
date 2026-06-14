@@ -5,7 +5,6 @@ import { ActivitiesSection } from "@/app/(pages)/portfolio/(components)/activiti
 import { AwardsSection } from "@/app/(pages)/portfolio/(components)/awards";
 import { CareersSection } from "@/app/(pages)/portfolio/(components)/careers";
 import { CertificatesSection } from "@/app/(pages)/portfolio/(components)/certificates";
-import { ContributionsSection } from "@/app/(pages)/portfolio/(components)/contributions";
 import { EducationsSection } from "@/app/(pages)/portfolio/(components)/educations";
 import { ExperiencesSection } from "@/app/(pages)/portfolio/(components)/experiences";
 import { ProfileSection } from "@/app/(pages)/portfolio/(components)/profile";
@@ -42,8 +41,7 @@ export default function PortfolioPage() {
           <ExperiencesSection index={6} />
           <EducationsSection index={7} />
           <ProjectsSection index={8} />
-          <ContributionsSection index={9} />
-          <ActivitiesSection index={10} />
+          <ActivitiesSection index={9} />
         </div>
 
         <div className="mt-spacing-1000">
