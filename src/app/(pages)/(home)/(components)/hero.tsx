@@ -15,7 +15,7 @@ export function Hero() {
             Suh<span className="text-core-accent">.</span>
           </h1>
           <p className="max-w-md text-balance text-body text-content-standard-secondary md:text-heading">
-            Full-Stack Engineer crafting interfaces that feel like home.
+            Full-Stack Engineer crafting experiences that feel like home.
           </p>
         </div>
 
