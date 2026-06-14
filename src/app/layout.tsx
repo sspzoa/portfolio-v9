@@ -14,7 +14,6 @@ export const metadata: Metadata = {
     description: "Mobile & Frontend Engineer",
     url: "https://sspzoa.io",
     siteName: "Seungpyo Suh",
-    images: [{ url: "https://sspzoa.io/og-image.png", width: 1200, height: 630 }],
     locale: "ko_KR",
     type: "website",
   },
@@ -22,7 +21,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Seungpyo Suh",
     description: "Mobile & Frontend Engineer",
-    images: ["https://sspzoa.io/og-image.png"],
   },
   robots: {
     index: true,
@@ -34,10 +32,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0b" },
-  ],
+  themeColor: "#6d87a8",
 };
 
 export default function RootLayout({
