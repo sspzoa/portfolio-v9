@@ -20,7 +20,6 @@ export default function OpengraphImage() {
         justifyContent: "center",
         backgroundColor: "#ffffff",
       }}>
-      {/* biome-ignore lint/performance/noImgElement: satori requires <img> */}
       <img src={logoSrc} width={320} height={320} style={{ borderRadius: 72 }} alt="" />
     </div>,
     { ...size },

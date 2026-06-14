@@ -7,11 +7,11 @@ import { Providers } from "@/shared/lib/provider";
 
 export const metadata: Metadata = {
   title: "Seungpyo Suh",
-  description: "Mobile & Frontend Engineer",
+  description: "Full-Stack Engineer",
   metadataBase: new URL("https://sspzoa.io"),
   openGraph: {
     title: "Seungpyo Suh",
-    description: "Mobile & Frontend Engineer",
+    description: "Full-Stack Engineer",
     url: "https://sspzoa.io",
     siteName: "Seungpyo Suh",
     locale: "ko_KR",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Seungpyo Suh",
-    description: "Mobile & Frontend Engineer",
+    description: "Full-Stack Engineer",
   },
   robots: {
     index: true,

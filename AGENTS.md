@@ -4,7 +4,7 @@
 
 ## Project overview
 
-This is a personal portfolio website for Seungpyo Suh, a mobile & frontend engineer. It is built with [Next.js](https://nextjs.org/) App Router, [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS v4](https://tailwindcss.com/). The site is a single-page résumé/portfolio that renders sections such as About, Projects, Careers, Experiences, Educations, Skills, Awards, Certificates, and Activities.
+This is a personal portfolio website for Seungpyo Suh, a full-stack engineer. It is built with [Next.js](https://nextjs.org/) App Router, [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS v4](https://tailwindcss.com/). The site is a single-page résumé/portfolio that renders sections such as About, Careers, Experiences, Educations, Skills, Awards, Certificates, Projects, and Activities.
 
 Key facts:
 
@@ -13,6 +13,7 @@ Key facts:
 - **Content source:** All résumé content is fetched at request time from [Notion](https://www.notion.so/) via the Notion API. There are no static JSON data files for content.
 - **Language/locale:** The page language is `ko`, but UI labels and most code comments are in English. Some fallback copy is in Korean.
 - **Site URL:** `https://sspzoa.io`
+- **React Compiler:** Enabled in `next.config.ts` (`reactCompiler: true`). The Babel plugin is installed as a dev dependency.
 
 ## Technology stack
 
@@ -27,6 +28,7 @@ Key facts:
 | Validation | Zod 4 |
 | Analytics | Vercel Analytics + Speed Insights |
 | Icons | lucide-react |
+| Compiler | React Compiler (via Next.js flag) |
 
 ## Directory structure
 
@@ -41,11 +43,13 @@ src/
     layout.tsx         # Root layout with metadata, skip link, providers
     robots.ts          # /robots.txt route
     sitemap.ts         # /sitemap.xml route
+    opengraph-image.tsx # /opengraph-image.png route
+    twitter-image.tsx   # /twitter-image.png route
   shared/
     components/        # Reusable UI primitives (Section, TimelineEntry, Tag, etc.)
     lib/               # Data fetching, Notion client, env validation, provider shell
     schemas.ts         # Zod schemas for Notion data
-    types.ts           # Re-export of schema-inferred types
+    types.ts           # Re-export of types from schemas.ts
     utils/             # Date/period formatting helpers
 public/                # Static assets (photo, logos, og-image)
 ```
@@ -54,7 +58,7 @@ public/                # Static assets (photo, logos, og-image)
 
 - The only public route is `/`, served by `src/app/(pages)/(home)/(routes)/page.tsx`.
 - `/portfolio` is permanently redirected to `/` via `next.config.ts`.
-- `robots.ts` and `sitemap.ts` are Next.js metadata route handlers.
+- `robots.ts`, `sitemap.ts`, `opengraph-image.tsx`, and `twitter-image.tsx` are Next.js metadata route handlers.
 
 ## Build and run commands
 
@@ -131,11 +135,11 @@ If any required variable is missing, the app throws at import time with a clear 
   - `Description` — expand/collapse long text and parses inline markdown-like syntax (`**bold**` and `[text](url)` links).
   - `SideNav` — observes section visibility with `IntersectionObserver` and highlights the active section.
   - `SideProjectToggle` — toggles visibility of side projects.
-- `src/shared/lib/provider.tsx` is a client-shell provider component that currently just renders children, but exists as an extension point.
+- `src/shared/lib/provider.tsx` exports a client-shell component named `Providers` that currently just renders children, but exists as an extension point.
 
 ### Content rendering conventions
 
-- `Description` parses a small subset of Markdown-like syntax: bold wraps (`**text**`) and inline links (`[text](url)`), plus bullet lists starting with `-` or `•`.
+- `Description` parses a small subset of Markdown-like syntax: bold wraps (`**text**`), inline links (`[text](url)`), and bullet lists starting with `-` or `•`.
 - Do not store arbitrary HTML in Notion and render it with `dangerouslySetInnerHTML`. The codebase intentionally parses text into React nodes.
 - Images are rendered with Next.js `<Image>` and must be served from allowed hostnames. `next.config.ts` currently allows `https://prod-files-secure.s3.us-west-2.amazonaws.com` for Notion-hosted files.
 
@@ -215,6 +219,7 @@ The project uses **Biome** for linting and formatting. Configuration is in `biom
 - Server Components should fetch data with `try/catch` and render a Korean fallback message on error: `일시적으로 데이터를 불러올 수 없습니다.`.
 - If a section has no items, return `null` instead of an empty section.
 - Use `formatPeriod(start, end, { present: true })` for careers/experiences/educations to show "Present" when there is no end date.
+- Use `formatPeriod(start, end)` without options for projects and activities.
 
 ## Testing instructions
 
@@ -252,7 +257,9 @@ Because data is fetched at request time from Notion, the build does not need to 
 ## Common gotchas
 
 - The Notion API version is pinned. If you upgrade it, verify that property shapes in `src/shared/lib/notion-types.ts` still match the API responses.
-- Data source fetchers run independently per section. If you want to reduce API calls, consider using `getPortfolioData()` and passing the result down, but this will change the streaming behavior of the page.
-- `Provider` currently does nothing but is the intended place for future context providers.
+- Data source fetchers run independently per section in `page.tsx`. If you want to reduce API calls, consider using `getPortfolioData()` and passing the result down, but this will change the streaming behavior of the page.
+- `Providers` currently does nothing but is the intended place for future context providers.
 - `description` text supports a tiny Markdown subset; do not assume full Markdown support.
-- The side-project toggle uses a composite key that includes the project type; avoid relying on array index alone for keyed lists of mixed main/side projects.
+- `formatDate` converts an ISO date string (`YYYY-MM-DD`) to a display string (`YYYY.MM`).
+- The side-project toggle keys list items with a composite prefix (`main-${index}` or `side-${index}`) rather than relying on array index alone.
+- React Compiler is enabled; the build pipeline expects the Babel plugin to be present.

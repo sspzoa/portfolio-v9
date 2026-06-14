@@ -31,13 +31,13 @@ export default function Home() {
   return (
     <div className="mx-auto min-h-dvh w-full max-w-5xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
       <div className="lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-x-spacing-850">
-        <aside className="hidden lg:flex lg:sticky lg:top-0 lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
+        <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
           <div className="flex flex-col gap-spacing-150">
             <Link href="#top" className="font-semibold text-content-standard-primary text-label tracking-tight">
               Seungpyo Suh<span className="text-core-accent">.</span>
             </Link>
             <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-[0.22em]">
-              Frontend Engineer
+              Full-Stack Engineer
             </p>
           </div>
 

@@ -53,7 +53,7 @@ export function SideNav({ items }: SideNavProps) {
                     isActive ? "w-6 bg-core-accent" : "w-3 bg-line-outline group-hover:w-5"
                   }`}
                 />
-                <span className="font-mono text-footnote text-content-standard-quaternary tabular-nums">
+                <span className="font-mono text-content-standard-quaternary text-footnote tabular-nums">
                   {(i + 1).toString().padStart(2, "0")}
                 </span>
                 <span
