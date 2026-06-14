@@ -7,7 +7,6 @@ import { useEffect, useId, useRef, useState } from "react";
 interface DescriptionProps {
   children: React.ReactNode;
   maxHeight?: number;
-  lead?: boolean;
 }
 
 type Block = { type: "list"; items: string[] } | { type: "text"; lines: string[] };
@@ -76,7 +75,7 @@ const parseBlocks = (text: string): Block[] => {
   return blocks;
 };
 
-export function Description({ children, maxHeight, lead = false }: DescriptionProps) {
+export function Description({ children, maxHeight }: DescriptionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsExpansion, setNeedsExpansion] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -119,8 +118,6 @@ export function Description({ children, maxHeight, lead = false }: DescriptionPr
     });
   };
 
-  const textClass = lead ? "text-body leading-8 md:text-heading md:leading-9" : "text-label leading-7";
-
   return (
     <div className="relative">
       <div
@@ -130,7 +127,7 @@ export function Description({ children, maxHeight, lead = false }: DescriptionPr
         style={{
           maxHeight: isExpanded || !needsExpansion ? undefined : maxHeight,
         }}>
-        <div className={`flex flex-col gap-spacing-300 text-content-standard-secondary ${textClass}`}>
+        <div className="flex flex-col gap-spacing-300 text-content-standard-secondary text-label leading-7">
           {renderContent()}
         </div>
       </div>

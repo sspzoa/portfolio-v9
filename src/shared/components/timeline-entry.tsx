@@ -31,7 +31,7 @@ export default function TimelineEntry({ period, title, subtitle, logo, descripti
             {subtitle && <p className="text-content-standard-tertiary text-label">{subtitle}</p>}
           </div>
         </div>
-        {description && <Description maxHeight={220}>{description}</Description>}
+        {description && <Description>{description}</Description>}
       </div>
     </article>
   );
