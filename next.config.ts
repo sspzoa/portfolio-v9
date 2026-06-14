@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' cdn.jsdelivr.net",
               "img-src 'self' data: https://prod-files-secure.s3.us-west-2.amazonaws.com https://avatars.githubusercontent.com",
               "font-src 'self' cdn.jsdelivr.net",
-              "connect-src 'self' https://api.github.com va.vercel-scripts.com",
+              "connect-src 'self' https://api.github.com https://github.com va.vercel-scripts.com",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",
