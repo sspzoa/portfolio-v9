@@ -17,24 +17,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    url: "/",
     siteName: SITE_TITLE,
     locale: "ko_KR",
     type: "website",
-    images: ["/opengraph-image.png"],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
-    images: ["/twitter-image.png"],
+    images: [`${SITE_URL}/opengraph-image`],
   },
   robots: {
     index: true,
     follow: true,
   },
   alternates: {
-    canonical: "/",
+    canonical: SITE_URL,
   },
   authors: [{ name: "Seungpyo Suh", url: SITE_URL }],
   creator: "Seungpyo Suh",
