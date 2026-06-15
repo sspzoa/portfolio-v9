@@ -6,6 +6,9 @@ export function Hero() {
     <header id="top" className="flex scroll-mt-spacing-800 flex-col gap-spacing-700 pb-spacing-200">
       <div className="flex flex-col-reverse gap-spacing-600 md:flex-row md:items-end md:justify-between">
         <div className="flex flex-col gap-spacing-500">
+          <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
+            Portfolio
+          </p>
           <h1 className="font-semibold text-content-standard-primary text-hero-sm md:text-hero-md lg:text-hero-lg">
             Seungpyo
             <br />
