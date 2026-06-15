@@ -16,7 +16,7 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="h-28 w-28 shrink-0 overflow-hidden rounded-radius-700 ring-1 ring-line-outline ring-inset md:h-36 md:w-36">
+        <div className="h-28 w-28 shrink-0 overflow-hidden rounded-radius-700 ring-1 ring-line-outline md:h-36 md:w-36">
           <Image
             src="/photo.jpg"
             alt="Seungpyo Suh"

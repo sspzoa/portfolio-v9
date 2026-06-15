@@ -19,15 +19,17 @@ export default function ProjectItem({ project }: ProjectItemProps) {
       <div className="flex items-baseline justify-between gap-spacing-400">
         <h3 className="flex min-w-0 items-center gap-spacing-300 font-semibold text-content-standard-primary text-heading tracking-tight">
           {project.iconImage && (
-            <Image
-              className="h-7 w-7 shrink-0 rounded-radius-200 object-contain"
-              width={28}
-              height={28}
-              src={project.iconImage}
-              alt=""
-              sizes="28px"
-              draggable={false}
-            />
+            <div className="h-7 w-7 shrink-0 overflow-hidden rounded-radius-200 ring-1 ring-line-outline">
+              <Image
+                className="h-full w-full object-contain"
+                width={28}
+                height={28}
+                src={project.iconImage}
+                alt=""
+                sizes="28px"
+                draggable={false}
+              />
+            </div>
           )}
           <span className="truncate">{project.name}</span>
         </h3>
@@ -39,7 +41,7 @@ export default function ProjectItem({ project }: ProjectItemProps) {
       {caption && <p className="text-content-standard-secondary text-label">{caption}</p>}
 
       {project.coverImage && (
-        <div className="relative aspect-video w-full overflow-hidden rounded-radius-400 ring-1 ring-line-outline ring-inset">
+        <div className="relative aspect-video w-full overflow-hidden rounded-radius-400 ring-1 ring-line-outline">
           <Image
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.025]"
             src={project.coverImage}
