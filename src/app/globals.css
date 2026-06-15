@@ -156,30 +156,4 @@ body {
   color: var(--content-standard-primary);
 }
 
-/* Editorial scroll reveal — pure CSS, progressive enhancement.
-   Browsers without scroll-driven animations (or with reduced motion) simply
-   render content at full opacity. No JS, server-component friendly. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    /* Apply .reveal to SHORT, leaf-level blocks (cards, rows, headers) — never to a
-       tall section wrapper, or its top stays half-faded while it's in the reading area.
-       The fade completes early in the element's entry, so items are solid well before
-       they reach the centre of the viewport. */
-    .reveal {
-      animation: reveal-rise linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 35%;
-    }
-  }
-}
 
-@keyframes reveal-rise {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}

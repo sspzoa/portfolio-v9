@@ -15,7 +15,7 @@ export default function ProjectItem({ project }: ProjectItemProps) {
     .join(" · ");
 
   return (
-    <article className="reveal group flex flex-col gap-spacing-400 border-line-divider border-t pt-spacing-700 first:border-t-0 first:pt-0">
+    <article className="group flex flex-col gap-spacing-400 border-line-divider border-t pt-spacing-700 first:border-t-0 first:pt-0">
       <div className="flex items-baseline justify-between gap-spacing-400">
         <h3 className="flex min-w-0 items-center gap-spacing-300 font-semibold text-content-standard-primary text-heading tracking-tight">
           {project.iconImage && (

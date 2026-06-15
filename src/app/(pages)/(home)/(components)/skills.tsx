@@ -26,7 +26,7 @@ export async function SkillsSection({ index, id }: SectionComponentProps) {
           {Object.entries(groupedSkills).map(([category, categorySkills]) => (
             <div
               key={category}
-              className="reveal grid grid-cols-1 items-baseline gap-x-spacing-700 gap-y-spacing-300 border-line-divider border-t py-spacing-500 first:border-t-0 first:pt-0 md:grid-cols-[160px_1fr]">
+              className="grid grid-cols-1 items-baseline gap-x-spacing-700 gap-y-spacing-300 border-line-divider border-t py-spacing-500 first:border-t-0 first:pt-0 md:grid-cols-[160px_1fr]">
               <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">
                 {category}
               </p>

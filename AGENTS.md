@@ -39,7 +39,7 @@ src/
       (components)/    # Section-specific React components
       (routes)/
         page.tsx       # Home page that composes all sections
-    globals.css        # Design tokens, dark mode, scroll reveal animation
+    globals.css        # Design tokens and dark mode
     layout.tsx         # Root layout with metadata, skip link, providers
     robots.ts          # /robots.txt route
     sitemap.ts         # /sitemap.xml route
@@ -173,9 +173,8 @@ Tailwind maps these custom properties to classes such as `text-content-standard-
 
 ### Motion
 
-- A CSS scroll-driven reveal animation (`reveal`) fades elements in as they enter the viewport.
-- It is wrapped in `@supports (animation-timeline: view())` and respects `prefers-reduced-motion`.
-- Only short leaf-level blocks (cards, rows, headers) should use `reveal`, never tall section wrappers.
+- There are no scroll-driven reveal animations; all content is visible immediately.
+- The page keeps `scroll-behavior: smooth` for anchor navigation.
 
 ## Code style guidelines
 

@@ -19,7 +19,7 @@ export async function ActivitiesSection({ index, id }: SectionComponentProps) {
           {activities.map((activity, i) => (
             <li
               key={i}
-              className="reveal flex flex-col gap-spacing-200 border-line-divider border-t py-spacing-400 first:border-t-0 md:[&:nth-child(-n+2)]:border-t-0">
+              className="flex flex-col gap-spacing-200 border-line-divider border-t py-spacing-400 first:border-t-0 md:[&:nth-child(-n+2)]:border-t-0">
               <div className="flex items-baseline justify-between gap-spacing-300">
                 <p className="min-w-0 break-words font-medium text-content-standard-primary text-label">
                   {activity.name}

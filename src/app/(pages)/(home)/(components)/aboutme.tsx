@@ -13,7 +13,7 @@ export async function AboutMeSection({ index, id }: SectionComponentProps) {
 
     return (
       <Section id={id} title="About" index={index}>
-        <div className="reveal max-w-2xl">
+        <div className="max-w-2xl">
           <Description>{aboutMe.content}</Description>
         </div>
       </Section>
