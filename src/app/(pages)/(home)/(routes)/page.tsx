@@ -13,6 +13,8 @@ import { SkillsSection } from "@/app/(pages)/(home)/(components)/skills";
 import { Socials } from "@/app/(pages)/(home)/(components)/socials";
 import Footer from "@/shared/components/footer";
 
+export const dynamic = "force-dynamic";
+
 const SECTIONS = [
   { id: "about", label: "About", Component: AboutMeSection },
   { id: "careers", label: "Careers", Component: CareersSection },
@@ -36,7 +38,7 @@ export default function Home() {
             <Link href="#top" className="font-semibold text-content-standard-primary text-label tracking-tight">
               Seungpyo Suh<span className="text-core-accent">.</span>
             </Link>
-            <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-[0.22em]">
+            <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
               Full-Stack Engineer
             </p>
           </div>
@@ -54,7 +56,7 @@ export default function Home() {
           </div>
         </aside>
 
-        <main id="main-content" className="flex min-w-0 flex-col py-spacing-700 md:py-spacing-800">
+        <main id="main-content" tabIndex={-1} className="flex min-w-0 flex-col py-spacing-700 md:py-spacing-800">
           <Hero />
 
           <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-900 md:gap-spacing-900">

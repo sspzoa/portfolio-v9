@@ -9,3 +9,8 @@ export type {
   Project,
   Skill,
 } from "@/shared/schemas";
+
+export interface SectionComponentProps {
+  id?: string;
+  index?: number;
+}

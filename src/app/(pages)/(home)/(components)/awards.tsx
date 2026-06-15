@@ -1,10 +1,10 @@
 import RecordRow from "@/shared/components/record-row";
 import Section from "@/shared/components/section";
-import { fetchAwards } from "@/shared/lib/portfolio-data";
+import { fetchAwards, isConfigError } from "@/shared/lib/portfolio-data";
+import type { SectionComponentProps } from "@/shared/types";
 
-interface SectionComponentProps {
-  index?: number;
-  id?: string;
+function getErrorMessage(error: unknown): string {
+  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
 }
 
 export async function AwardsSection({ index, id }: SectionComponentProps) {
@@ -15,16 +15,18 @@ export async function AwardsSection({ index, id }: SectionComponentProps) {
     return (
       <Section id={id} title="Awards" index={index} count={awards.length}>
         <ul className="flex flex-col">
-          {awards.map((award, i) => (
-            <RecordRow key={i} title={award.name} badge={award.tier ?? undefined} date={award.date ?? undefined} />
+          {awards.map((award) => (
+            <RecordRow key={award.id} title={award.name} badge={award.tier} date={award.date} />
           ))}
         </ul>
       </Section>
     );
-  } catch {
+  } catch (error) {
+    console.error("[AwardsSection]", error);
+
     return (
       <Section id={id} title="Awards" index={index}>
-        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+        <p className="text-content-standard-secondary text-label">{getErrorMessage(error)}</p>
       </Section>
     );
   }

@@ -1,10 +1,10 @@
 import { Description } from "@/shared/components/description";
 import Section from "@/shared/components/section";
-import { fetchAboutMe } from "@/shared/lib/portfolio-data";
+import { fetchAboutMe, isConfigError } from "@/shared/lib/portfolio-data";
+import type { SectionComponentProps } from "@/shared/types";
 
-interface SectionComponentProps {
-  index?: number;
-  id?: string;
+function getErrorMessage(error: unknown): string {
+  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
 }
 
 export async function AboutMeSection({ index, id }: SectionComponentProps) {
@@ -18,10 +18,12 @@ export async function AboutMeSection({ index, id }: SectionComponentProps) {
         </div>
       </Section>
     );
-  } catch {
+  } catch (error) {
+    console.error("[AboutMeSection]", error);
+
     return (
       <Section id={id} title="About" index={index}>
-        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+        <p className="text-content-standard-secondary text-label">{getErrorMessage(error)}</p>
       </Section>
     );
   }

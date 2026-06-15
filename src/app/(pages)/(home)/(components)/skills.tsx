@@ -1,10 +1,10 @@
 import Section from "@/shared/components/section";
 import Tag from "@/shared/components/tag";
-import { fetchSkills } from "@/shared/lib/portfolio-data";
+import { fetchSkills, isConfigError } from "@/shared/lib/portfolio-data";
+import type { SectionComponentProps } from "@/shared/types";
 
-interface SectionComponentProps {
-  index?: number;
-  id?: string;
+function getErrorMessage(error: unknown): string {
+  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
 }
 
 export async function SkillsSection({ index, id }: SectionComponentProps) {
@@ -13,10 +13,11 @@ export async function SkillsSection({ index, id }: SectionComponentProps) {
     if (skills.length === 0) return null;
 
     const groupedSkills = skills.reduce<Record<string, typeof skills>>((acc, skill) => {
-      if (!acc[skill.category]) {
-        acc[skill.category] = [];
+      const category = skill.category || "기타";
+      if (!acc[category]) {
+        acc[category] = [];
       }
-      acc[skill.category].push(skill);
+      acc[category].push(skill);
       return acc;
     }, {});
 
@@ -31,8 +32,8 @@ export async function SkillsSection({ index, id }: SectionComponentProps) {
                 {category}
               </p>
               <div className="flex flex-row flex-wrap gap-x-spacing-500 gap-y-spacing-300">
-                {categorySkills.map((skill, i) => (
-                  <Tag key={i} icon={skill.icon} name={skill.name} isMain={skill.isMain} />
+                {categorySkills.map((skill) => (
+                  <Tag key={skill.id} icon={skill.icon} name={skill.name} isMain={skill.isMain} />
                 ))}
               </div>
             </div>
@@ -40,10 +41,12 @@ export async function SkillsSection({ index, id }: SectionComponentProps) {
         </div>
       </Section>
     );
-  } catch {
+  } catch (error) {
+    console.error("[SkillsSection]", error);
+
     return (
       <Section id={id} title="Skills" index={index}>
-        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+        <p className="text-content-standard-secondary text-label">{getErrorMessage(error)}</p>
       </Section>
     );
   }

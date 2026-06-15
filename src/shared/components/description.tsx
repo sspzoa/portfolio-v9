@@ -14,11 +14,11 @@ type Block = { type: "list"; items: string[] } | { type: "text"; lines: string[]
 const parseInline = (text: string): React.ReactNode[] => {
   const pattern = /(\*\*.*?\*\*|\[.*?\]\(.*?\))/g;
   return text.split(pattern).map((part, i) => {
-    if (part.startsWith("**") && part.endsWith("**")) {
+    if (part.startsWith("**") && part.endsWith("**") && part.length >= 4) {
       return (
-        <span key={i} className="font-semibold text-content-standard-primary">
+        <strong key={i} className="font-semibold text-content-standard-primary">
           {part.slice(2, -2)}
-        </span>
+        </strong>
       );
     }
     const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
@@ -30,7 +30,7 @@ const parseInline = (text: string): React.ReactNode[] => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-core-accent decoration-core-accent/40 underline-offset-2 transition-colors hover:underline">
+          className="font-medium text-core-accent decoration-core-accent/40 underline-offset-2 transition-colors hover:underline focus-visible:rounded-radius-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
           {linkText}
         </Link>
       );
@@ -79,18 +79,38 @@ export function Description({ children, maxHeight }: DescriptionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsExpansion, setNeedsExpansion] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const contentId = useId();
 
   useEffect(() => {
+    let animationFrame: number;
+
     const checkHeight = () => {
       if (contentRef.current && maxHeight) {
         setNeedsExpansion(contentRef.current.scrollHeight > maxHeight);
       }
     };
+
+    const handleResize = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(checkHeight);
+    };
+
     checkHeight();
-    window.addEventListener("resize", checkHeight);
-    return () => window.removeEventListener("resize", checkHeight);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      cancelAnimationFrame(animationFrame);
+    };
   }, [children, maxHeight]);
+
+  const handleToggle = () => {
+    setIsExpanded((prev) => !prev);
+    // Return focus to the toggle button after React re-renders the new label.
+    requestAnimationFrame(() => {
+      buttonRef.current?.focus();
+    });
+  };
 
   const renderContent = () => {
     if (typeof children !== "string") return children;
@@ -132,34 +152,24 @@ export function Description({ children, maxHeight }: DescriptionProps) {
         </div>
       </div>
 
-      {needsExpansion &&
-        (!isExpanded ? (
-          <div
-            className="absolute right-0 bottom-0 left-0 flex h-24 items-end justify-start pb-spacing-50"
-            style={{
-              background: "linear-gradient(to top, var(--background-standard-primary) 35%, transparent)",
-            }}>
-            <button
-              type="button"
-              onClick={() => setIsExpanded(true)}
-              aria-expanded={false}
-              aria-controls={contentId}
-              className="cursor-pointer font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest transition-colors hover:text-content-standard-primary">
-              더보기 +
-            </button>
-          </div>
-        ) : (
-          <div className="flex justify-start pt-spacing-300">
-            <button
-              type="button"
-              onClick={() => setIsExpanded(false)}
-              aria-expanded={true}
-              aria-controls={contentId}
-              className="cursor-pointer font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest transition-colors hover:text-content-standard-primary">
-              접기 −
-            </button>
-          </div>
-        ))}
+      {needsExpansion && (
+        <div
+          className={`${
+            isExpanded
+              ? "relative flex justify-start pt-spacing-300"
+              : "description-fade absolute right-0 bottom-0 left-0 flex h-24 items-end justify-start pb-spacing-50"
+          }`}>
+          <button
+            ref={buttonRef}
+            type="button"
+            onClick={handleToggle}
+            aria-expanded={isExpanded}
+            aria-controls={contentId}
+            className="font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest transition-colors hover:text-content-standard-primary focus-visible:rounded-radius-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+            {isExpanded ? "접기 −" : "더보기 +"}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

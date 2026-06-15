@@ -6,10 +6,10 @@ export function Hero() {
     <header id="top" className="flex scroll-mt-spacing-800 flex-col gap-spacing-700 pb-spacing-200">
       <div className="flex flex-col-reverse gap-spacing-600 md:flex-row md:items-end md:justify-between">
         <div className="flex flex-col gap-spacing-500">
-          <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-[0.22em]">
+          <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
             Portfolio
           </p>
-          <h1 className="font-semibold text-[44px] text-content-standard-primary leading-[1.02] tracking-[-0.03em] md:text-[64px] lg:text-[72px]">
+          <h1 className="font-semibold text-content-standard-primary text-hero-sm md:text-hero-md lg:text-hero-lg">
             Seungpyo
             <br />
             Suh<span className="text-core-accent">.</span>
@@ -25,6 +25,7 @@ export function Hero() {
             alt="Seungpyo Suh"
             width={160}
             height={160}
+            sizes="(min-width: 768px) 144px, 112px"
             priority
             className="h-full w-full scale-105 object-cover"
             draggable={false}

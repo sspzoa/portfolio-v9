@@ -37,6 +37,8 @@ export function SideNav({ items }: SideNavProps) {
     return () => observer.disconnect();
   }, [items]);
 
+  if (items.length === 0) return null;
+
   return (
     <nav aria-label="Sections">
       <ul className="flex flex-col gap-spacing-50">
@@ -46,14 +48,17 @@ export function SideNav({ items }: SideNavProps) {
             <li key={item.id}>
               <a
                 href={`#${item.id}`}
-                aria-current={isActive ? "true" : undefined}
-                className="group flex items-center gap-spacing-300 py-spacing-100">
+                aria-current={isActive ? "location" : undefined}
+                className="group flex items-center gap-spacing-300 rounded-radius-200 py-spacing-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
                 <span
+                  aria-hidden="true"
                   className={`h-px shrink-0 transition-all duration-300 ${
                     isActive ? "w-6 bg-core-accent" : "w-3 bg-line-outline group-hover:w-5"
                   }`}
                 />
-                <span className="font-mono text-content-standard-quaternary text-footnote tabular-nums">
+                <span
+                  aria-hidden="true"
+                  className="font-mono text-content-standard-quaternary text-footnote tabular-nums">
                   {(i + 1).toString().padStart(2, "0")}
                 </span>
                 <span

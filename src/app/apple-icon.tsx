@@ -2,14 +2,13 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "Seungpyo Suh";
-export const size = { width: 1200, height: 630 };
+export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-const logo = readFileSync(join(process.cwd(), "public/sspzoa_logo.png"));
-const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
+const logo = readFileSync(join(process.cwd(), "public/sspzoa_logo.svg"));
+const logoSrc = `data:image/svg+xml;base64,${logo.toString("base64")}`;
 
-export default function OpengraphImage() {
+export default function AppleIcon() {
   return new ImageResponse(
     <div
       style={{
@@ -18,9 +17,9 @@ export default function OpengraphImage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#6d87a8",
       }}>
-      <img src={logoSrc} width={320} height={320} alt="" />
+      <img src={logoSrc} width={140} height={140} alt="" />
     </div>,
     { ...size },
   );

@@ -20,6 +20,7 @@ export default function Tag({ icon, name, isMain = false }: TagProps) {
           height={14}
           src={icon}
           alt=""
+          sizes="14px"
           draggable={false}
         />
       )}

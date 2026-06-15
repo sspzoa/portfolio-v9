@@ -15,17 +15,20 @@ interface SocialsProps {
 export function Socials({ className }: SocialsProps) {
   return (
     <div className={`flex flex-row gap-spacing-400 ${className ?? ""}`}>
-      {socialLinks.map((link) => (
-        <Link
-          key={link.href}
-          aria-label={link.label}
-          href={link.href}
-          target={link.href.startsWith("http") ? "_blank" : undefined}
-          rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-          className="text-content-standard-tertiary transition-colors hover:text-content-standard-primary">
-          <link.icon size={18} strokeWidth={1.75} />
-        </Link>
-      ))}
+      {socialLinks.map((link) => {
+        const isExternal = link.href.startsWith("http");
+        return (
+          <Link
+            key={link.href}
+            aria-label={isExternal ? `${link.label} (새 창)` : link.label}
+            href={link.href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noopener noreferrer" : undefined}
+            className="rounded-radius-200 text-content-standard-tertiary transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+            <link.icon size={18} strokeWidth={1.75} />
+          </Link>
+        );
+      })}
     </div>
   );
 }

@@ -3,6 +3,8 @@
 @config "../../tailwind.config.ts";
 
 :root {
+  color-scheme: light dark;
+
   --solid-red: rgba(255, 64, 53, 1);
   --solid-orange: rgba(255, 154, 5, 1);
   --solid-yellow: rgba(245, 201, 5, 1);
@@ -73,9 +75,9 @@
   --syntax-function: rgba(91, 89, 222, 1);
   --syntax-variable: rgba(224, 136, 4, 1);
   --syntax-string: rgba(50, 204, 88, 1);
-  --syntax-constant: rgb(5, 127, 255, 1);
-  --syntax-operator: rgb(183, 86, 232, 1);
-  --syntax-keyword: rgb(255, 50, 90, 1);
+  --syntax-constant: rgba(5, 127, 255, 1);
+  --syntax-operator: rgba(183, 86, 232, 1);
+  --syntax-keyword: rgba(255, 50, 90, 1);
 
   --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
 }
@@ -154,6 +156,16 @@ body {
 ::selection {
   background-color: var(--core-accent-translucent);
   color: var(--content-standard-primary);
+}
+
+.description-fade {
+  background: linear-gradient(to top, var(--background-standard-primary) 35%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  .description-fade {
+    background: linear-gradient(to top, var(--background-standard-primary) 35%, transparent);
+  }
 }
 
 

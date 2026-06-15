@@ -1,20 +1,27 @@
 import { z } from "zod";
 
+const dateStringSchema = z
+  .string()
+  .regex(/^\d{4}\.\d{2}$/, "Date must be in YYYY.MM format")
+  .nullable();
+
 export const skillSchema = z.object({
+  id: z.string(),
   name: z.string(),
   category: z.string(),
   isMain: z.boolean(),
   icon: z.string().url().nullable(),
-  url: z.string().url(),
+  url: z.string().url().nullable(),
 });
 
 export const projectSchema = z.object({
+  id: z.string(),
   name: z.string(),
   shortDescription: z.string().nullable(),
   description: z.string().nullable(),
-  startDate: z.string().nullable(),
-  endDate: z.string().nullable(),
-  teamSize: z.number().nullable(),
+  startDate: dateStringSchema,
+  endDate: dateStringSchema,
+  teamSize: z.number().int().nonnegative().nullable(),
   isSideProject: z.boolean(),
   tags: z.array(z.string()),
   coverImage: z.string().url().nullable(),
@@ -22,55 +29,61 @@ export const projectSchema = z.object({
 });
 
 export const experienceSchema = z.object({
+  id: z.string(),
   role: z.string(),
   organization: z.string().nullable(),
   description: z.string().nullable(),
-  startDate: z.string().nullable(),
-  endDate: z.string().nullable(),
+  startDate: dateStringSchema,
+  endDate: dateStringSchema,
   logo: z.string().url().nullable(),
 });
 
 export const educationSchema = z.object({
+  id: z.string(),
   department: z.string(),
   organization: z.string().nullable(),
   description: z.string().nullable(),
-  startDate: z.string().nullable(),
-  endDate: z.string().nullable(),
+  startDate: dateStringSchema,
+  endDate: dateStringSchema,
   logo: z.string().url().nullable(),
 });
 
 export const certificationSchema = z.object({
+  id: z.string(),
   name: z.string(),
   kind: z.string().nullable(),
   institution: z.string().nullable(),
-  date: z.string().nullable(),
+  date: dateStringSchema,
 });
 
 export const careerSchema = z.object({
+  id: z.string(),
   role: z.string(),
   organization: z.string().nullable(),
   description: z.string().nullable(),
-  startDate: z.string().nullable(),
-  endDate: z.string().nullable(),
+  startDate: dateStringSchema,
+  endDate: dateStringSchema,
   logo: z.string().url().nullable(),
 });
 
 export const awardSchema = z.object({
+  id: z.string(),
   name: z.string(),
   tier: z.string().nullable(),
-  date: z.string().nullable(),
+  date: dateStringSchema,
 });
 
 export const activitySchema = z.object({
+  id: z.string(),
   name: z.string(),
   role: z.string(),
   hosts: z.array(z.string()),
-  startDate: z.string().nullable(),
-  endDate: z.string().nullable(),
+  startDate: dateStringSchema,
+  endDate: dateStringSchema,
 });
 
 export const aboutMeSchema = z.object({
-  content: z.string(),
+  content: z.string().min(1, "AboutMe content cannot be empty"),
 });
 
 export type Skill = z.infer<typeof skillSchema>;

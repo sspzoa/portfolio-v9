@@ -1,16 +1,18 @@
 import { z } from "zod";
 
+const NOTION_TOKEN_REGEX = /^secret_[A-Za-z0-9_-]+$/;
+
 const envSchema = z.object({
-  NOTION_TOKEN: z.string().min(1, "NOTION_TOKEN is required"),
-  ABOUTME_DATA_SOURCE_ID: z.string().min(1, "ABOUTME_DATA_SOURCE_ID is required"),
-  ACTIVITIES_DATA_SOURCE_ID: z.string().min(1, "ACTIVITIES_DATA_SOURCE_ID is required"),
-  AWARDS_DATA_SOURCE_ID: z.string().min(1, "AWARDS_DATA_SOURCE_ID is required"),
-  CAREERS_DATA_SOURCE_ID: z.string().min(1, "CAREERS_DATA_SOURCE_ID is required"),
-  CERTIFICATES_DATA_SOURCE_ID: z.string().min(1, "CERTIFICATES_DATA_SOURCE_ID is required"),
-  EDUCATIONS_DATA_SOURCE_ID: z.string().min(1, "EDUCATIONS_DATA_SOURCE_ID is required"),
-  EXPERIENCES_DATA_SOURCE_ID: z.string().min(1, "EXPERIENCES_DATA_SOURCE_ID is required"),
-  PROJECTS_DATA_SOURCE_ID: z.string().min(1, "PROJECTS_DATA_SOURCE_ID is required"),
-  SKILLS_DATA_SOURCE_ID: z.string().min(1, "SKILLS_DATA_SOURCE_ID is required"),
+  NOTION_TOKEN: z.string().regex(NOTION_TOKEN_REGEX, "NOTION_TOKEN must be a valid Notion integration token"),
+  ABOUTME_DATA_SOURCE_ID: z.string().uuid("ABOUTME_DATA_SOURCE_ID must be a valid UUID"),
+  ACTIVITIES_DATA_SOURCE_ID: z.string().uuid("ACTIVITIES_DATA_SOURCE_ID must be a valid UUID"),
+  AWARDS_DATA_SOURCE_ID: z.string().uuid("AWARDS_DATA_SOURCE_ID must be a valid UUID"),
+  CAREERS_DATA_SOURCE_ID: z.string().uuid("CAREERS_DATA_SOURCE_ID must be a valid UUID"),
+  CERTIFICATES_DATA_SOURCE_ID: z.string().uuid("CERTIFICATES_DATA_SOURCE_ID must be a valid UUID"),
+  EDUCATIONS_DATA_SOURCE_ID: z.string().uuid("EDUCATIONS_DATA_SOURCE_ID must be a valid UUID"),
+  EXPERIENCES_DATA_SOURCE_ID: z.string().uuid("EXPERIENCES_DATA_SOURCE_ID must be a valid UUID"),
+  PROJECTS_DATA_SOURCE_ID: z.string().uuid("PROJECTS_DATA_SOURCE_ID must be a valid UUID"),
+  SKILLS_DATA_SOURCE_ID: z.string().uuid("SKILLS_DATA_SOURCE_ID must be a valid UUID"),
 });
 
 const parsed = envSchema.safeParse(process.env);

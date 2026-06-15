@@ -1,6 +1,8 @@
 # AGENTS.md
 
 > AI coding agent guide for `portfolio-v9`. This file describes the project as it actually exists in the repository, so refer to it before making changes.
+>
+> Last updated: 2026-06-15
 
 ## Project overview
 
@@ -45,11 +47,15 @@ src/
     sitemap.ts         # /sitemap.xml route
     opengraph-image.tsx # /opengraph-image.png route
     twitter-image.tsx   # /twitter-image.png route
+    manifest.ts        # /manifest.webmanifest route
+    apple-icon.tsx     # /apple-icon.png route
+    error.tsx          # Route-level error boundary
+    global-error.tsx   # Global error boundary
   shared/
     components/        # Reusable UI primitives (Section, TimelineEntry, Tag, etc.)
     lib/               # Data fetching, Notion client, env validation, provider shell
     schemas.ts         # Zod schemas for Notion data
-    types.ts           # Re-export of types from schemas.ts
+    types.ts           # Shared types including re-exports from schemas.ts and SectionComponentProps
     utils/             # Date/period formatting helpers
 public/                # Static assets (photo, logos, og-image)
 ```
@@ -58,7 +64,7 @@ public/                # Static assets (photo, logos, og-image)
 
 - The only public route is `/`, served by `src/app/(pages)/(home)/(routes)/page.tsx`.
 - `/portfolio` is permanently redirected to `/` via `next.config.ts`.
-- `robots.ts`, `sitemap.ts`, `opengraph-image.tsx`, and `twitter-image.tsx` are Next.js metadata route handlers.
+- `robots.ts`, `sitemap.ts`, `opengraph-image.tsx`, `twitter-image.tsx`, `manifest.ts`, and `apple-icon.tsx` are Next.js metadata route handlers.
 
 ## Build and run commands
 
@@ -82,6 +88,7 @@ npm run start
 
 # Lint/check everything
 bun run lint        # biome check
+bun run lint:fix    # biome check --write
 
 # Auto-format and fix issues
 bun run format      # biome format --write
@@ -124,9 +131,11 @@ If any required variable is missing, the app throws at import time with a clear 
 - API version header: `2025-09-03`
 - Sends `Authorization: Bearer <NOTION_TOKEN>` and `Content-Type: application/json`
 - Uses `cache: "no-store"` so data is fetched at request time
+- Applies a 15s request timeout via `AbortController`
+- Retries transient failures (network errors, 5xx, 429) up to 3 times with exponential backoff
 - Throws `NotionApiError` on non-OK responses
 
-`src/shared/lib/portfolio-data.ts` exposes one async fetcher per section (e.g., `fetchProjects`, `fetchCareers`) and an aggregator `getPortfolioData()`. Each fetcher queries the corresponding data source via `/data_sources/<ID>/query`, maps Notion properties to plain objects, and validates them with Zod schemas from `src/shared/schemas.ts`.
+`src/shared/lib/portfolio-data.ts` exposes one async fetcher per section (e.g., `fetchProjects`, `fetchCareers`) and an aggregator `getPortfolioData()`. Each fetcher queries the corresponding data source via `/data_sources/<ID>/query`, maps Notion properties to plain objects (including each Notion page `id`), and validates them with Zod schemas from `src/shared/schemas.ts`. Fetchers classify errors as `DataFetchError` (network/Notion API) or `DataValidationError` (Zod/schema). `getPortfolioData()` uses `Promise.allSettled()` so that failures in awards, certificates, skills, careers, experiences, educations, projects, or activities do not crash the whole page; however, `aboutMe` is required, so a failure there still propagates.
 
 ### Server vs. client components
 
@@ -136,11 +145,13 @@ If any required variable is missing, the app throws at import time with a clear 
   - `SideNav` — observes section visibility with `IntersectionObserver` and highlights the active section.
   - `SideProjectToggle` — toggles visibility of side projects.
 - `src/shared/lib/provider.tsx` exports a client-shell component named `Providers` that currently just renders children, but exists as an extension point.
+- `src/app/error.tsx` and `src/app/global-error.tsx` provide route-level and global error boundaries.
 
 ### Content rendering conventions
 
-- `Description` parses a small subset of Markdown-like syntax: bold wraps (`**text**`), inline links (`[text](url)`), and bullet lists starting with `-` or `•`.
+- `Description` parses a small subset of Markdown-like syntax: bold wraps (`**text**`) rendered as `<strong>`, inline links (`[text](url)`), and bullet lists starting with `-` or `•`.
 - Do not store arbitrary HTML in Notion and render it with `dangerouslySetInnerHTML`. The codebase intentionally parses text into React nodes.
+- The only exception is the hardcoded JSON-LD schema in `layout.tsx`, which is fully controlled data and annotated with a Biome ignore comment.
 - Images are rendered with Next.js `<Image>` and must be served from allowed hostnames. `next.config.ts` currently allows `https://prod-files-secure.s3.us-west-2.amazonaws.com` for Notion-hosted files.
 
 ## Styling and design system
@@ -169,7 +180,8 @@ Tailwind maps these custom properties to classes such as `text-content-standard-
 
 - Primary font: `Wanted Sans Variable` / `Wanted Sans`, loaded from `cdn.jsdelivr.net`.
 - Monospace font stack is used for labels, dates, and captions via `font-mono`.
-- Tailwind text sizes: `display`, `title`, `heading`, `body`, `label`, `footnote`, `caption`.
+- Tailwind text sizes: `display`, `title`, `heading`, `body`, `label`, `footnote`, `caption`, `hero-sm`, `hero-md`, `hero-lg`.
+- Custom letter spacing: `tracking-label-wide`.
 
 ### Motion
 
@@ -214,8 +226,9 @@ The project uses **Biome** for linting and formatting. Configuration is in `biom
 
 ### Component patterns
 
-- Section components accept `id?: string` and `index?: number` and render inside `Section`.
-- Server Components should fetch data with `try/catch` and render a Korean fallback message on error: `일시적으로 데이터를 불러올 수 없습니다.`.
+- Section components accept `id?: string` and `index?: number` (via `SectionComponentProps` from `@/shared/types`) and render inside `Section`.
+- Server Components should fetch data with `try/catch`, log the error, and render a Korean fallback message on error. Use `isConfigError()` from `portfolio-data` to show `설정을 확인해 주세요.` for 4xx Notion errors; otherwise show `일시적으로 데이터를 불러올 수 없습니다.`.
+- List items should use stable keys derived from Notion page `id`s rather than array indices.
 - If a section has no items, return `null` instead of an empty section.
 - Use `formatPeriod(start, end, { present: true })` for careers/experiences/educations to show "Present" when there is no end date.
 - Use `formatPeriod(start, end)` without options for projects and activities.
@@ -237,9 +250,9 @@ Recommended manual checks when making changes:
 ## Security considerations
 
 - **Secrets:** `NOTION_TOKEN` and Notion data source IDs are sensitive. They are read from environment variables, validated by Zod, and never sent to the client.
-- **CSP:** `next.config.ts` sets a strict `Content-Security-Policy` header. It allows scripts/styles from `'self'`, inline scripts/styles for Next.js, `va.vercel-scripts.com` for Vercel scripts, and `cdn.jsdelivr.net` for the font. Images are restricted to `'self'`, `data:`, and the Notion S3 hostname. If you add a new external script, font, image domain, or iframe source, update the CSP accordingly.
-- **Security headers:** The app also sends `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, and a restrictive `Permissions-Policy`.
-- **XSS prevention:** The app avoids `dangerouslySetInnerHTML`. Rich text from Notion is treated as plain text and optionally parsed into safe React nodes by `Description`.
+- **CSP:** `next.config.ts` sets a strict `Content-Security-Policy` header. It allows scripts/styles from `'self'`, inline scripts/styles for Next.js, `va.vercel-scripts.com` for Vercel scripts, `cdn.jsdelivr.net` for the font, and `https://vitals.vercel-insights.com` for Vercel vitals. Images are restricted to `'self'`, `data:`, and the Notion S3 hostname. If you add a new external script, font, image domain, or iframe source, update the CSP accordingly.
+- **Security headers:** The app also sends `Strict-Transport-Security`, `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `X-DNS-Prefetch-Control`, `X-Permitted-Cross-Domain-Policies`, `Referrer-Policy`, and a restrictive `Permissions-Policy`.
+- **XSS prevention:** The app avoids `dangerouslySetInnerHTML` for user-facing content. Rich text from Notion is treated as plain text and optionally parsed into safe React nodes by `Description`. The only exception is the hardcoded JSON-LD schema in `layout.tsx`, which is fully controlled data and annotated with a Biome ignore comment.
 - **Environment isolation:** `.env*` files and `.next/` output are ignored by Git.
 
 ## Deployment
@@ -259,6 +272,7 @@ Because data is fetched at request time from Notion, the build does not need to 
 - Data source fetchers run independently per section in `page.tsx`. If you want to reduce API calls, consider using `getPortfolioData()` and passing the result down, but this will change the streaming behavior of the page.
 - `Providers` currently does nothing but is the intended place for future context providers.
 - `description` text supports a tiny Markdown subset; do not assume full Markdown support.
-- `formatDate` converts an ISO date string (`YYYY-MM-DD`) to a display string (`YYYY.MM`).
-- The side-project toggle keys list items with a composite prefix (`main-${index}` or `side-${index}`) rather than relying on array index alone.
+- `formatDate` converts an ISO date string (`YYYY-MM-DD`) to a display string (`YYYY.MM`) and validates the input format.
+- The side-project toggle keys list items with a composite prefix that includes the Notion page `id` rather than relying on array index alone.
+- `page.tsx` exports `dynamic = "force-dynamic"` because all content is fetched at request time with `cache: "no-store"`; do not change this unless you also add a caching strategy.
 - React Compiler is enabled; the build pipeline expects the Babel plugin to be present.

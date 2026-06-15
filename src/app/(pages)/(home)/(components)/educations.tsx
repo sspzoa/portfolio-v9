@@ -1,11 +1,11 @@
 import Section from "@/shared/components/section";
 import TimelineEntry from "@/shared/components/timeline-entry";
-import { fetchEducations } from "@/shared/lib/portfolio-data";
+import { fetchEducations, isConfigError } from "@/shared/lib/portfolio-data";
+import type { SectionComponentProps } from "@/shared/types";
 import formatPeriod from "@/shared/utils/formatPeriod";
 
-interface SectionComponentProps {
-  index?: number;
-  id?: string;
+function getErrorMessage(error: unknown): string {
+  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
 }
 
 export async function EducationsSection({ index, id }: SectionComponentProps) {
@@ -16,9 +16,9 @@ export async function EducationsSection({ index, id }: SectionComponentProps) {
     return (
       <Section id={id} title="Educations" index={index} count={educations.length}>
         <div className="flex flex-col gap-spacing-600">
-          {educations.map((education, i) => (
+          {educations.map((education) => (
             <TimelineEntry
-              key={i}
+              key={education.id}
               period={formatPeriod(education.startDate, education.endDate, { present: true })}
               title={education.organization ?? education.department}
               subtitle={education.organization ? education.department : null}
@@ -29,10 +29,12 @@ export async function EducationsSection({ index, id }: SectionComponentProps) {
         </div>
       </Section>
     );
-  } catch {
+  } catch (error) {
+    console.error("[EducationsSection]", error);
+
     return (
       <Section id={id} title="Educations" index={index}>
-        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+        <p className="text-content-standard-secondary text-label">{getErrorMessage(error)}</p>
       </Section>
     );
   }

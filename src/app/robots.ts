@@ -7,5 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
     },
     sitemap: "https://sspzoa.io/sitemap.xml",
+    host: "https://sspzoa.io",
   };
 }

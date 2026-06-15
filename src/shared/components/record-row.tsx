@@ -1,8 +1,8 @@
 interface RecordRowProps {
   title: string;
-  meta?: string;
-  badge?: string;
-  date?: string;
+  meta?: string | null;
+  badge?: string | null;
+  date?: string | null;
 }
 
 // Compact editorial list row — title + meta on the left, badge/date on the right.

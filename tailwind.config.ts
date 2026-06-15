@@ -1,11 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/app/**/*.{js,ts,jsx,tsx,mdx}", "./src/shared/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
@@ -106,6 +102,12 @@ const config: Config = {
           keyword: "var(--syntax-keyword)",
         },
       },
+      fontFamily: {
+        mono: ["var(--font-mono)", "monospace"],
+      },
+      letterSpacing: {
+        "label-wide": "0.22em",
+      },
       fontSize: {
         display: ["48px", { lineHeight: "64px", letterSpacing: "-1.44px" }],
         title: ["24px", { lineHeight: "32px", letterSpacing: "-0.48px" }],
@@ -114,6 +116,9 @@ const config: Config = {
         label: ["14px", { lineHeight: "22px", letterSpacing: "-0.28px" }],
         footnote: ["12px", { lineHeight: "20px", letterSpacing: "-0.24px" }],
         caption: ["10px", { lineHeight: "16px", letterSpacing: "-0.2px" }],
+        "hero-sm": ["44px", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        "hero-md": ["64px", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        "hero-lg": ["72px", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
       },
       spacing: {
         "spacing-50": "2px",

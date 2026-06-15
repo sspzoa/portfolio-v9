@@ -25,13 +25,14 @@ export default function ProjectItem({ project }: ProjectItemProps) {
               height={28}
               src={project.iconImage}
               alt=""
+              sizes="28px"
               draggable={false}
             />
           )}
           <span className="truncate">{project.name}</span>
         </h3>
         {period && (
-          <span className="shrink-0 font-mono text-content-standard-tertiary text-footnote tabular-nums">{period}</span>
+          <time className="shrink-0 font-mono text-content-standard-tertiary text-footnote tabular-nums">{period}</time>
         )}
       </div>
 
@@ -53,8 +54,8 @@ export default function ProjectItem({ project }: ProjectItemProps) {
 
       {project.tags.length > 0 && (
         <div className="flex flex-row flex-wrap gap-spacing-150">
-          {project.tags.map((tag, i) => (
-            <Chip key={i} name={tag} />
+          {project.tags.map((tag) => (
+            <Chip key={`${project.id}-${tag}`} name={tag} />
           ))}
         </div>
       )}

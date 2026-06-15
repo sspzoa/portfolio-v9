@@ -1,10 +1,10 @@
 import RecordRow from "@/shared/components/record-row";
 import Section from "@/shared/components/section";
-import { fetchCertificates } from "@/shared/lib/portfolio-data";
+import { fetchCertificates, isConfigError } from "@/shared/lib/portfolio-data";
+import type { SectionComponentProps } from "@/shared/types";
 
-interface SectionComponentProps {
-  index?: number;
-  id?: string;
+function getErrorMessage(error: unknown): string {
+  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
 }
 
 export async function CertificatesSection({ index, id }: SectionComponentProps) {
@@ -15,21 +15,23 @@ export async function CertificatesSection({ index, id }: SectionComponentProps) 
     return (
       <Section id={id} title="Certificates" index={index} count={certificates.length}>
         <ul className="flex flex-col">
-          {certificates.map((certificate, i) => (
+          {certificates.map((certificate) => (
             <RecordRow
-              key={i}
+              key={certificate.id}
               title={certificate.name}
               meta={[certificate.institution, certificate.kind].filter(Boolean).join(" · ")}
-              date={certificate.date ?? undefined}
+              date={certificate.date}
             />
           ))}
         </ul>
       </Section>
     );
-  } catch {
+  } catch (error) {
+    console.error("[CertificatesSection]", error);
+
     return (
       <Section id={id} title="Certificates" index={index}>
-        <p className="text-content-standard-secondary text-label">일시적으로 데이터를 불러올 수 없습니다.</p>
+        <p className="text-content-standard-secondary text-label">{getErrorMessage(error)}</p>
       </Section>
     );
   }

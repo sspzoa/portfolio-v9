@@ -2,11 +2,13 @@
   "name": "portfolio-v9",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
+    "lint:fix": "biome check --write",
     "format": "biome format --write"
   },
   "dependencies": {
@@ -27,5 +29,8 @@
     "babel-plugin-react-compiler": "1.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
