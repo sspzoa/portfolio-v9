@@ -6,7 +6,7 @@
 
 ## Project overview
 
-This is a personal portfolio website for Seungpyo Suh, a full-stack engineer. It is built with [Next.js](https://nextjs.org/) App Router, [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS v4](https://tailwindcss.com/). The site is a single-page résumé/portfolio that renders sections such as About, Careers, Experiences, Educations, Skills, Awards, Certificates, Projects, and Activities.
+This is a personal portfolio website for Seungpyo Suh, a product engineer. It is built with [Next.js](https://nextjs.org/) App Router, [React 19](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Tailwind CSS v4](https://tailwindcss.com/). The site is a single-page résumé/portfolio that renders sections such as About, Careers, Experiences, Educations, Skills, Awards, Certificates, Projects, and Activities.
 
 Key facts:
 

@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Seungpyo Suh",
     short_name: "Seungpyo Suh",
-    description: "Full-Stack Engineer",
+    description: "Product Engineer",
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",

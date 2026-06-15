@@ -39,7 +39,7 @@ export default function Home() {
               Seungpyo Suh<span className="text-core-accent">.</span>
             </Link>
             <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
-              Full-Stack Engineer
+              Product Engineer
             </p>
           </div>
 
