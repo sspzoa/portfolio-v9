@@ -28,9 +28,16 @@ const SECTIONS = [
   { id: "activities", label: "Activities", Component: ActivitiesSection },
 ] as const;
 
-const navItems = SECTIONS.map(({ id, label }) => ({ id, label }));
+interface HomeProps {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}
 
-export default function Home() {
+export default async function Home({ searchParams }: HomeProps) {
+  const params = await searchParams;
+  // Projects render only when explicitly requested, e.g. /?projects
+  const sections = params.projects === undefined ? SECTIONS.filter(({ id }) => id !== "projects") : SECTIONS;
+  const navItems = sections.map(({ id, label }) => ({ id, label }));
+
   return (
     <div className="mx-auto min-h-dvh w-full max-w-6xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
       <MobileHeader items={navItems} />
@@ -65,7 +72,7 @@ export default function Home() {
           <Hero />
 
           <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-900 md:gap-spacing-900">
-            {SECTIONS.map(({ id, Component }, i) => (
+            {sections.map(({ id, Component }, i) => (
               <Component key={id} id={id} index={i + 1} />
             ))}
           </div>
