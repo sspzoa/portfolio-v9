@@ -4,23 +4,27 @@ import { Hero } from "@/features/hero";
 import { MobileHeader, SideNav } from "@/features/nav";
 import { AboutMeSection } from "@/features/sections/aboutme";
 import { ActivitiesSection } from "@/features/sections/activities";
+import { AwardsSection } from "@/features/sections/awards";
 import { CareersSection } from "@/features/sections/careers";
+import { CertificatesSection } from "@/features/sections/certificates";
+import { EducationsSection } from "@/features/sections/educations";
 import { ExperiencesSection } from "@/features/sections/experiences";
 import { ProjectsSection } from "@/features/sections/projects";
-import { RecordsSection } from "@/features/sections/records";
 import { SkillsSection } from "@/features/sections/skills";
 import { Socials } from "@/features/socials";
 
 export const dynamic = "force-dynamic";
 
-// Content-priority order (P1): Projects promoted, records consolidated (P5).
+// Korean résumé-style content order.
 const SECTIONS = [
   { id: "about", label: "About", Component: AboutMeSection },
-  { id: "projects", label: "Projects", Component: ProjectsSection },
+  { id: "awards", label: "Awards", Component: AwardsSection },
+  { id: "certificates", label: "Certificates", Component: CertificatesSection },
   { id: "careers", label: "Careers", Component: CareersSection },
   { id: "experiences", label: "Experiences", Component: ExperiencesSection },
   { id: "skills", label: "Skills", Component: SkillsSection },
-  { id: "records", label: "Records", Component: RecordsSection },
+  { id: "education", label: "Education", Component: EducationsSection },
+  { id: "projects", label: "Projects", Component: ProjectsSection },
   { id: "activities", label: "Activities", Component: ActivitiesSection },
 ] as const;
 
