@@ -124,7 +124,7 @@ export function MobileHeader({ items }: NavProps) {
   const activeItem = items[activeIndex];
 
   return (
-    <header className="-mx-spacing-500 sticky top-0 z-40 border-line-divider border-b bg-background-standard-primary/80 backdrop-blur-md md:-mx-spacing-700 lg:hidden">
+    <header className="-mx-spacing-500 md:-mx-spacing-700 sticky top-0 z-40 border-line-divider border-b bg-background-standard-primary/80 backdrop-blur-md lg:hidden">
       <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700">
         <Link
           href="#top"

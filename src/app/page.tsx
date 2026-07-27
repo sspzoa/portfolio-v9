@@ -55,7 +55,6 @@ export default function Home() {
               className="font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary">
               me@sspzoa.io
             </Link>
-            <p className="font-mono text-content-standard-quaternary text-footnote">© {new Date().getFullYear()}</p>
           </div>
         </aside>
 
