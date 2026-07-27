@@ -10,6 +10,7 @@ import type {
   NotionExperiencePage,
   NotionFileProperty,
   NotionProjectPage,
+  NotionRichTextSegment,
   NotionSkillPage,
 } from "@/shared/lib/notion-types";
 import {
@@ -72,6 +73,20 @@ function getFileUrl(file: NotionFileProperty | null | undefined): string | null 
 function getPageIconUrl(page: NotionProjectPage): string | null {
   if (!page.icon) return null;
   return page.icon.type === "emoji" ? null : getFileUrl(page.icon);
+}
+
+function richTextToMarkdown(richText: NotionRichTextSegment[]): string | null {
+  const parts = richText.map((segment) => {
+    const text = segment.plain_text;
+    if (!segment.annotations?.bold) return text;
+    if (!text.trim()) return text;
+    return text
+      .split("\n")
+      .map((line) => (line.trim() ? `**${line}**` : line))
+      .join("\n");
+  });
+  const joined = parts.join("");
+  return joined.trim() ? joined : null;
 }
 
 export interface PortfolioData {
@@ -137,8 +152,8 @@ export async function fetchProjects(): Promise<Project[]> {
     const projects = response.results.map((result) => ({
       id: result.id,
       name: result.properties.name.title[0]?.plain_text ?? "",
-      shortDescription: result.properties.shortDescription.rich_text[0]?.plain_text ?? null,
-      description: result.properties.description.rich_text[0]?.plain_text ?? null,
+      shortDescription: richTextToMarkdown(result.properties.shortDescription.rich_text),
+      description: richTextToMarkdown(result.properties.description.rich_text),
       startDate: formatDate(result.properties.workPeriod.date?.start),
       endDate: formatDate(result.properties.workPeriod.date?.end),
       teamSize: result.properties.teamSize.number,
@@ -173,7 +188,7 @@ export async function fetchExperiences(): Promise<Experience[]> {
       id: result.id,
       role: result.properties.role.title[0]?.plain_text ?? "",
       organization: result.properties.organization.rich_text[0]?.plain_text ?? null,
-      description: result.properties.description.rich_text[0]?.plain_text ?? null,
+      description: richTextToMarkdown(result.properties.description.rich_text),
       startDate: formatDate(result.properties.date.date?.start),
       endDate: formatDate(result.properties.date.date?.end),
       logo: getFileUrl(result.properties.logo.files[0]),
@@ -204,7 +219,7 @@ export async function fetchCareers(): Promise<Career[]> {
       id: result.id,
       role: result.properties.role.title[0]?.plain_text ?? "",
       organization: result.properties.organization.rich_text[0]?.plain_text ?? null,
-      description: result.properties.description.rich_text[0]?.plain_text ?? null,
+      description: richTextToMarkdown(result.properties.description.rich_text),
       startDate: formatDate(result.properties.date.date?.start),
       endDate: formatDate(result.properties.date.date?.end),
       logo: getFileUrl(result.properties.logo.files[0]),
@@ -235,7 +250,7 @@ export async function fetchEducations(): Promise<Education[]> {
       id: result.id,
       department: result.properties.department.title[0]?.plain_text ?? "",
       organization: result.properties.organization.rich_text[0]?.plain_text ?? null,
-      description: result.properties.description.rich_text[0]?.plain_text ?? null,
+      description: richTextToMarkdown(result.properties.description.rich_text),
       startDate: formatDate(result.properties.date.date?.start),
       endDate: formatDate(result.properties.date.date?.end),
       logo: getFileUrl(result.properties.logo.files[0]),
@@ -352,7 +367,7 @@ export async function fetchAboutMe(): Promise<AboutMe> {
     }
 
     const aboutme = {
-      content: firstResult.properties.content.rich_text[0]?.plain_text ?? "",
+      content: richTextToMarkdown(firstResult.properties.content.rich_text) ?? "",
     };
 
     return aboutMeSchema.parse(aboutme);

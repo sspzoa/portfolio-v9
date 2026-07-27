@@ -2,8 +2,13 @@ export interface NotionTitleProperty {
   title: { plain_text: string }[];
 }
 
+export interface NotionRichTextSegment {
+  plain_text: string;
+  annotations?: { bold: boolean };
+}
+
 export interface NotionRichTextProperty {
-  rich_text: { plain_text: string }[];
+  rich_text: NotionRichTextSegment[];
 }
 
 export interface NotionSelectProperty {
