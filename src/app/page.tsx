@@ -1,29 +1,26 @@
 import Link from "next/link";
-import { AboutMeSection } from "@/app/(pages)/(home)/(components)/aboutme";
-import { ActivitiesSection } from "@/app/(pages)/(home)/(components)/activities";
-import { AwardsSection } from "@/app/(pages)/(home)/(components)/awards";
-import { CareersSection } from "@/app/(pages)/(home)/(components)/careers";
-import { CertificatesSection } from "@/app/(pages)/(home)/(components)/certificates";
-import { EducationsSection } from "@/app/(pages)/(home)/(components)/educations";
-import { ExperiencesSection } from "@/app/(pages)/(home)/(components)/experiences";
-import { Hero } from "@/app/(pages)/(home)/(components)/hero";
-import { ProjectsSection } from "@/app/(pages)/(home)/(components)/projects";
-import { SideNav } from "@/app/(pages)/(home)/(components)/side-nav";
-import { SkillsSection } from "@/app/(pages)/(home)/(components)/skills";
-import { Socials } from "@/app/(pages)/(home)/(components)/socials";
-import Footer from "@/shared/components/footer";
+import { Footer } from "@/features/footer";
+import { Hero } from "@/features/hero";
+import { MobileHeader, SideNav } from "@/features/nav";
+import { AboutMeSection } from "@/features/sections/aboutme";
+import { ActivitiesSection } from "@/features/sections/activities";
+import { CareersSection } from "@/features/sections/careers";
+import { ExperiencesSection } from "@/features/sections/experiences";
+import { ProjectsSection } from "@/features/sections/projects";
+import { RecordsSection } from "@/features/sections/records";
+import { SkillsSection } from "@/features/sections/skills";
+import { Socials } from "@/features/socials";
 
 export const dynamic = "force-dynamic";
 
+// Content-priority order (P1): Projects promoted, records consolidated (P5).
 const SECTIONS = [
   { id: "about", label: "About", Component: AboutMeSection },
+  { id: "projects", label: "Projects", Component: ProjectsSection },
   { id: "careers", label: "Careers", Component: CareersSection },
   { id: "experiences", label: "Experiences", Component: ExperiencesSection },
-  { id: "educations", label: "Educations", Component: EducationsSection },
   { id: "skills", label: "Skills", Component: SkillsSection },
-  { id: "awards", label: "Awards", Component: AwardsSection },
-  { id: "certificates", label: "Certificates", Component: CertificatesSection },
-  { id: "projects", label: "Projects", Component: ProjectsSection },
+  { id: "records", label: "Records", Component: RecordsSection },
   { id: "activities", label: "Activities", Component: ActivitiesSection },
 ] as const;
 
@@ -31,8 +28,10 @@ const navItems = SECTIONS.map(({ id, label }) => ({ id, label }));
 
 export default function Home() {
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-5xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
-      <div className="lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-x-spacing-850">
+    <div className="mx-auto min-h-dvh w-full max-w-6xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+      <MobileHeader items={navItems} />
+
+      <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-x-spacing-850">
         <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
           <div className="flex flex-col gap-spacing-150">
             <Link href="#top" className="font-semibold text-content-standard-primary text-label tracking-tight">
@@ -52,11 +51,14 @@ export default function Home() {
               className="font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary">
               me@sspzoa.io
             </Link>
-            <p className="font-mono text-caption text-content-standard-quaternary">© {new Date().getFullYear()}</p>
+            <p className="font-mono text-content-standard-quaternary text-footnote">© {new Date().getFullYear()}</p>
           </div>
         </aside>
 
-        <main id="main-content" tabIndex={-1} className="flex min-w-0 flex-col py-spacing-700 md:py-spacing-800">
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex min-w-0 max-w-content flex-col py-spacing-700 md:py-spacing-800">
           <Hero />
 
           <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-900 md:gap-spacing-900">

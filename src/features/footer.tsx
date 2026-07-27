@@ -1,4 +1,4 @@
-export default function Footer() {
+export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -6,7 +6,7 @@ export default function Footer() {
       <p className="font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest">
         Designed & built by Seungpyo Suh
       </p>
-      <p className="font-mono text-caption text-content-standard-quaternary">
+      <p className="font-mono text-footnote text-content-standard-quaternary">
         © <time dateTime="2023">2023</time>–<time dateTime={String(currentYear)}>{currentYear}</time> · All rights
         reserved
       </p>

@@ -1,11 +1,8 @@
-import Section from "@/shared/components/section";
-import { fetchProjects, isConfigError } from "@/shared/lib/portfolio-data";
+import { SideProjectToggle } from "@/features/side-project-toggle";
+import { getErrorMessage } from "@/shared/lib/errors";
+import { fetchProjects } from "@/shared/lib/portfolio-data";
 import type { SectionComponentProps } from "@/shared/types";
-import { SideProjectToggle } from "./side-project-toggle";
-
-function getErrorMessage(error: unknown): string {
-  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
-}
+import { Section } from "@/shared/ui/section";
 
 export async function ProjectsSection({ index, id }: SectionComponentProps) {
   try {

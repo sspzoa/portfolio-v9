@@ -8,7 +8,7 @@ interface SectionProps {
   children: React.ReactNode;
 }
 
-export default function Section({ id, title, index, count, children }: SectionProps) {
+export function Section({ id, title, index, count, children }: SectionProps) {
   return (
     <section id={id} className="scroll-mt-spacing-800 border-line-divider border-t pt-spacing-700 md:pt-spacing-800">
       <header className="mb-spacing-600 flex items-baseline justify-between gap-spacing-400">

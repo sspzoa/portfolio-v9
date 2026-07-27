@@ -65,21 +65,17 @@
   --components-translucent-tertiary: rgba(121, 124, 138, 0.05);
 
   --core-accent: rgba(85, 117, 158, 1);
+  --core-accent-strong: rgba(74, 101, 135, 1);
   --core-accent-translucent: rgba(85, 117, 158, 0.1);
 
-  --core-status-positive: var(--solid-green);
-  --core-status-warning: var(--solid-yellow);
-  --core-status-negative: var(--solid-red);
-
-  --syntax-comment: var(--content-standard-tertiary);
-  --syntax-function: rgba(91, 89, 222, 1);
-  --syntax-variable: rgba(224, 136, 4, 1);
-  --syntax-string: rgba(50, 204, 88, 1);
-  --syntax-constant: rgba(5, 127, 255, 1);
-  --syntax-operator: rgba(183, 86, 232, 1);
-  --syntax-keyword: rgba(255, 50, 90, 1);
-
   --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
+
+  --content-max: 720px;
+
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -132,12 +128,27 @@
     --components-translucent-tertiary: rgba(121, 124, 138, 0.08);
 
     --core-accent: rgba(143, 175, 213, 1);
+    --core-accent-strong: rgba(165, 193, 226, 1);
     --core-accent-translucent: rgba(143, 175, 213, 0.12);
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 24px;
 }
 
@@ -160,12 +171,6 @@ body {
 
 .description-fade {
   background: linear-gradient(to top, var(--background-standard-primary) 35%, transparent);
-}
-
-@media (prefers-color-scheme: dark) {
-  .description-fade {
-    background: linear-gradient(to top, var(--background-standard-primary) 35%, transparent);
-  }
 }
 
 

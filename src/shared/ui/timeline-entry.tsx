@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Description } from "@/shared/components/description";
+import { Description } from "@/shared/ui/description";
 
 interface TimelineEntryProps {
   period: string;
@@ -10,7 +10,7 @@ interface TimelineEntryProps {
 }
 
 // Résumé-style entry: a fixed period column on the left, content on the right.
-export default function TimelineEntry({ period, title, subtitle, logo, description }: TimelineEntryProps) {
+export function TimelineEntry({ period, title, subtitle, logo, description }: TimelineEntryProps) {
   return (
     <article className="grid grid-cols-1 gap-spacing-300 border-line-divider border-t pt-spacing-600 first:border-t-0 first:pt-0 md:grid-cols-[150px_1fr] md:gap-spacing-700">
       <time className="pt-spacing-50 font-mono text-content-standard-tertiary text-footnote tabular-nums">
@@ -20,7 +20,7 @@ export default function TimelineEntry({ period, title, subtitle, logo, descripti
         <div className="flex items-center gap-spacing-300">
           {logo && (
             <Image
-              className="h-8 w-8 shrink-0 rounded-radius-200 object-contain"
+              className="h-8 w-8 shrink-0 rounded-radius-sm object-contain"
               width={32}
               height={32}
               src={logo}

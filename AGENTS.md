@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-Guidance for Claude Code when working in this repository.
+Guidance for coding agents working in this repository.
 
 ## What this is
 
@@ -67,6 +67,7 @@ Key files:
   - `DataFetchError` — network / Notion API failure. `isConfigError()` returns `true` when the underlying `NotionApiError` is a 4xx (i.e. misconfiguration, not transient).
   - `DataValidationError` — Zod rejected the shape.
   - `getPortfolioData()` aggregates all fetches with `Promise.allSettled`; **`aboutMe` is required** (its rejection propagates), all other sections degrade to `[]`.
+- **`src/shared/lib/errors.ts`** — `getErrorMessage()`, the shared Korean error copy for section boundaries (config error vs transient failure).
 - **`src/shared/utils/formatDate.ts`** — ISO `YYYY-MM-DD` → `YYYY.MM` (warns + returns `null` on unexpected input).
 - **`src/shared/utils/formatPeriod.ts`** — builds a `start – end` range label without orphan separators; `{ present: true }` renders `start – Present`.
 
@@ -76,30 +77,33 @@ Key files:
 src/
   app/
     layout.tsx                       # root layout: metadata, JSON-LD, skip link, Analytics, Providers
+    page.tsx                         # the home page ("/"); declares SECTIONS + layout
     globals.css                      # Tailwind import, @config, CSS-var design tokens (light/dark)
     error.tsx / global-error.tsx     # error boundaries (client)
     manifest.ts / sitemap.ts / robots.ts
     opengraph-image.tsx / apple-icon.tsx   # generated via next/og ImageResponse
-    (pages)/(home)/
-      (routes)/page.tsx              # the home page ("/"); declares SECTIONS + layout
-      (components)/                  # page-specific section components (async Server Components)
-        aboutme, careers, experiences, educations, skills,
-        awards, certificates, projects, activities,
-        hero, socials, side-nav, side-project-toggle
+  features/                          # components specific to the home page
+    hero.tsx                         # name, tagline, photo
+    nav.tsx                          # SideNav (desktop) + MobileHeader (mobile) + shared hooks (client)
+    socials.tsx / footer.tsx
+    side-project-toggle.tsx          # main/side project expander (client)
+    sections/                        # async Server Component sections
+      aboutme, projects, careers, experiences, skills, records, activities
   shared/
-    components/                      # reusable presentational pieces
-      section, timeline-entry, record-row, project-item,
-      chip, tag, description, button, footer
-    lib/                             # env, notion, notion-types, portfolio-data, provider
+    ui/                              # reusable presentational primitives
+      section, timeline-entry, record-row, record-group, project-card,
+      chip, tag, button, description, collapsible
+    markdown/parse.tsx               # server-safe markdown-lite parser (**bold**, links, lists)
+    lib/                             # env, notion, notion-types, portfolio-data, errors, provider
     utils/                           # formatDate, formatPeriod
     schemas.ts / types.ts
 ```
 
-Parenthesized folders are **Next.js route groups** — they organize files without adding URL segments, so the page resolves to `/`.
-
 ## Conventions (follow these when editing)
 
-**Server vs client.** Section components in `(components)/` are **async Server Components** that fetch their own data. Only `side-nav`, `side-project-toggle`, and `description` are `"use client"` (they need state / effects / scroll observation). Default to a Server Component; reach for `"use client"` only when you need interactivity.
+**Server vs client.** Section components in `features/sections/` are **async Server Components** that fetch their own data. Only `nav`, `side-project-toggle`, and `collapsible` are `"use client"` (scroll observation / state). `Description` is a **server** component; when content needs a max-height toggle, wrap it in the client `Collapsible`. Default to a Server Component; reach for `"use client"` only when you need interactivity.
+
+**Named exports everywhere.** No default exports except where Next.js requires them (`page.tsx`, `layout.tsx`, `error.tsx`, metadata files).
 
 **Each section owns its error handling.** The pattern is uniform — copy it for new sections:
 
@@ -118,18 +122,24 @@ export async function XSection({ index, id }: SectionComponentProps) {
     );
   }
 }
-// getErrorMessage: isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다."
 ```
 
-**Design tokens only — never raw values.** All spacing, color, radius, and type come from the token scale defined in `tailwind.config.ts` (backed by CSS vars in `globals.css`). Use these, not arbitrary px/hex:
+`getErrorMessage` is imported from `@/shared/lib/errors` — never redefine it locally. The `records` section consolidates three sources (Educations/Awards/Certificates) with `Promise.allSettled` so each degrades independently.
 
-- Spacing: `spacing-50 … spacing-1000` (`p-spacing-500`, `gap-spacing-400`, `mt-spacing-850`).
-- Color (semantic): `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-{primary,secondary}`, `line-{divider,outline}`, `components-*`, `core-accent`. Use the inverted / status / solid / syntax scales as needed.
-- Radius: `radius-100 … radius-800`, `radius-full`.
-- Type: `text-{display,title,heading,body,label,footnote,caption}` and `text-hero-{sm,md,lg}` (each token bundles size + line-height + letter-spacing).
+**Section order is content-priority.** `SECTIONS` in `page.tsx` drives both the page and navigation: About → Projects → Careers → Experiences → Skills → Records → Activities. Keep Projects near the top.
+
+**Design tokens only — never raw values.** All spacing, color, radius, type, and motion come from the token scale in `tailwind.config.ts` (backed by CSS vars in `globals.css`):
+
+- Tokens are **3-layer**: Layer 1 primitives (`--solid-*`) live in `globals.css` and are referenced only by Layer 2 semantic tokens; Tailwind exposes **Layer 2 only**. Never use `--solid-*` directly in components.
+- Color (semantic): `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-{primary,secondary}`, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}` (`accent-strong` is for text on light backgrounds). Use the inverted scales as needed.
+- Spacing: `spacing-50 … spacing-1000` (`p-spacing-500`, `gap-spacing-400`).
+- Radius: `radius-{sm,md,lg,full}`.
+- Type: `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid (`clamp()`), `body` has Korean-optimized 1.7 line-height. There is no `caption`/`display`; don't reintroduce them.
+- Motion: `duration-{fast,base,slow}` + `ease-standard`. Animate only state changes (hover/focus/active nav/progress) — no scroll-reveal decorations.
+- Layout: `max-w-content` (720px reading column), sidebar grid `lg:grid-cols-[240px_minmax(0,1fr)]`.
 - **Exception:** Tailwind's built-in `tracking-wider` / `tracking-widest` are intentional and used throughout — they are *not* token violations; don't "fix" them. (`tracking-label-wide` is the one custom tracking token.)
 
-**Theming.** Light/dark is pure CSS via `prefers-color-scheme` + `color-scheme: light dark` in `globals.css`. There is **no theme toggle and no JS theme state** — `Providers` (`shared/lib/provider.tsx`) is deliberately a pass-through. Don't add a theme context unless asked.
+**Theming.** Light/dark is pure CSS via `prefers-color-scheme` + `color-scheme: light dark` in `globals.css`. There is **no theme toggle and no JS theme state** — `Providers` (`shared/lib/provider.tsx`) is deliberately a pass-through. Don't add a theme context unless asked. Motion is globally dampened under `prefers-reduced-motion` and `scroll-behavior: smooth` only applies under `no-preference` — preserve that.
 
 **Images.** Always `next/image` with explicit `width`/`height`/`sizes` and `draggable={false}`; decorative images get `alt=""`. Notion-hosted images come from `prod-files-secure.s3.us-west-2.amazonaws.com`, which is allow-listed in **both** `next.config.ts` `images.remotePatterns` **and** the CSP `img-src`.
 
@@ -148,8 +158,8 @@ Because env validation and the data pipeline are strict, a new section touches s
 3. `src/shared/lib/notion-types.ts` — add the raw page type.
 4. `src/shared/schemas.ts` — add the Zod schema + exported type.
 5. `src/shared/lib/portfolio-data.ts` — add `fetchNewSection()` following the existing map-then-`schema.parse()` shape, with the `DataFetchError` / `DataValidationError` try/catch.
-6. `src/app/(pages)/(home)/(components)/newsection.tsx` — async section component (use the error-handling pattern above).
-7. `src/app/(pages)/(home)/(routes)/page.tsx` — add `{ id, label, Component }` to the `SECTIONS` array (drives both the page and the side-nav).
+6. `src/features/sections/newsection.tsx` — async section component (use the error-handling pattern above, `getErrorMessage` from `@/shared/lib/errors`).
+7. `src/app/page.tsx` — add `{ id, label, Component }` to the `SECTIONS` array (drives the page, the desktop SideNav, and the MobileHeader indicator).
 8. If it loads images from a new host: update **both** `next.config.ts` `remotePatterns` **and** the CSP `img-src` in `next.config.ts`.
 
 ## Gotchas
@@ -161,3 +171,4 @@ Because env validation and the data pipeline are strict, a new section touches s
 - **Security headers** (HSTS, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`) live in `next.config.ts` — preserve them.
 - **`dangerouslySetInnerHTML`** is used once, for the hardcoded JSON-LD `Person` schema in `layout.tsx`. Don't introduce it elsewhere.
 - **`/portfolio` permanently redirects to `/`** (configured in `next.config.ts`).
+- **A stray dev server on :3000 breaks `bun start`** (EADDRINUSE); check before serving the production build.

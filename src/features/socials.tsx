@@ -24,7 +24,7 @@ export function Socials({ className }: SocialsProps) {
             href={link.href}
             target={isExternal ? "_blank" : undefined}
             rel={isExternal ? "noopener noreferrer" : undefined}
-            className="rounded-radius-200 text-content-standard-tertiary transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+            className="rounded-radius-sm text-content-standard-tertiary transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
             <link.icon size={18} strokeWidth={1.75} />
           </Link>
         );

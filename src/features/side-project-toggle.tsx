@@ -1,9 +1,9 @@
 "use client";
 
 import { useId, useState } from "react";
-import Button from "@/shared/components/button";
-import ProjectItem from "@/shared/components/project-item";
 import type { Project } from "@/shared/types";
+import { Button } from "@/shared/ui/button";
+import { ProjectCard } from "@/shared/ui/project-card";
 
 interface SideProjectToggleProps {
   mainProjects: Project[];
@@ -14,15 +14,13 @@ export function SideProjectToggle({ mainProjects, sideProjects }: SideProjectTog
   const [showSideProjects, setShowSideProjects] = useState(false);
   const sideListId = useId();
 
-  // Render main and (optionally) side projects in one flow so the hairline rhythm
-  // is unbroken — only the very first project drops its top border (first:border-t-0).
   const visibleProjects = showSideProjects ? [...mainProjects, ...sideProjects] : mainProjects;
 
   return (
     <div className="flex flex-col gap-spacing-700">
-      <div id={sideListId}>
-        {visibleProjects.map((project, i) => (
-          <ProjectItem key={`${project.isSideProject ? "side" : "main"}-${project.id}-${i}`} project={project} />
+      <div id={sideListId} className="grid grid-cols-1 gap-x-spacing-600 gap-y-spacing-800 md:grid-cols-2">
+        {visibleProjects.map((project) => (
+          <ProjectCard key={`${project.isSideProject ? "side" : "main"}-${project.id}`} project={project} />
         ))}
       </div>
 

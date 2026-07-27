@@ -7,7 +7,7 @@ interface TagProps {
 }
 
 // Inline skill token — icon + name, no pill. Main skills read at full contrast.
-export default function Tag({ icon, name, isMain = false }: TagProps) {
+export function Tag({ icon, name, isMain = false }: TagProps) {
   return (
     <span
       className={`inline-flex items-center gap-spacing-150 ${

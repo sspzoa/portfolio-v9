@@ -1,11 +1,8 @@
-import { Description } from "@/shared/components/description";
-import Section from "@/shared/components/section";
-import { fetchAboutMe, isConfigError } from "@/shared/lib/portfolio-data";
+import { getErrorMessage } from "@/shared/lib/errors";
+import { fetchAboutMe } from "@/shared/lib/portfolio-data";
 import type { SectionComponentProps } from "@/shared/types";
-
-function getErrorMessage(error: unknown): string {
-  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
-}
+import { Description } from "@/shared/ui/description";
+import { Section } from "@/shared/ui/section";
 
 export async function AboutMeSection({ index, id }: SectionComponentProps) {
   try {

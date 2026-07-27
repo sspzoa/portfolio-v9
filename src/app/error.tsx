@@ -25,7 +25,7 @@ export default function Error({ error, reset }: ErrorProps) {
       <button
         type="button"
         onClick={() => reset()}
-        className="rounded-radius-400 bg-content-standard-primary px-spacing-500 py-spacing-300 font-medium text-background-standard-primary text-label transition-colors hover:bg-content-standard-secondary">
+        className="rounded-radius-md bg-content-standard-primary px-spacing-500 py-spacing-300 font-medium text-background-standard-primary text-label transition-colors hover:bg-content-standard-secondary">
         다시 시도
       </button>
     </div>

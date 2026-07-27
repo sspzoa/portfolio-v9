@@ -1,36 +1,16 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: ["./src/app/**/*.{js,ts,jsx,tsx,mdx}", "./src/shared/**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/features/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/shared/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
+      // Layer 2 semantic tokens only. Layer 1 primitives (--solid-*) stay in
+      // globals.css and are referenced exclusively by these semantic tokens.
       colors: {
-        solid: {
-          red: "var(--solid-red)",
-          orange: "var(--solid-orange)",
-          yellow: "var(--solid-yellow)",
-          green: "var(--solid-green)",
-          blue: "var(--solid-blue)",
-          indigo: "var(--solid-indigo)",
-          purple: "var(--solid-purple)",
-          pink: "var(--solid-pink)",
-          brown: "var(--solid-brown)",
-          black: "var(--solid-black)",
-          white: "var(--solid-white)",
-        },
-        "solid-translucent": {
-          red: "var(--solid-translucent-red)",
-          orange: "var(--solid-translucent-orange)",
-          yellow: "var(--solid-translucent-yellow)",
-          green: "var(--solid-translucent-green)",
-          blue: "var(--solid-translucent-blue)",
-          indigo: "var(--solid-translucent-indigo)",
-          purple: "var(--solid-translucent-purple)",
-          pink: "var(--solid-translucent-pink)",
-          brown: "var(--solid-translucent-brown)",
-          black: "var(--solid-translucent-black)",
-          white: "var(--solid-translucent-white)",
-        },
         background: {
           standard: {
             primary: "var(--background-standard-primary)",
@@ -85,21 +65,8 @@ const config: Config = {
         },
         core: {
           accent: "var(--core-accent)",
+          "accent-strong": "var(--core-accent-strong)",
           "accent-translucent": "var(--core-accent-translucent)",
-          status: {
-            positive: "var(--core-status-positive)",
-            warning: "var(--core-status-warning)",
-            negative: "var(--core-status-negative)",
-          },
-        },
-        syntax: {
-          comment: "var(--syntax-comment)",
-          function: "var(--syntax-function)",
-          variable: "var(--syntax-variable)",
-          string: "var(--syntax-string)",
-          constant: "var(--syntax-constant)",
-          operator: "var(--syntax-operator)",
-          keyword: "var(--syntax-keyword)",
         },
       },
       fontFamily: {
@@ -109,16 +76,13 @@ const config: Config = {
         "label-wide": "0.22em",
       },
       fontSize: {
-        display: ["48px", { lineHeight: "64px", letterSpacing: "-1.44px" }],
-        title: ["24px", { lineHeight: "32px", letterSpacing: "-0.48px" }],
-        heading: ["20px", { lineHeight: "28px", letterSpacing: "-0.4px" }],
-        body: ["16px", { lineHeight: "24px", letterSpacing: "-0.32px" }],
-        label: ["14px", { lineHeight: "22px", letterSpacing: "-0.28px" }],
-        footnote: ["12px", { lineHeight: "20px", letterSpacing: "-0.24px" }],
-        caption: ["10px", { lineHeight: "16px", letterSpacing: "-0.2px" }],
-        "hero-sm": ["44px", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
-        "hero-md": ["64px", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
-        "hero-lg": ["72px", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        // Fluid hero — single token replaces the old hero-{sm,md,lg} steps.
+        hero: ["clamp(2.75rem, 2rem + 4vw, 4.5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        title: ["24px", { lineHeight: "34px", letterSpacing: "-0.02em" }],
+        heading: ["20px", { lineHeight: "28px", letterSpacing: "-0.02em" }],
+        body: ["16px", { lineHeight: "27px", letterSpacing: "-0.01em" }],
+        label: ["14px", { lineHeight: "22px", letterSpacing: "-0.01em" }],
+        footnote: ["12px", { lineHeight: "18px", letterSpacing: "0" }],
       },
       spacing: {
         "spacing-50": "2px",
@@ -138,16 +102,22 @@ const config: Config = {
         "spacing-950": "72px",
         "spacing-1000": "80px",
       },
+      maxWidth: {
+        content: "var(--content-max)",
+      },
       borderRadius: {
-        "radius-100": "4px",
-        "radius-200": "6px",
-        "radius-300": "8px",
-        "radius-400": "12px",
-        "radius-500": "14px",
-        "radius-600": "16px",
-        "radius-700": "20px",
-        "radius-800": "24px",
+        "radius-sm": "6px",
+        "radius-md": "12px",
+        "radius-lg": "20px",
         "radius-full": "9999px",
+      },
+      transitionDuration: {
+        fast: "var(--duration-fast)",
+        base: "var(--duration-base)",
+        slow: "var(--duration-slow)",
+      },
+      transitionTimingFunction: {
+        standard: "var(--ease-standard)",
       },
     },
   },

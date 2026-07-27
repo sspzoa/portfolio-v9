@@ -6,7 +6,7 @@ interface RecordRowProps {
 }
 
 // Compact editorial list row — title + meta on the left, badge/date on the right.
-export default function RecordRow({ title, meta, badge, date }: RecordRowProps) {
+export function RecordRow({ title, meta, badge, date }: RecordRowProps) {
   return (
     <li className="flex items-baseline justify-between gap-spacing-400 border-line-divider border-t py-spacing-400 first:border-t-0">
       <div className="flex min-w-0 flex-col gap-spacing-50">

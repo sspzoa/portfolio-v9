@@ -1,12 +1,9 @@
-import Chip from "@/shared/components/chip";
-import Section from "@/shared/components/section";
-import { fetchActivities, isConfigError } from "@/shared/lib/portfolio-data";
+import { getErrorMessage } from "@/shared/lib/errors";
+import { fetchActivities } from "@/shared/lib/portfolio-data";
 import type { SectionComponentProps } from "@/shared/types";
+import { Chip } from "@/shared/ui/chip";
+import { Section } from "@/shared/ui/section";
 import formatPeriod from "@/shared/utils/formatPeriod";
-
-function getErrorMessage(error: unknown): string {
-  return isConfigError(error) ? "설정을 확인해 주세요." : "일시적으로 데이터를 불러올 수 없습니다.";
-}
 
 export async function ActivitiesSection({ index, id }: SectionComponentProps) {
   try {
@@ -31,7 +28,7 @@ export async function ActivitiesSection({ index, id }: SectionComponentProps) {
                 )}
               </div>
               {activity.role && (
-                <p className="font-mono text-caption text-content-standard-tertiary uppercase tracking-wider">
+                <p className="font-mono text-footnote text-content-standard-tertiary uppercase tracking-wider">
                   {activity.role}
                 </p>
               )}
