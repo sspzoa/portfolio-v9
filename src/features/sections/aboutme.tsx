@@ -10,9 +10,7 @@ export async function AboutMeSection({ index, id }: SectionComponentProps) {
 
     return (
       <Section id={id} title="About" index={index}>
-        <div className="max-w-2xl">
-          <Description>{aboutMe.content}</Description>
-        </div>
+        <Description>{aboutMe.content}</Description>
       </Section>
     );
   } catch (error) {
