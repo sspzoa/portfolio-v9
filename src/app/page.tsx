@@ -52,7 +52,7 @@ export default function Home() {
             <Socials />
             <Link
               href="mailto:me@sspzoa.io"
-              className="font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary">
+              className="font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
               me@sspzoa.io
             </Link>
           </div>

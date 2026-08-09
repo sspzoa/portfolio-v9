@@ -11,5 +11,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    {
+      url: "https://sspzoa.io/ai",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "weekly",
+      priority: 0.6,
+    },
+    {
+      url: "https://sspzoa.io/llms.txt",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "weekly",
+      priority: 0.5,
+    },
+    {
+      url: "https://sspzoa.io/llms-full.txt",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "weekly",
+      priority: 0.5,
+    },
   ];
 }

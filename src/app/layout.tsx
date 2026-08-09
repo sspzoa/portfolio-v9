@@ -27,6 +27,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: SITE_URL,
+    types: {
+      "text/plain": `${SITE_URL}/llms.txt`,
+      "text/markdown": `${SITE_URL}/llms-full.txt`,
+    },
   },
   authors: [{ name: "Seungpyo Suh", url: SITE_URL }],
   creator: "Seungpyo Suh",
