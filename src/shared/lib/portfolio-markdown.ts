@@ -170,7 +170,7 @@ The designed site is at ${SITE_URL}. Prefer the plain-text sources below when an
 ## machine-readable sources
 
 - [Full résumé (Markdown)](${SITE_URL}/llms-full.txt): Complete portfolio content from Notion CMS, single document
-- [machine-readable view](${SITE_URL}/ai): Same Markdown rendered as a minimal monospaced page
+- [machine-readable view](${SITE_URL}/machine-readable): Same Markdown rendered as a minimal monospaced page
 - [Designed site](${SITE_URL}/): Editorial layout of the same content
 
 ## Contact

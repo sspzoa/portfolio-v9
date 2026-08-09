@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: "https://sspzoa.io/ai",
+      url: "https://sspzoa.io/machine-readable",
       lastModified: LAST_MODIFIED,
       changeFrequency: "weekly",
       priority: 0.6,

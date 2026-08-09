@@ -1,16 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Socials } from "./socials";
 
 export function Hero() {
   return (
-    <header id="top" className="relative flex scroll-mt-spacing-800 flex-col gap-spacing-700 pb-spacing-200">
-      <Link
-        href="/ai"
-        className="absolute top-0 right-0 z-10 font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
-        machine-readable
-      </Link>
-
+    <header id="top" className="flex scroll-mt-spacing-800 flex-col gap-spacing-700 pb-spacing-200">
       <div className="flex flex-col-reverse gap-spacing-600 md:flex-row md:items-end md:justify-between">
         <div className="flex flex-col gap-spacing-500">
           <h1 className="font-semibold text-content-standard-primary text-hero">

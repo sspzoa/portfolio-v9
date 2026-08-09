@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: "machine-readable · Seungpyo Suh",
   description: "Plain Markdown résumé optimized for machines, LLMs, and text readers.",
   alternates: {
-    canonical: "https://sspzoa.io/ai",
+    canonical: "https://sspzoa.io/machine-readable",
     types: {
       "text/markdown": "https://sspzoa.io/llms-full.txt",
       "text/plain": "https://sspzoa.io/llms.txt",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function AiPage() {
+export default async function MachineReadablePage() {
   let markdown: string;
   let errorMessage: string | null = null;
 
@@ -29,7 +29,7 @@ export default async function AiPage() {
     const data = await getPortfolioData();
     markdown = formatPortfolioMarkdown(data);
   } catch (error) {
-    console.error("[AiPage]", error);
+    console.error("[MachineReadablePage]", error);
     markdown = "";
     errorMessage = "포트폴리오 데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.";
   }
