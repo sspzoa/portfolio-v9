@@ -12,6 +12,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: "https://sspzoa.io/design-system",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
+      url: "https://sspzoa.io/code-style",
+      lastModified: LAST_MODIFIED,
+      changeFrequency: "monthly",
+      priority: 0.4,
+    },
+    {
       url: "https://sspzoa.io/machine-readable",
       lastModified: LAST_MODIFIED,
       changeFrequency: "weekly",

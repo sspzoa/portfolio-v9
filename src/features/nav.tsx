@@ -128,7 +128,7 @@ export function MobileHeader({ items }: NavProps) {
       <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700">
         <Link
           href="#top"
-          className="font-semibold text-content-standard-primary text-label tracking-tight focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50">
+          className="font-semibold text-content-standard-primary text-label tracking-tight focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
           Seungpyo Suh<span className="text-core-accent">.</span>
         </Link>
         {activeItem && (

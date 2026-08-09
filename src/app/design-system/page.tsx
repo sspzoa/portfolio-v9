@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Footer } from "@/features/footer";
+import { MobileHeader, SideNav } from "@/features/nav";
 import { Button } from "@/shared/ui/button";
 import { Chip } from "@/shared/ui/chip";
 import { Collapsible } from "@/shared/ui/collapsible";
@@ -14,7 +16,7 @@ import { TimelineEntry } from "@/shared/ui/timeline-entry";
 export const metadata: Metadata = {
   title: "Design System · Seungpyo Suh",
   description: "Design tokens and UI primitives for sspzoa.io.",
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
   alternates: {
     canonical: "https://sspzoa.io/design-system",
   },
@@ -181,15 +183,7 @@ function Subgroup({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
-function Swatch({
-  token,
-  className,
-  inverted = false,
-}: {
-  token: string;
-  className: string;
-  inverted?: boolean;
-}) {
+function Swatch({ token, className, inverted = false }: { token: string; className: string; inverted?: boolean }) {
   return (
     <div className="flex min-w-0 flex-col gap-spacing-200">
       <div className={`h-14 w-full ring-1 ring-line-outline ${className}`} />
@@ -250,15 +244,20 @@ function TokenRow({ token, value, preview }: { token: string; value: string; pre
   );
 }
 
+const navItems = NAV.map(({ id, label }) => ({ id, label }));
+
+const shellLinkClassName =
+  "font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary";
+
 export default function DesignSystemPage() {
   return (
     <div className="mx-auto min-h-dvh w-full max-w-6xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+      <MobileHeader items={navItems} />
+
       <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-x-spacing-850">
         <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
           <div className="flex flex-col gap-spacing-150">
-            <Link
-              href="/"
-              className={`font-semibold text-content-standard-primary text-label tracking-tight ${focusRingClass()}`}>
+            <Link href="#top" className="font-semibold text-content-standard-primary text-label tracking-tight">
               Seungpyo Suh<span className="text-core-accent">.</span>
             </Link>
             <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
@@ -266,20 +265,9 @@ export default function DesignSystemPage() {
             </p>
           </div>
 
-          <nav aria-label="Design system sections" className="flex flex-col gap-spacing-150">
-            {NAV.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className={`font-mono text-content-standard-tertiary text-footnote transition-colors duration-fast hover:text-content-standard-primary ${focusRingClass()}`}>
-                {item.label}
-              </a>
-            ))}
-          </nav>
+          <SideNav items={navItems} />
 
-          <Link
-            href="/"
-            className={`font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary ${focusRingClass()}`}>
+          <Link href="/" className={shellLinkClassName}>
             ← Portfolio
           </Link>
         </aside>
@@ -288,14 +276,9 @@ export default function DesignSystemPage() {
           id="main-content"
           tabIndex={-1}
           className="flex min-w-0 max-w-content flex-col py-spacing-700 md:py-spacing-800">
-          <header className="flex flex-col gap-spacing-500 pb-spacing-200">
-            <div className="flex flex-wrap items-baseline justify-between gap-spacing-400 lg:hidden">
-              <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
-                Design System
-              </p>
-              <Link
-                href="/"
-                className={`font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary ${focusRingClass()}`}>
+          <header id="top" className="flex scroll-mt-spacing-800 flex-col gap-spacing-500 pb-spacing-200">
+            <div className="flex justify-end lg:hidden">
+              <Link href="/" className={shellLinkClassName}>
                 ← Portfolio
               </Link>
             </div>
@@ -305,7 +288,12 @@ export default function DesignSystemPage() {
             <p className="max-w-content text-body text-content-standard-secondary">
               sspzoa.io 토큰 스케일과 UI 프리미티브. Layer 2 semantic 토큰만 컴포넌트에서 사용하고, Layer 1{" "}
               <code className="font-mono text-footnote">--solid-*</code> 원시값은 CSS에서만 참조합니다. 테마는{" "}
-              <code className="font-mono text-footnote">prefers-color-scheme</code> 기반이며 토글 UI는 없습니다.
+              <code className="font-mono text-footnote">prefers-color-scheme</code> 기반이며 토글 UI는 없습니다. 코드
+              컨벤션은{" "}
+              <Link href="/code-style" className="text-core-accent-strong underline-offset-2 hover:underline">
+                Code Style
+              </Link>
+              .
             </p>
           </header>
 
@@ -613,11 +601,9 @@ export default function DesignSystemPage() {
             </DsSection>
           </div>
 
-          <footer className="mt-spacing-900 border-line-divider border-t pt-spacing-600">
-            <p className="font-mono text-content-standard-quaternary text-footnote">
-              tokens · globals.css + tailwind.config.ts · components · src/shared/ui
-            </p>
-          </footer>
+          <div className="mt-spacing-900">
+            <Footer />
+          </div>
         </main>
       </div>
     </div>

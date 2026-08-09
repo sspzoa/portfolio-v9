@@ -15,6 +15,12 @@ export function Footer() {
         <span aria-hidden="true" className="font-mono text-content-standard-quaternary text-footnote">
           ·
         </span>
+        <Link href="/code-style" className={linkClassName}>
+          code style
+        </Link>
+        <span aria-hidden="true" className="font-mono text-content-standard-quaternary text-footnote">
+          ·
+        </span>
         <Link href="/machine-readable" className={linkClassName}>
           machine-readable
         </Link>

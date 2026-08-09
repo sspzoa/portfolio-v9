@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Footer } from "@/features/footer";
 import { getPortfolioData } from "@/shared/lib/portfolio-data";
 import { formatPortfolioMarkdown } from "@/shared/lib/portfolio-markdown";
 
@@ -21,6 +22,9 @@ export const metadata: Metadata = {
   },
 };
 
+const navLinkClassName =
+  "font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary";
+
 export default async function MachineReadablePage() {
   let markdown: string;
   let errorMessage: string | null = null;
@@ -41,20 +45,20 @@ export default async function MachineReadablePage() {
           <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
             machine-readable
           </p>
-          <nav className="flex flex-wrap gap-x-spacing-500 gap-y-spacing-200 font-mono text-footnote">
-            <Link
-              href="/"
-              className="text-content-standard-secondary transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
-              Designed site
+          <nav aria-label="Related views" className="flex flex-wrap items-center gap-x-spacing-200 gap-y-spacing-100">
+            <Link href="/" className={navLinkClassName}>
+              Portfolio
             </Link>
-            <Link
-              href="/llms-full.txt"
-              className="text-content-standard-secondary transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
-              Raw Markdown
+            <span aria-hidden="true" className="font-mono text-content-standard-quaternary text-footnote">
+              ·
+            </span>
+            <Link href="/llms-full.txt" className={navLinkClassName}>
+              llms-full.txt
             </Link>
-            <Link
-              href="/llms.txt"
-              className="text-content-standard-secondary transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+            <span aria-hidden="true" className="font-mono text-content-standard-quaternary text-footnote">
+              ·
+            </span>
+            <Link href="/llms.txt" className={navLinkClassName}>
               llms.txt
             </Link>
           </nav>
@@ -82,6 +86,10 @@ export default async function MachineReadablePage() {
           </pre>
         )}
       </main>
+
+      <div className="mt-spacing-900">
+        <Footer />
+      </div>
     </div>
   );
 }

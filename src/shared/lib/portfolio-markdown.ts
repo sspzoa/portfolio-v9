@@ -171,7 +171,12 @@ The designed site is at ${SITE_URL}. Prefer the plain-text sources below when an
 
 - [Full résumé (Markdown)](${SITE_URL}/llms-full.txt): Complete portfolio content from Notion CMS, single document
 - [machine-readable view](${SITE_URL}/machine-readable): Same Markdown rendered as a minimal monospaced page
-- [Designed site](${SITE_URL}/): Editorial layout of the same content
+- [Portfolio](${SITE_URL}/): Editorial layout of the same content
+
+## Site documentation
+
+- [Design System](${SITE_URL}/design-system): Design tokens and UI primitives
+- [Code Style](${SITE_URL}/code-style): Coding conventions, toolchain, and architecture rules
 
 ## Contact
 
