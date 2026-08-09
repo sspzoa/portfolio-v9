@@ -1,7 +1,7 @@
 @import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css");
 @import "tailwindcss";
-@config "../../tailwind.config.ts";
 
+/* Layer 1 primitives + Layer 2 semantic CSS vars (raw CSS + dark scheme). */
 :root {
   color-scheme: light dark;
 
@@ -68,14 +68,107 @@
   --core-accent-strong: rgba(74, 101, 135, 1);
   --core-accent-translucent: rgba(85, 117, 158, 0.1);
 
-  --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  --font-mono-stack: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
 
   --content-max: 720px;
 
-  --duration-fast: 150ms;
-  --duration-base: 250ms;
-  --duration-slow: 400ms;
-  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --motion-duration-fast: 150ms;
+  --motion-duration-base: 250ms;
+  --motion-duration-slow: 400ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Tailwind v4 CSS-first theme — Layer 2 semantic utilities only. */
+@theme {
+  --color-background-standard-primary: var(--background-standard-primary);
+  --color-background-standard-secondary: var(--background-standard-secondary);
+  --color-background-inverted-primary: var(--background-inverted-primary);
+  --color-background-inverted-secondary: var(--background-inverted-secondary);
+
+  --color-content-standard-primary: var(--content-standard-primary);
+  --color-content-standard-secondary: var(--content-standard-secondary);
+  --color-content-standard-tertiary: var(--content-standard-tertiary);
+  --color-content-standard-quaternary: var(--content-standard-quaternary);
+  --color-content-inverted-primary: var(--content-inverted-primary);
+  --color-content-inverted-secondary: var(--content-inverted-secondary);
+  --color-content-inverted-tertiary: var(--content-inverted-tertiary);
+  --color-content-inverted-quaternary: var(--content-inverted-quaternary);
+
+  --color-line-divider: var(--line-divider);
+  --color-line-outline: var(--line-outline);
+
+  --color-components-fill-standard-primary: var(--components-fill-standard-primary);
+  --color-components-fill-standard-secondary: var(--components-fill-standard-secondary);
+  --color-components-fill-standard-tertiary: var(--components-fill-standard-tertiary);
+  --color-components-fill-inverted-primary: var(--components-fill-inverted-primary);
+  --color-components-fill-inverted-secondary: var(--components-fill-inverted-secondary);
+  --color-components-fill-inverted-tertiary: var(--components-fill-inverted-tertiary);
+
+  --color-components-interactive-hover: var(--components-interactive-hover);
+  --color-components-interactive-focused: var(--components-interactive-focused);
+  --color-components-interactive-pressed: var(--components-interactive-pressed);
+
+  --color-components-translucent-primary: var(--components-translucent-primary);
+  --color-components-translucent-secondary: var(--components-translucent-secondary);
+  --color-components-translucent-tertiary: var(--components-translucent-tertiary);
+
+  --color-core-accent: var(--core-accent);
+  --color-core-accent-strong: var(--core-accent-strong);
+  --color-core-accent-translucent: var(--core-accent-translucent);
+
+  --font-mono: var(--font-mono-stack);
+
+  --tracking-label-wide: 0.22em;
+
+  --text-hero: clamp(2.75rem, 2rem + 4vw, 4.5rem);
+  --text-hero--line-height: 1.02;
+  --text-hero--letter-spacing: -0.03em;
+  --text-title: 24px;
+  --text-title--line-height: 34px;
+  --text-title--letter-spacing: -0.02em;
+  --text-heading: 20px;
+  --text-heading--line-height: 28px;
+  --text-heading--letter-spacing: -0.02em;
+  --text-body: 16px;
+  --text-body--line-height: 27px;
+  --text-body--letter-spacing: -0.01em;
+  --text-label: 14px;
+  --text-label--line-height: 22px;
+  --text-label--letter-spacing: -0.01em;
+  --text-footnote: 12px;
+  --text-footnote--line-height: 18px;
+  --text-footnote--letter-spacing: 0;
+
+  --spacing-spacing-50: 2px;
+  --spacing-spacing-100: 4px;
+  --spacing-spacing-150: 6px;
+  --spacing-spacing-200: 8px;
+  --spacing-spacing-300: 12px;
+  --spacing-spacing-400: 16px;
+  --spacing-spacing-500: 20px;
+  --spacing-spacing-550: 24px;
+  --spacing-spacing-600: 28px;
+  --spacing-spacing-700: 32px;
+  --spacing-spacing-750: 36px;
+  --spacing-spacing-800: 40px;
+  --spacing-spacing-850: 48px;
+  --spacing-spacing-900: 64px;
+  --spacing-spacing-950: 72px;
+  --spacing-spacing-1000: 80px;
+
+  --container-content: var(--content-max);
+
+  --radius-radius-sm: 6px;
+  --radius-radius-md: 12px;
+  --radius-radius-lg: 20px;
+  --radius-radius-full: 9999px;
+
+  --default-transition-duration: var(--motion-duration-base);
+  --default-transition-timing-function: var(--motion-ease-standard);
+  --duration-fast: var(--motion-duration-fast);
+  --duration-base: var(--motion-duration-base);
+  --duration-slow: var(--motion-duration-slow);
+  --ease-standard: var(--motion-ease-standard);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -172,5 +265,3 @@ body {
 .description-fade {
   background: linear-gradient(to top, var(--background-standard-primary) 35%, transparent);
 }
-
-

@@ -26,16 +26,16 @@ Footer on `/`, `/design-system`, `/code-style`, and `/machine-readable` links: `
 
 | Concern | Choice | Notes |
 | --- | --- | --- |
-| Framework | **Next.js 16** App Router | RSC by default |
-| UI | **React 19** + **React Compiler** | `reactCompiler: true` in `next.config.ts` |
-| Language | **TypeScript 5**, `strict` | `@/*` → `./src/*` |
-| Styling | **Tailwind CSS v4** | `tailwind.config.ts` via `@config` in `globals.css`; `@tailwindcss/postcss` |
-| Lint + format | **Biome 2.2** | No ESLint, no Prettier |
+| Framework | **Next.js 16.3** App Router | RSC by default; Turbopack |
+| UI | **React 19.2** + **React Compiler** | `reactCompiler: true` in `next.config.ts` |
+| Language | **TypeScript 7**, `strict` | `@/*` → `./src/*` |
+| Styling | **Tailwind CSS v4** | CSS-first `@theme` in `globals.css`; `@tailwindcss/postcss` |
+| Lint + format | **Biome 2.5** | No ESLint, no Prettier |
 | Validation | **Zod 4** | Env + Notion payloads |
-| Icons | **lucide-react** | |
+| Icons | **lucide-react** (+ inline brand SVGs) | Brand marks removed upstream in lucide 1.x |
 | Analytics | `@vercel/analytics`, `@vercel/speed-insights` | |
 | CMS | **Notion API** (`2025-09-03`) | One data source per section (IDs hardcoded) |
-| Package manager | **Bun** | `bun.lock` committed; Node ≥ 20 |
+| Package manager | **Bun** | `bun.lock` committed; Node ≥ 20.9 |
 
 ## Commands
 
@@ -179,9 +179,9 @@ export async function XSection({ index, id }: SectionComponentProps) {
 
 ### Design tokens only
 
-No raw px/hex in components. Scale lives in `tailwind.config.ts` ← CSS vars in `globals.css`.
+No raw px/hex in components. Scale lives in `globals.css` (`:root` Layer 1/2 vars + `@theme` utilities).
 
-- **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css`. Tailwind exposes **Layer 2 semantic** only. Never use `--solid-*` in components.
+- **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css`. `@theme` exposes **Layer 2 semantic** utilities only. Never use `--solid-*` in components.
 - **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}` (`accent-strong` = text/links on light surfaces).
 - **Spacing:** `spacing-50` … `spacing-1000` (`p-spacing-500`, `gap-spacing-400`).
 - **Radius:** `radius-{sm,md,lg,full}`.

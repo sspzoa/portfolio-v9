@@ -254,15 +254,15 @@ export default function CodeStylePage() {
             <DocSection id="stack" index={2} title="Stack" description="고정 선택. 대체 도구를 새로 들이지 않음.">
               <KeyValueList
                 rows={[
-                  { key: "Framework", value: "Next.js 16 App Router" },
-                  { key: "UI", value: "React 19 + React Compiler" },
-                  { key: "Language", value: "TypeScript 5 strict · @/* → ./src/*" },
-                  { key: "Styling", value: "Tailwind CSS v4 · token-only" },
-                  { key: "Lint / format", value: "Biome 2.2 (no ESLint, no Prettier)" },
+                  { key: "Framework", value: "Next.js 16.3 App Router · Turbopack" },
+                  { key: "UI", value: "React 19.2 + React Compiler" },
+                  { key: "Language", value: "TypeScript 7 strict · @/* → ./src/*" },
+                  { key: "Styling", value: "Tailwind CSS v4 · @theme CSS-first · token-only" },
+                  { key: "Lint / format", value: "Biome 2.5 (no ESLint, no Prettier)" },
                   { key: "Validation", value: "Zod 4" },
-                  { key: "Icons", value: "lucide-react" },
+                  { key: "Icons", value: "lucide-react (+ inline brand SVGs)" },
                   { key: "CMS", value: "Notion API 2025-09-03" },
-                  { key: "Package manager", value: "Bun · Node ≥ 20" },
+                  { key: "Package manager", value: "Bun · Node ≥ 20.9" },
                   { key: "Analytics", value: "@vercel/analytics · speed-insights" },
                 ]}
               />
