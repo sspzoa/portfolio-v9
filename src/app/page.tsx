@@ -32,7 +32,7 @@ const navItems = SECTIONS.map(({ id, label }) => ({ id, label }));
 
 export default function Home() {
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-shell px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+    <div className="mx-auto min-h-dvh w-full max-w-6xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
       <MobileHeader items={navItems} />
 
       <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-x-spacing-850">
