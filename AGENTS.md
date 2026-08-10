@@ -14,8 +14,8 @@ Human-facing mirrors of these rules (keep them in sync when conventions change):
 
 | URL | Purpose |
 | --- | --- |
-| `/design-system` | Token scale + `shared/ui` primitives showcase |
-| `/code-style` | Toolchain, structure, React/TS/format conventions |
+| `/design-system` | Production design system — tokens, patterns, component APIs |
+| `/code-style` | Production engineering guide — architecture, data, security, playbooks |
 | `/machine-readable` | Same résumé as monospaced Markdown |
 | `/llms.txt` | Short LLM index (llmstxt.org) |
 | `/llms-full.txt` | Full résumé Markdown (`text/markdown`) |
@@ -105,19 +105,20 @@ src/
     error.tsx / global-error.tsx
     manifest.ts / sitemap.ts / robots.ts
     opengraph-image.tsx / apple-icon.tsx
-    design-system/page.tsx     # token + component docs
-    code-style/page.tsx        # coding conventions docs
+    design-system/page.tsx     # production design system
+    code-style/page.tsx        # production engineering guide
     machine-readable/page.tsx  # monospaced Markdown view
     llms.txt/route.ts
     llms-full.txt/route.ts
-  features/                    # home + shared chrome
+  features/                    # product surfaces
+    docs/                      # DocShell + docs primitives
     hero.tsx / nav.tsx / socials.tsx / footer.tsx
     side-project-toggle.tsx    # client: main/side projects
     sections/                  # async Server Component sections
       aboutme, awards, certificates, careers, experiences,
       skills, educations, projects, activities
   shared/
-    ui/                        # presentational primitives
+    ui/                        # domain-light presentational primitives
       section, timeline-entry, record-row, record-group,
       project-card, chip, tag, button, description, collapsible
     markdown/parse.tsx         # **bold**, links, lists (server-safe)
@@ -183,11 +184,15 @@ No raw px/hex in components. Scale lives in `globals.css` (`:root` Layer 1/2 var
 
 - **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css`. `@theme` exposes **Layer 2 semantic** utilities only. Never use `--solid-*` in components.
 - **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}` (`accent-strong` = text/links on light surfaces).
+- **Status:** `status-{success,warning,danger,info}` + `*-translucent` — feedback only, not decoration.
 - **Spacing:** `spacing-50` … `spacing-1000` (`p-spacing-500`, `gap-spacing-400`).
 - **Radius:** `radius-{sm,md,lg,full}`.
+- **Elevation:** `shadow-elevation-{1,2,3}` — overlays/modals; default surfaces use ring/border.
+- **Z-index:** `z-{base,raised,sticky,overlay,modal,toast}` — no arbitrary `z-[999]`.
+- **Icons:** `size-icon-{sm,md,lg}` (14/18/24). lucide + inline brand SVGs.
 - **Type:** `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid `clamp()`. No `caption`/`display`.
 - **Motion:** `duration-{fast,base,slow}` + `ease-standard`. State changes only (hover/focus/active/nav progress) — no scroll-reveal.
-- **Layout:** `max-w-content` (720px), shell `max-w-6xl`, sidebar `lg:grid-cols-[240px_minmax(0,1fr)]`.
+- **Layout:** `max-w-content` (720px), shell `max-w-shell` (72rem), sidebar `lg:grid-cols-[240px_minmax(0,1fr)]`.
 - **Exception:** Tailwind `tracking-wider` / `tracking-widest` are intentional. Custom tracking: `tracking-label-wide`.
 
 Full visual reference: `/design-system`.
@@ -256,13 +261,14 @@ Do **not** add comments unless asked. No drive-by README/docs unless requested. 
 
 ## Shell pages (design-system / code-style)
 
-Match the home chrome:
+Use **`DocShell`** from `features/docs/shell.tsx` (do not fork page chrome):
 
-- Outer: `max-w-6xl` + spacing padding
-- `MobileHeader` + `lg` sticky aside (`SideNav`, brand → `#top`, subtitle, `← Portfolio`)
+- Outer: `max-w-shell` + spacing padding
+- `MobileHeader` + `lg` sticky aside (`SideNav`, brand → `#top`, subtitle, cross-links)
 - `main#main-content` with `max-w-content`
 - Shared `Footer` at bottom
 - `id="top"` on the page header for MobileHeader / brand anchors
+- Docs primitives (`DocSection`, `PropsTable`, `Callout`, …) live in `features/docs/primitives.tsx`
 
 ## Gotchas
 
