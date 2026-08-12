@@ -14,7 +14,7 @@ export function RecordRow({ title, meta, badge, date }: RecordRowProps) {
         {meta && <p className="font-mono text-content-standard-tertiary text-footnote">{meta}</p>}
       </div>
       <div className="flex shrink-0 items-baseline gap-spacing-300">
-        {badge && <span className="font-medium text-core-accent text-footnote">{badge}</span>}
+        {badge && <span className="font-medium text-core-accent-strong text-footnote">{badge}</span>}
         {date && <span className="font-mono text-content-standard-tertiary text-footnote tabular-nums">{date}</span>}
       </div>
     </li>

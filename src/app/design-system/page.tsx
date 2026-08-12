@@ -157,7 +157,9 @@ function DsSection({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-spacing-800 border-line-divider border-t pt-spacing-700 md:pt-spacing-800">
+    <section
+      id={id}
+      className="scroll-mt-spacing-950 border-line-divider border-t pt-spacing-700 md:pt-spacing-800 lg:scroll-mt-spacing-900">
       <header className="mb-spacing-600 flex flex-col gap-spacing-200">
         <div className="flex items-baseline gap-spacing-400">
           <span
@@ -276,7 +278,9 @@ export default function DesignSystemPage() {
           id="main-content"
           tabIndex={-1}
           className="flex min-w-0 max-w-content flex-col py-spacing-700 md:py-spacing-800">
-          <header id="top" className="flex scroll-mt-spacing-800 flex-col gap-spacing-500 pb-spacing-200">
+          <header
+            id="top"
+            className="flex scroll-mt-spacing-950 flex-col gap-spacing-500 pb-spacing-200 lg:scroll-mt-spacing-900">
             <div className="flex justify-end lg:hidden">
               <Link href="/" className={shellLinkClassName}>
                 ← Portfolio
@@ -362,7 +366,8 @@ export default function DesignSystemPage() {
               <Subgroup title="Core accent">
                 <SwatchGrid items={CORE} />
                 <p className="text-content-standard-tertiary text-footnote">
-                  <code className="font-mono">accent-strong</code>은 밝은 배경 위 텍스트용. 본문 강조 링크 등에 사용.
+                  <code className="font-mono">accent-strong</code>은 텍스트 액센트(본문 링크·수상 배지),{" "}
+                  <code className="font-mono">accent</code>는 그래픽 액센트(내비 마크·진행바·히어로 도트).
                 </p>
               </Subgroup>
               <Subgroup title="Line">
@@ -374,8 +379,8 @@ export default function DesignSystemPage() {
                   <p className="text-content-standard-secondary text-label">secondary — 설명 문단</p>
                   <p className="text-content-standard-tertiary text-label">tertiary — 메타, 보조 라벨</p>
                   <p className="text-content-standard-quaternary text-label">quaternary — 인덱스 번호, 희미한 chrome</p>
-                  <p className="text-core-accent text-label">core-accent — 포인트</p>
-                  <p className="text-core-accent-strong text-label">core-accent-strong — 라이트 배경 링크</p>
+                  <p className="text-core-accent text-label">core-accent — 그래픽 포인트</p>
+                  <p className="text-core-accent-strong text-label">core-accent-strong — 텍스트 링크·배지</p>
                 </div>
               </Subgroup>
             </DsSection>
@@ -407,10 +412,10 @@ export default function DesignSystemPage() {
                     }
                   />
                   <TokenRow
-                    token="tracking-wider / tracking-widest"
+                    token="tracking-wider"
                     value="Tailwind built-in (intentional)"
                     preview={
-                      <span className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest">
+                      <span className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">
                         More
                       </span>
                     }

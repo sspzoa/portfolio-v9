@@ -19,7 +19,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   return (
     <article className="group flex min-w-0 flex-col gap-spacing-300">
       {project.coverImage && (
-        <div className="relative mb-spacing-100 aspect-video w-full overflow-hidden rounded-radius-md ring-1 ring-line-outline">
+        <div className="relative mb-spacing-100 aspect-video w-full overflow-hidden rounded-radius-md bg-components-fill-standard-secondary ring-1 ring-line-outline">
           <Image
             className="h-full w-full object-cover transition-transform duration-slow ease-standard group-hover:scale-[1.025]"
             src={project.coverImage}
@@ -35,7 +35,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex items-baseline justify-between gap-spacing-400">
         <h3 className="flex min-w-0 items-center gap-spacing-300 font-semibold text-content-standard-primary text-heading tracking-tight">
           {project.iconImage && (
-            <span className="h-7 w-7 shrink-0 overflow-hidden rounded-radius-sm ring-1 ring-line-outline">
+            <span className="h-7 w-7 shrink-0 overflow-hidden rounded-radius-sm">
               <Image
                 className="h-full w-full object-contain"
                 width={28}

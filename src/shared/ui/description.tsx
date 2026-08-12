@@ -7,7 +7,7 @@ interface DescriptionProps {
 // Server-rendered rich text. Wrap in Collapsible when a max-height toggle is needed.
 export function Description({ children }: DescriptionProps) {
   return (
-    <div className="flex flex-col gap-spacing-300 text-content-standard-secondary text-label leading-7">
+    <div className="flex flex-col gap-spacing-300 text-content-standard-secondary text-label leading-6">
       {renderMarkdown(children)}
     </div>
   );

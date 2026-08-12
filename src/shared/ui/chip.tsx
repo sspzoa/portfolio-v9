@@ -5,7 +5,7 @@ interface ChipProps {
 // Outlined monospace chip — project tags, activity hosts.
 export function Chip({ name }: ChipProps) {
   return (
-    <span className="rounded-radius-full border border-line-outline px-spacing-200 py-spacing-50 font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">
+    <span className="whitespace-nowrap rounded-radius-full border border-line-outline px-spacing-200 py-spacing-50 font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">
       {name}
     </span>
   );

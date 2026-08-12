@@ -15,7 +15,7 @@ export function Tag({ icon, name, isMain = false }: TagProps) {
       }`}>
       {icon && (
         <Image
-          className="h-3.5 w-3.5 shrink-0 object-contain"
+          className={`h-3.5 w-3.5 shrink-0 object-contain ${isMain ? "" : "opacity-70 grayscale"}`}
           width={14}
           height={14}
           src={icon}

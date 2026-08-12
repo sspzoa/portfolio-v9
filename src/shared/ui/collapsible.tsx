@@ -8,39 +8,47 @@ interface CollapsibleProps {
   maxHeight: number;
 }
 
-// Client wrapper that clamps tall content to maxHeight behind a 더보기/접기 toggle.
 export function Collapsible({ children, maxHeight }: CollapsibleProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [needsExpansion, setNeedsExpansion] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const contentId = useId();
 
   useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+
     let animationFrame: number;
 
     const checkHeight = () => {
-      if (contentRef.current) {
-        setNeedsExpansion(contentRef.current.scrollHeight > maxHeight);
-      }
+      const node = contentRef.current;
+      if (!node || node.getClientRects().length === 0) return;
+      setContentHeight(node.scrollHeight);
+      setNeedsExpansion(node.scrollHeight > maxHeight);
     };
 
-    const handleResize = () => {
+    const scheduleCheck = () => {
       cancelAnimationFrame(animationFrame);
       animationFrame = requestAnimationFrame(checkHeight);
     };
 
     checkHeight();
-    window.addEventListener("resize", handleResize);
+
+    const resizeObserver = new ResizeObserver(scheduleCheck);
+    resizeObserver.observe(el);
+    window.addEventListener("resize", scheduleCheck);
+
     return () => {
-      window.removeEventListener("resize", handleResize);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", scheduleCheck);
       cancelAnimationFrame(animationFrame);
     };
   }, [maxHeight]);
 
   const handleToggle = () => {
     setIsExpanded((prev) => !prev);
-    // Return focus to the toggle button after React re-renders the new label.
     requestAnimationFrame(() => {
       buttonRef.current?.focus();
     });
@@ -51,9 +59,9 @@ export function Collapsible({ children, maxHeight }: CollapsibleProps) {
       <div
         ref={contentRef}
         id={contentId}
-        className="overflow-hidden"
+        className="overflow-hidden transition-[max-height] duration-slow ease-standard"
         style={{
-          maxHeight: isExpanded || !needsExpansion ? undefined : maxHeight,
+          maxHeight: needsExpansion ? (isExpanded ? contentHeight : maxHeight) : undefined,
         }}>
         {children}
       </div>
@@ -71,7 +79,7 @@ export function Collapsible({ children, maxHeight }: CollapsibleProps) {
             onClick={handleToggle}
             aria-expanded={isExpanded}
             aria-controls={contentId}
-            className="font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-widest transition-colors hover:text-content-standard-primary focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+            className="font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider transition-colors duration-fast hover:text-content-standard-primary focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
             {isExpanded ? "접기 −" : "더보기 +"}
           </button>
         </div>

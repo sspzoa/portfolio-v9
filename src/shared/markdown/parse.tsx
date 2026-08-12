@@ -25,7 +25,7 @@ const parseInline = (text: string): React.ReactNode[] => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-core-accent decoration-core-accent/40 underline-offset-2 transition-colors hover:underline focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+          className="font-medium text-core-accent-strong decoration-core-accent-strong/40 underline-offset-2 transition-colors hover:underline focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
           {linkText}
         </Link>
       );

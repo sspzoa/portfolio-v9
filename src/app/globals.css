@@ -36,9 +36,9 @@
   --background-inverted-secondary: rgba(14, 14, 15, 1);
 
   --content-standard-primary: rgba(28, 29, 33, 1);
-  --content-standard-secondary: rgba(28, 29, 33, 0.7);
+  --content-standard-secondary: rgba(28, 29, 33, 0.78);
   --content-standard-tertiary: rgba(28, 29, 33, 0.62);
-  --content-standard-quaternary: rgba(28, 29, 33, 0.3);
+  --content-standard-quaternary: rgba(28, 29, 33, 0.34);
 
   --content-inverted-primary: rgba(244, 244, 245, 1);
   --content-inverted-secondary: rgba(244, 244, 245, 0.6);
@@ -67,6 +67,7 @@
   --core-accent: rgba(85, 117, 158, 1);
   --core-accent-strong: rgba(74, 101, 135, 1);
   --core-accent-translucent: rgba(85, 117, 158, 0.1);
+  --core-selection: rgba(85, 117, 158, 0.2);
 
   --font-mono-stack: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
 
@@ -192,9 +193,9 @@
     --background-inverted-secondary: rgba(237, 238, 242, 1);
 
     --content-standard-primary: rgba(244, 244, 245, 1);
-    --content-standard-secondary: rgba(244, 244, 245, 0.7);
-    --content-standard-tertiary: rgba(244, 244, 245, 0.5);
-    --content-standard-quaternary: rgba(244, 244, 245, 0.3);
+    --content-standard-secondary: rgba(244, 244, 245, 0.75);
+    --content-standard-tertiary: rgba(244, 244, 245, 0.55);
+    --content-standard-quaternary: rgba(244, 244, 245, 0.34);
 
     --content-inverted-primary: rgba(28, 29, 33, 1);
     --content-inverted-secondary: rgba(28, 29, 33, 0.6);
@@ -223,6 +224,7 @@
     --core-accent: rgba(143, 175, 213, 1);
     --core-accent-strong: rgba(165, 193, 226, 1);
     --core-accent-translucent: rgba(143, 175, 213, 0.12);
+    --core-selection: rgba(143, 175, 213, 0.32);
   }
 }
 
@@ -241,10 +243,6 @@
   }
 }
 
-html {
-  scroll-padding-top: 24px;
-}
-
 body {
   background: var(--background-standard-primary);
   color: var(--content-standard-primary);
@@ -258,7 +256,7 @@ body {
 }
 
 ::selection {
-  background-color: var(--core-accent-translucent);
+  background-color: var(--core-selection);
   color: var(--content-standard-primary);
 }
 

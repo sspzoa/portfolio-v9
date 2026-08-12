@@ -96,7 +96,9 @@ export function SideNav({ items }: NavProps) {
                 />
                 <span
                   aria-hidden="true"
-                  className="font-mono text-content-standard-quaternary text-footnote tabular-nums">
+                  className={`font-mono text-footnote tabular-nums transition-colors ${
+                    isActive ? "text-core-accent" : "text-content-standard-quaternary"
+                  }`}>
                   {(i + 1).toString().padStart(2, "0")}
                 </span>
                 <span

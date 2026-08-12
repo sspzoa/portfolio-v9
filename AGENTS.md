@@ -182,13 +182,13 @@ export async function XSection({ index, id }: SectionComponentProps) {
 No raw px/hex in components. Scale lives in `globals.css` (`:root` Layer 1/2 vars + `@theme` utilities).
 
 - **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css`. `@theme` exposes **Layer 2 semantic** utilities only. Never use `--solid-*` in components.
-- **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}` (`accent-strong` = text/links on light surfaces).
+- **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}` (`accent-strong` = text accent: links, badges; `accent` = graphical accent: nav marks, progress, hero dot). `--core-selection` is CSS-only (`::selection` in `globals.css`, not in `@theme`).
 - **Spacing:** `spacing-50` … `spacing-1000` (`p-spacing-500`, `gap-spacing-400`).
 - **Radius:** `radius-{sm,md,lg,full}`.
 - **Type:** `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid `clamp()`. No `caption`/`display`.
 - **Motion:** `duration-{fast,base,slow}` + `ease-standard`. State changes only (hover/focus/active/nav progress) — no scroll-reveal.
 - **Layout:** `max-w-content` (720px), shell `max-w-6xl`, sidebar `lg:grid-cols-[240px_minmax(0,1fr)]`.
-- **Exception:** Tailwind `tracking-wider` / `tracking-widest` are intentional. Custom tracking: `tracking-label-wide`.
+- **Exception:** Tailwind `tracking-wider` is intentional (`tracking-widest` is not used). Custom tracking: `tracking-label-wide`.
 
 Full visual reference: `/design-system`.
 

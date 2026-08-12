@@ -46,7 +46,9 @@ function DocSection({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-spacing-800 border-line-divider border-t pt-spacing-700 md:pt-spacing-800">
+    <section
+      id={id}
+      className="scroll-mt-spacing-950 border-line-divider border-t pt-spacing-700 md:pt-spacing-800 lg:scroll-mt-spacing-900">
       <header className="mb-spacing-600 flex flex-col gap-spacing-200">
         <div className="flex items-baseline gap-spacing-400">
           <span
@@ -174,7 +176,9 @@ export default function CodeStylePage() {
           id="main-content"
           tabIndex={-1}
           className="flex min-w-0 max-w-content flex-col py-spacing-700 md:py-spacing-800">
-          <header id="top" className="flex scroll-mt-spacing-800 flex-col gap-spacing-500 pb-spacing-200">
+          <header
+            id="top"
+            className="flex scroll-mt-spacing-950 flex-col gap-spacing-500 pb-spacing-200 lg:scroll-mt-spacing-900">
             <div className="flex justify-end lg:hidden">
               <Link href="/" className={shellLinkClassName}>
                 ← Portfolio
@@ -469,8 +473,8 @@ bun run format      # biome format --write`}</CodeBlock>
                     body: "상태 변화(hover/focus/active)만. 스크롤 리빌 장식 금지. reduced-motion 존중.",
                   },
                   {
-                    title: "tracking-wider / widest",
-                    body: "Tailwind 빌트인 사용 허용 (토큰 위반 아님).",
+                    title: "tracking-wider",
+                    body: "Tailwind 빌트인 사용 허용 (토큰 위반 아님). 커스텀 자간은 tracking-label-wide 하나.",
                   },
                   {
                     title: "Focus ring",

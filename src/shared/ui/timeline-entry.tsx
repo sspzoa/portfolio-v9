@@ -12,7 +12,7 @@ interface TimelineEntryProps {
 // Résumé-style entry: a fixed period column on the left, content on the right.
 export function TimelineEntry({ period, title, subtitle, logo, description }: TimelineEntryProps) {
   return (
-    <article className="grid grid-cols-1 gap-spacing-300 border-line-divider border-t pt-spacing-600 first:border-t-0 first:pt-0 md:grid-cols-[150px_1fr] md:gap-spacing-700">
+    <article className="grid grid-cols-1 gap-spacing-300 border-line-divider border-t pt-spacing-600 first:border-t-0 first:pt-0 md:grid-cols-[160px_1fr] md:gap-spacing-700">
       <time className="pt-spacing-50 font-mono text-content-standard-tertiary text-footnote tabular-nums">
         {period}
       </time>

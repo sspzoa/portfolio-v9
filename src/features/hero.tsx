@@ -3,9 +3,11 @@ import { Socials } from "./socials";
 
 export function Hero() {
   return (
-    <header id="top" className="flex scroll-mt-spacing-800 flex-col gap-spacing-700 pb-spacing-200">
+    <header
+      id="top"
+      className="flex scroll-mt-spacing-950 flex-col gap-spacing-700 pb-spacing-200 lg:scroll-mt-spacing-900">
       <div className="flex flex-col-reverse gap-spacing-600 md:flex-row md:items-end md:justify-between">
-        <div className="flex flex-col gap-spacing-500">
+        <div className="flex flex-col gap-spacing-400">
           <h1 className="font-semibold text-content-standard-primary text-hero">
             Seungpyo
             <br />
@@ -16,7 +18,7 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="h-28 w-28 shrink-0 overflow-hidden rounded-radius-lg ring-1 ring-line-outline md:h-36 md:w-36">
+        <div className="h-28 w-28 shrink-0 overflow-hidden rounded-radius-lg bg-components-fill-standard-secondary ring-1 ring-line-outline md:h-36 md:w-36">
           <Image
             src="/photo.jpg"
             alt="Seungpyo Suh"
