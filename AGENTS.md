@@ -6,21 +6,10 @@ Guidance for coding agents working in this repository.
 
 `portfolio-v9` — personal portfolio / résumé for **Seungpyo Suh** (Product Engineer), deployed at **https://sspzoa.io** on Vercel.
 
-- Home (`/`) is a single-page editorial résumé. Content is live from **Notion** (headless CMS).
-- Design tokens drive all UI. Layout is a sticky sidebar + reading column on large screens.
+- Home (`/`) is a static centered entry (name, tagline, socials, link to the résumé).
+- `/portfolio` is the single-page editorial résumé. Content is live from **Notion** (headless CMS).
+- Design tokens drive all UI. Portfolio layout is a sticky sidebar + reading column on large screens.
 - UI copy is Korean (`lang="ko"`). **Code, comments, identifiers, and commit messages are English.**
-
-Human-facing mirrors of these rules (keep them in sync when conventions change):
-
-| URL | Purpose |
-| --- | --- |
-| `/design-system` | Token scale + `shared/ui` primitives showcase |
-| `/code-style` | Toolchain, structure, React/TS/format conventions |
-| `/machine-readable` | Same résumé as monospaced Markdown |
-| `/llms.txt` | Short LLM index (llmstxt.org) |
-| `/llms-full.txt` | Full résumé Markdown (`text/markdown`) |
-
-Footer on `/`, `/design-system`, `/code-style`, and `/machine-readable` links: `design system · code style · machine-readable`.
 
 ## Tech stack
 
@@ -57,16 +46,15 @@ Always run `bun run lint` before considering a change complete. It is the projec
 
 | Path | Kind | Notes |
 | --- | --- | --- |
-| `/` | Page | Portfolio home; `dynamic = "force-dynamic"` |
-| `/design-system` | Page | Tokens + UI docs; indexed |
-| `/code-style` | Page | Code conventions; indexed |
-| `/machine-readable` | Page | Markdown view; `force-dynamic` |
-| `/llms.txt` | Route handler | Plain-text LLM index |
-| `/llms-full.txt` | Route handler | Full Markdown résumé |
-| `/portfolio` | Redirect | Permanent → `/` |
+| `/` | Page | Static profile-card entry |
+| `/portfolio` | Page | Editorial résumé; `dynamic = "force-dynamic"` |
+| `/design-system` | Redirect | Permanent → `/` (removed page) |
+| `/code-style` | Redirect | Permanent → `/` (removed page) |
+| `/machine-readable` | Redirect | Permanent → `/portfolio` (removed page) |
+| `/llms.txt` | Redirect | Permanent → `/portfolio` (removed page) |
+| `/llms-full.txt` | Redirect | Permanent → `/portfolio` (removed page) |
 
-`sitemap.ts` includes `/`, `/design-system`, `/code-style`, `/machine-readable`, `/llms.txt`, `/llms-full.txt`.  
-Root `layout.tsx` exposes `alternates.types` for `text/plain` → `/llms.txt` and `text/markdown` → `/llms-full.txt`.
+`sitemap.ts` includes `/` and `/portfolio`.
 
 ## Architecture & data flow
 
@@ -78,7 +66,7 @@ NOTION_TOKEN (.env.local)
   → portfolio-data.ts  ──uses──►  notion.ts  (timeout, retry, no-store)
        map raw page → plain object → schemas.ts parse
   → typed entities (types.ts ← z.infer)
-  → async Server Component sections  OR  portfolio-markdown.ts (llms / machine-readable)
+  → async Server Component sections
 ```
 
 ### Key files
@@ -88,8 +76,7 @@ NOTION_TOKEN (.env.local)
 - **`src/shared/lib/notion-types.ts`** — Raw Notion response shapes.
 - **`src/shared/schemas.ts`** — Zod schemas + canonical types via `z.infer`. Dates normalized to `YYYY.MM`.
 - **`src/shared/types.ts`** — Re-exports entity types + `SectionComponentProps`.
-- **`src/shared/lib/portfolio-data.ts`** — `fetchAboutMe`, `fetchAwards`, … map-then-`schema.parse()`. Errors: `DataFetchError` (4xx → config via `isConfigError()`), `DataValidationError`. `getPortfolioData()` uses `Promise.allSettled`; **`aboutMe` is required** (rejection propagates); other sections degrade to `[]`.
-- **`src/shared/lib/portfolio-markdown.ts`** — `formatPortfolioMarkdown()` / `formatLlmsTxt()` for `/machine-readable`, `/llms-full.txt`, `/llms.txt`. Section order matches home.
+- **`src/shared/lib/portfolio-data.ts`** — `fetchAboutMe`, `fetchAwards`, … map-then-`schema.parse()`. Errors: `DataFetchError` (4xx → config via `isConfigError()`), `DataValidationError`.
 - **`src/shared/lib/errors.ts`** — `getErrorMessage()` (shared Korean section error copy). Never redefine locally.
 - **`src/shared/utils/formatDate.ts`** — ISO `YYYY-MM-DD` → `YYYY.MM`.
 - **`src/shared/utils/formatPeriod.ts`** — `start – end`; `{ present: true }` → `start – Present`.
@@ -100,16 +87,12 @@ NOTION_TOKEN (.env.local)
 src/
   app/
     layout.tsx                 # metadata, JSON-LD, skip link, Analytics, Providers
-    page.tsx                   # home: SECTIONS + sidebar shell
+    page.tsx                   # home: static profile-card entry
+    portfolio/page.tsx         # résumé: SECTIONS + sidebar shell
     globals.css                # Tailwind, tokens (light/dark), fonts
     error.tsx / global-error.tsx
     manifest.ts / sitemap.ts / robots.ts
     opengraph-image.tsx / apple-icon.tsx
-    design-system/page.tsx     # token + component docs
-    code-style/page.tsx        # coding conventions docs
-    machine-readable/page.tsx  # monospaced Markdown view
-    llms.txt/route.ts
-    llms-full.txt/route.ts
   features/                    # home + shared chrome
     hero.tsx / nav.tsx / socials.tsx / footer.tsx
     side-project-toggle.tsx    # client: main/side projects
@@ -121,18 +104,18 @@ src/
       section, timeline-entry, record-row, record-group,
       project-card, chip, tag, button, description, collapsible
     markdown/parse.tsx         # **bold**, links, lists (server-safe)
-    lib/                       # env, notion, portfolio-data, portfolio-markdown, errors, provider
+    lib/                       # env, notion, portfolio-data, errors, provider
     utils/                     # formatDate, formatPeriod
     schemas.ts / types.ts
 ```
 
 ## Home section order
 
-`SECTIONS` in `src/app/page.tsx` drives the page, `SideNav`, and `MobileHeader`. Korean résumé-style order:
+`SECTIONS` in `src/app/portfolio/page.tsx` drives the page, `SideNav`, and `MobileHeader`. Korean résumé-style order:
 
 **About → Awards → Certificates → Careers → Experiences → Skills → Education → Projects → Activities**
 
-Markdown export (`formatPortfolioMarkdown`) must stay in the same order. Awards / Certificates / Education are **separate sections** (not a single Records block).
+Awards / Certificates / Education are **separate sections** (not a single Records block).
 
 ## Conventions
 
@@ -190,8 +173,6 @@ No raw px/hex in components. Scale lives in `globals.css` (`:root` Layer 1/2 var
 - **Layout:** `max-w-content` (720px), shell `max-w-6xl`, sidebar `lg:grid-cols-[240px_minmax(0,1fr)]`.
 - **Exception:** Tailwind `tracking-wider` is intentional (`tracking-widest` is not used). Custom tracking: `tracking-label-wide`.
 
-Full visual reference: `/design-system`.
-
 ### Theming
 
 Light/dark via `prefers-color-scheme` + `color-scheme: light dark` in CSS only. **No theme toggle / JS theme state.** `Providers` is a pass-through. `prefers-reduced-motion` dampens transitions; smooth scroll only under `no-preference`.
@@ -234,43 +215,32 @@ Imports auto-organized. CSS excluded from Biome (`!**/*.css`) — format `global
 
 - Files: `kebab-case.tsx`
 - Components: PascalCase named exports
-- Fetchers: `fetchProjects`, `getPortfolioData`
+- Fetchers: `fetchProjects`
 - Errors: `DataFetchError`, `DataValidationError`, `NotionApiError`
 
 ### Comments
 
-Do **not** add comments unless asked. No drive-by README/docs unless requested. Prefer updating `/code-style` + this file when conventions change.
+Do **not** add comments unless asked. No drive-by README/docs unless requested. Prefer updating this file when conventions change.
 
 ## Adding a new portfolio section
 
 1. Hardcode `NEWSECTION_DATA_SOURCE_ID` in `DATA_SOURCE_IDS` inside `src/shared/lib/env.ts`.
 2. `src/shared/lib/notion-types.ts` — raw page type.
 3. `src/shared/schemas.ts` — Zod schema + type.
-4. `src/shared/lib/portfolio-data.ts` — `fetchNewSection()` + wire into `getPortfolioData()` if needed.
-5. `src/shared/lib/portfolio-markdown.ts` — section in `formatPortfolioMarkdown()` (same order as home).
-6. `src/features/sections/newsection.tsx` — async section + error pattern.
-7. `src/app/page.tsx` — `{ id, label, Component }` in `SECTIONS`.
-8. New image host → `remotePatterns` **and** CSP `img-src` in `next.config.ts`.
+4. `src/shared/lib/portfolio-data.ts` — `fetchNewSection()`.
+5. `src/features/sections/newsection.tsx` — async section + error pattern.
+6. `src/app/portfolio/page.tsx` — `{ id, label, Component }` in `SECTIONS`.
+7. New image host → `remotePatterns` **and** CSP `img-src` in `next.config.ts`.
 
 (Only `NOTION_TOKEN` lives in `.env.local`. Do not reintroduce per-section env UUIDs unless explicitly requested.)
 
-## Shell pages (design-system / code-style)
-
-Match the home chrome:
-
-- Outer: `max-w-6xl` + spacing padding
-- `MobileHeader` + `lg` sticky aside (`SideNav`, brand → `#top`, subtitle, `← Portfolio`)
-- `main#main-content` with `max-w-content`
-- Shared `Footer` at bottom
-- `id="top"` on the page header for MobileHeader / brand anchors
-
 ## Gotchas
 
-- **No caching by design.** Home and machine-readable use `force-dynamic`; `notionRequest` uses `cache: "no-store"`. Do not add caching without discussing freshness.
+- **No caching by design.** `/portfolio` uses `force-dynamic`; `notionRequest` uses `cache: "no-store"`. `/` is static. Do not add caching without discussing freshness.
 - **Env validation at import.** Bad `NOTION_TOKEN` fails the whole process. Data source IDs are code, not env.
 - **CSP is strict** (`next.config.ts`). New external script/style/font/img/connect targets need matching `*-src`.
 - **Security headers** (HSTS, `X-Frame-Options: DENY`, `nosniff`, Referrer-Policy, Permissions-Policy) — preserve them.
 - **`dangerouslySetInnerHTML`** — only hardcoded JSON-LD `Person` in `layout.tsx`. Do not add more.
-- **`/portfolio` → `/`** permanent redirect only; no `/ai` redirect (route is `/machine-readable`).
+- **`/design-system`** and **`/code-style`** permanently redirect to `/`. **`/machine-readable`**, **`/llms.txt`**, and **`/llms-full.txt`** permanently redirect to `/portfolio`.
 - **Stray dev server on :3000** breaks `bun start` (EADDRINUSE).
-- When updating conventions, keep **AGENTS.md**, **`/code-style`**, and **`/design-system`** aligned.
+- When updating conventions, keep **AGENTS.md** current.

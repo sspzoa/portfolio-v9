@@ -89,18 +89,6 @@ function richTextToMarkdown(richText: NotionRichTextSegment[]): string | null {
   return joined.trim() ? joined : null;
 }
 
-export interface PortfolioData {
-  aboutMe: AboutMe;
-  awards: Award[];
-  certificates: Certification[];
-  skills: Skill[];
-  careers: Career[];
-  experiences: Experience[];
-  educations: Education[];
-  projects: Project[];
-  activities: Activity[];
-}
-
 export async function fetchSkills(): Promise<Skill[]> {
   try {
     const response = await notionRequest<{ results: NotionSkillPage[] }>(
@@ -377,64 +365,4 @@ export async function fetchAboutMe(): Promise<AboutMe> {
     }
     throw new DataValidationError("AboutMe data validation failed", error);
   }
-}
-
-export async function getPortfolioData(): Promise<PortfolioData> {
-  const results = await Promise.allSettled([
-    fetchAboutMe(),
-    fetchAwards(),
-    fetchCertificates(),
-    fetchSkills(),
-    fetchCareers(),
-    fetchExperiences(),
-    fetchEducations(),
-    fetchProjects(),
-    fetchActivities(),
-  ]);
-
-  const [
-    aboutMeResult,
-    awardsResult,
-    certificatesResult,
-    skillsResult,
-    careersResult,
-    experiencesResult,
-    educationsResult,
-    projectsResult,
-    activitiesResult,
-  ] = results;
-
-  const settled = {
-    aboutMe: aboutMeResult,
-    awards: awardsResult,
-    certificates: certificatesResult,
-    skills: skillsResult,
-    careers: careersResult,
-    experiences: experiencesResult,
-    educations: educationsResult,
-    projects: projectsResult,
-    activities: activitiesResult,
-  };
-
-  for (const [key, result] of Object.entries(settled)) {
-    if (result.status === "rejected") {
-      console.error(`[portfolio-data] ${key} failed:`, result.reason);
-    }
-  }
-
-  if (aboutMeResult.status === "rejected") {
-    throw aboutMeResult.reason;
-  }
-
-  return {
-    aboutMe: aboutMeResult.value,
-    awards: awardsResult.status === "fulfilled" ? awardsResult.value : [],
-    certificates: certificatesResult.status === "fulfilled" ? certificatesResult.value : [],
-    skills: skillsResult.status === "fulfilled" ? skillsResult.value : [],
-    careers: careersResult.status === "fulfilled" ? careersResult.value : [],
-    experiences: experiencesResult.status === "fulfilled" ? experiencesResult.value : [],
-    educations: educationsResult.status === "fulfilled" ? educationsResult.value : [],
-    projects: projectsResult.status === "fulfilled" ? projectsResult.value : [],
-    activities: activitiesResult.status === "fulfilled" ? activitiesResult.value : [],
-  };
 }

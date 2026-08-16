@@ -12,6 +12,10 @@ interface NavProps {
   items: NavItem[];
 }
 
+interface MobileHeaderProps extends NavProps {
+  brandHref?: string;
+}
+
 // Tracks the topmost visible section via IntersectionObserver.
 function useActiveSection(items: NavItem[]): string {
   const [active, setActive] = useState<string>(items[0]?.id ?? "");
@@ -119,7 +123,7 @@ export function SideNav({ items }: NavProps) {
 }
 
 // Mobile-only sticky bar: identity, current section, scroll progress. (P2)
-export function MobileHeader({ items }: NavProps) {
+export function MobileHeader({ items, brandHref = "#top" }: MobileHeaderProps) {
   const active = useActiveSection(items);
   const progress = useScrollProgress();
   const activeIndex = items.findIndex((item) => item.id === active);
@@ -129,7 +133,7 @@ export function MobileHeader({ items }: NavProps) {
     <header className="sticky top-0 z-40 -mx-spacing-500 border-line-divider border-b bg-background-standard-primary/80 backdrop-blur-md md:-mx-spacing-700 lg:hidden">
       <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700">
         <Link
-          href="#top"
+          href={brandHref}
           className="font-semibold text-content-standard-primary text-label tracking-tight focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
           Seungpyo Suh<span className="text-core-accent">.</span>
         </Link>
