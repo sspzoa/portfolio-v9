@@ -11,8 +11,12 @@ export default function Home() {
         <p className="mt-spacing-150 font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
           Product Engineer
         </p>
-        <p className="mt-spacing-400 max-w-xs text-balance text-body text-content-standard-secondary">
-          Crafting experiences that feel like home.
+        <p className="mt-spacing-400 text-body text-content-standard-secondary">
+          HORANG EDU Corp.
+          <br />
+          DGU Business School '26
+          <br />
+          KDMHS Hacking Defence 22nd
         </p>
 
         <Socials className="mt-spacing-700 justify-center" />
