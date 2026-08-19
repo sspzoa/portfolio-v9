@@ -11,7 +11,7 @@ export default function Home() {
         <p className="mt-spacing-150 font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
           Product Engineer
         </p>
-        <p className="mt-spacing-400 text-body text-content-standard-secondary">
+        <p className="mt-spacing-400 text-content-standard-tertiary text-label">
           HORANG EDU Corp.
           <br />
           DGU Business School '26
