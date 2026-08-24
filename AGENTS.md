@@ -101,7 +101,7 @@ src/
       skills, educations, projects, activities
   shared/
     ui/                        # presentational primitives
-      section, timeline-entry, record-row, record-group,
+      section, timeline-entry, record-row,
       project-card, chip, tag, button, description, collapsible
     markdown/parse.tsx         # **bold**, links, lists (server-safe)
     lib/                       # env, notion, portfolio-data, errors, provider
