@@ -16,7 +16,7 @@ export function SideProjectToggle({ mainProjects, sideProjects }: SideProjectTog
 
   return (
     <div className="flex flex-col">
-      <div className="grid grid-cols-1 gap-x-spacing-600 gap-y-spacing-800 md:grid-cols-2">
+      <div className="flex flex-col gap-spacing-800">
         {mainProjects.map((project) => (
           <ProjectCard key={`main-${project.id}`} project={project} />
         ))}
@@ -32,7 +32,7 @@ export function SideProjectToggle({ mainProjects, sideProjects }: SideProjectTog
             inert={showSideProjects ? undefined : true}>
             <div className="min-h-0 overflow-hidden">
               <div
-                className={`grid grid-cols-1 gap-x-spacing-600 gap-y-spacing-800 pt-spacing-800 transition-opacity duration-slow ease-standard md:grid-cols-2 ${
+                className={`flex flex-col gap-spacing-800 pt-spacing-800 transition-opacity duration-slow ease-standard ${
                   showSideProjects ? "opacity-100" : "opacity-0"
                 }`}>
                 {sideProjects.map((project) => (
