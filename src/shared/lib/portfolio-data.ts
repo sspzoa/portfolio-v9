@@ -78,6 +78,12 @@ function getPageIconUrl(page: NotionProjectPage): string | null {
 function richTextToMarkdown(richText: NotionRichTextSegment[]): string | null {
   const parts = richText.map((segment) => {
     const text = segment.plain_text;
+    const href = segment.href ?? segment.text?.link?.url ?? null;
+
+    if (href && text.trim()) {
+      return `[${text}](${href})`;
+    }
+
     if (!segment.annotations?.bold) return text;
     if (!text.trim()) return text;
     return text

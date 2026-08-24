@@ -4,6 +4,11 @@ export interface NotionTitleProperty {
 
 export interface NotionRichTextSegment {
   plain_text: string;
+  href?: string | null;
+  text?: {
+    content: string;
+    link?: { url: string } | null;
+  };
   annotations?: { bold: boolean };
 }
 
