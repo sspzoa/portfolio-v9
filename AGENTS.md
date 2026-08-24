@@ -164,10 +164,10 @@ export async function XSection({ index, id }: SectionComponentProps) {
 
 No raw px/hex in components. Scale lives in `globals.css` (`:root` Layer 1/2 vars + `@theme` utilities).
 
-The visual system is a terminal/manpage aesthetic inspired by opencode.ai (see `DESIGN.md`): warm cream canvas + near-black ink, all-monospace type, hairline rules, flat surfaces, ASCII bracket markers (`[+]`, `[01]`, `[tag]`, `>`) as the only iconography.
+The visual system is a terminal/manpage aesthetic inspired by opencode.ai (see `DESIGN.md`): all-monospace type, hairline rules, flat surfaces, ASCII bracket markers (`[+]`, `[01]`, `[tag]`, `>`) as the only iconography. Chroma follows the original cool slate theme, not the cream/ink marketing palette.
 
-- **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css` (ink/cream ramp). `@theme` exposes **Layer 2 semantic** utilities only. Never use `--solid-*` in components.
-- **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}`. The chrome is **monochrome**: `core-accent` = ink (cream in dark) — do not introduce hue accents. `--core-selection` is CSS-only (`::selection` in `globals.css`, not in `@theme`).
+- **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css` (ink/paper/slate ramp). `@theme` exposes **Layer 2 semantic** utilities only. Never use `--solid-*` in components.
+- **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}`. Canvas is cool white (`#ffffff` / `#0a0a0b` in dark) with slate-tinted fills and hairlines (`rgba(121, 123, 138, …)`). `core-accent` is slate blue (`#55759e`, `#8fafd5` in dark) for existing semantic uses (links, badges, focus, selection) — do not sprinkle it onto decorative marks. `--core-selection` is CSS-only (`::selection` in `globals.css`, not in `@theme`).
 - **Spacing:** `spacing-50` … `spacing-1000` (`p-spacing-500`, `gap-spacing-400`).
 - **Radius:** `radius-{sm,full}` only. `radius-sm` (4px) on interactive elements (buttons, focus rings); containers, images, and cards are sharp rectangles (no rounding).
 - **Type:** `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid `clamp()` (~28→38px). Letter-spacing is 0 everywhere; no `tracking-*` utilities, no `uppercase` labels. Section headers are `text-heading` + `font-bold`; use `font-bold` (700) / `font-medium` (500) — never `font-semibold` (600 is not loaded).

@@ -17,7 +17,7 @@ export default function AppleIcon() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#201d1d",
+        backgroundColor: "#6d87a8",
       }}>
       <img src={logoSrc} width={140} height={140} alt="" />
     </div>,

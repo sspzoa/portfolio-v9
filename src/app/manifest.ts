@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Product Engineer",
     start_url: "/",
     display: "standalone",
-    background_color: "#fdfcfc",
-    theme_color: "#201d1d",
+    background_color: "#ffffff",
+    theme_color: "#6d87a8",
     icons: [
       {
         src: "/sspzoa_logo.svg",
