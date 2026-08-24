@@ -27,14 +27,7 @@ export function TimelineEntry({ period, title, subtitle, logo, description }: Ti
             />
           )}
           <div className="flex min-w-0 flex-col">
-            <h3 className="flex items-baseline gap-spacing-200 font-bold text-content-standard-primary text-heading">
-              <span
-                aria-hidden="true"
-                className="shrink-0 select-none font-mono font-normal text-content-standard-quaternary text-label">
-                [+]
-              </span>
-              {title}
-            </h3>
+            <h3 className="font-bold text-content-standard-primary text-heading">{title}</h3>
             {subtitle && <p className="text-content-standard-tertiary text-label">{subtitle}</p>}
           </div>
         </div>

@@ -8,7 +8,7 @@ Guidance for coding agents working in this repository.
 
 - Home (`/`) is a static manpage-style entry (name, affiliations, socials, link to the résumé).
 - `/portfolio` is the single-page editorial résumé. Content is live from **Notion** (headless CMS).
-- Design tokens drive all UI. Home and `/portfolio` share a single reading column (`max-w-content`).
+- Design tokens drive all UI. Home is a single reading column. `/portfolio` is a sticky contents sidebar + reading column on large screens.
 - UI copy is Korean (`lang="ko"`). **Code, comments, identifiers, and commit messages are English.**
 
 ## Tech stack
@@ -173,7 +173,7 @@ The visual system is a terminal/manpage aesthetic inspired by opencode.ai (see `
 - **Type:** `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid `clamp()` (~28→38px). Letter-spacing is 0 everywhere; no `tracking-*` utilities, no `uppercase` labels. Section headers are `text-heading` + `font-bold`; use `font-bold` (700) / `font-medium` (500) — never `font-semibold` (600 is not loaded).
 - **Depth:** no shadows, no gradients, no blur, no inverted surface blocks. Everything sits flat on the canvas; separation comes from 1px `line-divider` hairlines only.
 - **Motion:** `duration-{fast,base,slow}` + `ease-standard`. State changes only (hover/focus/active/nav progress) — no scroll-reveal.
-- **Layout:** single reading column `max-w-content` (720px) on `/` and `/portfolio`. No sidebar.
+- **Layout:** `max-w-content` (720px) reading column. Home is single-column. Portfolio shell is `max-w-6xl` with `lg:grid-cols-[220px_minmax(0,1fr)]` sticky `## contents`.
 
 ### Theming
 

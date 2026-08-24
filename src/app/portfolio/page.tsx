@@ -43,37 +43,50 @@ const focusRing =
 
 export default function PortfolioPage() {
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-content flex-col px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+    <div className="mx-auto min-h-dvh w-full max-w-6xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
       <MobileHeader items={navItems} brandHref="/" />
 
-      <main id="main-content" tabIndex={-1} className="flex flex-1 flex-col py-spacing-700 md:py-spacing-800">
-        <Hero />
-
-        <div className="mt-spacing-850 flex flex-col gap-spacing-400 md:mt-spacing-1000">
+      <div className="lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-x-spacing-850">
+        <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
           <Contents items={navItems} />
 
-          <nav aria-label="Links" className="border-line-divider border-t pt-spacing-600">
+          <div className="flex flex-col gap-spacing-400">
+            <p className="font-mono text-content-standard-tertiary text-footnote">## links</p>
+            <Socials />
+            <Link href="/" className={`font-mono text-content-standard-primary text-footnote ${focusRing}`}>
+              cd /
+            </Link>
+          </div>
+        </aside>
+
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex min-w-0 max-w-content flex-col py-spacing-700 md:py-spacing-800">
+          <Hero />
+
+          <nav aria-label="Links" className="mt-spacing-700 border-line-divider border-t pt-spacing-600 lg:hidden">
             <p className="mb-spacing-400 font-mono text-content-standard-tertiary text-footnote">## links</p>
             <Socials />
           </nav>
-        </div>
 
-        <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-1000 md:gap-spacing-1000">
-          {SECTIONS.map(({ id, Component }, i) => (
-            <Component key={id} id={id} index={i + 1} />
-          ))}
-        </div>
+          <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-1000 md:gap-spacing-1000">
+            {SECTIONS.map(({ id, Component }, i) => (
+              <Component key={id} id={id} index={i + 1} />
+            ))}
+          </div>
 
-        <Link
-          href="/"
-          className={`mt-spacing-800 inline-flex w-fit items-center rounded-radius-sm border border-line-outline px-spacing-500 py-spacing-150 font-medium font-mono text-content-standard-primary text-label transition-colors duration-fast hover:bg-components-interactive-hover ${focusRing}`}>
-          cd /
-        </Link>
+          <Link
+            href="/"
+            className={`mt-spacing-800 inline-flex w-fit items-center rounded-radius-sm border border-line-outline px-spacing-500 py-spacing-150 font-medium font-mono text-content-standard-primary text-label transition-colors duration-fast hover:bg-components-interactive-hover lg:hidden ${focusRing}`}>
+            cd /
+          </Link>
 
-        <div className="mt-spacing-900">
-          <Footer />
-        </div>
-      </main>
+          <div className="mt-spacing-900">
+            <Footer />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

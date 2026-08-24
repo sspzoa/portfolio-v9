@@ -83,7 +83,7 @@ export function Contents({ items }: NavProps) {
   if (items.length === 0) return null;
 
   return (
-    <nav aria-label="Sections" className="border-line-divider border-t pt-spacing-600">
+    <nav aria-label="Sections">
       <p className="font-mono text-content-standard-tertiary text-footnote">## contents</p>
       <ul className="mt-spacing-400 flex flex-col">
         {items.map((item, i) => {
@@ -132,8 +132,8 @@ export function MobileHeader({ items, brandHref = "/" }: MobileHeaderProps) {
   const activeItem = items[activeIndex];
 
   return (
-    <header className="sticky top-0 z-40 -mx-spacing-500 border-line-divider border-b bg-background-standard-primary md:-mx-spacing-700 lg:-mx-spacing-800">
-      <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+    <header className="sticky top-0 z-40 -mx-spacing-500 border-line-divider border-b bg-background-standard-primary md:-mx-spacing-700 lg:hidden">
+      <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700">
         <Link href={brandHref} className={`font-mono text-content-standard-primary text-footnote ${focusRing}`}>
           cd /
         </Link>
