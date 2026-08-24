@@ -28,9 +28,7 @@ export async function ActivitiesSection({ index, id }: SectionComponentProps) {
                 )}
               </div>
               {activity.role && (
-                <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">
-                  {activity.role}
-                </p>
+                <p className="font-mono text-content-standard-tertiary text-footnote">{activity.role}</p>
               )}
               {activity.hosts.length > 0 && (
                 <div className="flex flex-row flex-wrap gap-spacing-150">

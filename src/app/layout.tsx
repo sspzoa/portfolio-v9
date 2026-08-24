@@ -39,8 +39,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0b" },
+    { media: "(prefers-color-scheme: light)", color: "#fdfcfc" },
+    { media: "(prefers-color-scheme: dark)", color: "#201d1d" },
   ],
 };
 
@@ -67,7 +67,7 @@ export default function RootLayout({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-spacing-400 focus:left-spacing-400 focus:z-50 focus:rounded-radius-md focus:bg-content-standard-primary focus:px-spacing-400 focus:py-spacing-300 focus:text-background-standard-primary focus:text-label">
+          className="sr-only focus:not-sr-only focus:absolute focus:top-spacing-400 focus:left-spacing-400 focus:z-50 focus:rounded-radius-sm focus:bg-content-standard-primary focus:px-spacing-400 focus:py-spacing-300 focus:text-background-standard-primary focus:text-label">
           본문으로 바로가기
         </a>
         <Analytics />

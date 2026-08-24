@@ -164,14 +164,16 @@ export async function XSection({ index, id }: SectionComponentProps) {
 
 No raw px/hex in components. Scale lives in `globals.css` (`:root` Layer 1/2 vars + `@theme` utilities).
 
-- **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css`. `@theme` exposes **Layer 2 semantic** utilities only. Never use `--solid-*` in components.
-- **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}` (`accent-strong` = text accent: links, badges; `accent` = graphical accent: nav marks, progress, hero dot). `--core-selection` is CSS-only (`::selection` in `globals.css`, not in `@theme`).
+The visual system is a terminal/manpage aesthetic inspired by opencode.ai (see `DESIGN.md`): warm cream canvas + near-black ink, all-monospace type, hairline rules, flat surfaces, ASCII bracket markers (`[+]`, `[01]`, `[tag]`, `>`) as the only iconography.
+
+- **3-layer tokens:** Layer 1 `--solid-*` only in `globals.css` (ink/cream ramp). `@theme` exposes **Layer 2 semantic** utilities only. Never use `--solid-*` in components.
+- **Color:** `content-standard-{primary,secondary,tertiary,quaternary}`, `background-standard-*`, inverted scales, `line-{divider,outline}`, `components-*`, `core-{accent,accent-strong,accent-translucent}`. The chrome is **monochrome**: `core-accent` = ink (cream in dark) — do not introduce hue accents. `--core-selection` is CSS-only (`::selection` in `globals.css`, not in `@theme`).
 - **Spacing:** `spacing-50` … `spacing-1000` (`p-spacing-500`, `gap-spacing-400`).
-- **Radius:** `radius-{sm,md,lg,full}`.
-- **Type:** `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid `clamp()`. No `caption`/`display`.
+- **Radius:** `radius-{sm,full}` only. `radius-sm` (4px) on interactive elements (buttons, focus rings); containers, images, and cards are sharp rectangles (no rounding).
+- **Type:** `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid `clamp()` (~28→38px). Letter-spacing is 0 everywhere; no `tracking-*` utilities, no `uppercase` labels. Section headers are `text-heading` + `font-bold`; use `font-bold` (700) / `font-medium` (500) — never `font-semibold` (600 is not loaded).
+- **Depth:** no shadows, no gradients, no blur, no inverted surface blocks. Everything sits flat on the canvas; separation comes from 1px `line-divider` hairlines only.
 - **Motion:** `duration-{fast,base,slow}` + `ease-standard`. State changes only (hover/focus/active/nav progress) — no scroll-reveal.
 - **Layout:** `max-w-content` (720px), shell `max-w-6xl`, sidebar `lg:grid-cols-[240px_minmax(0,1fr)]`.
-- **Exception:** Tailwind `tracking-wider` is intentional (`tracking-widest` is not used). Custom tracking: `tracking-label-wide`.
 
 ### Theming
 
@@ -188,7 +190,7 @@ Always `next/image` with `width` / `height` / `sizes`, `draggable={false}`; deco
 
 ### Fonts
 
-Wanted Sans Variable (jsDelivr) in `globals.css`; mono via `--font-mono` / `font-mono`. jsDelivr in CSP `style-src` / `font-src`.
+All-monospace: **JetBrains Mono** (400/500/700, Latin) with **Nanum Gothic Coding** (400/700, Hangul) fallback, both via jsDelivr Fontsource CSS in `globals.css`. `body` and `--font-mono` share the same stack, so `font-mono` is a no-op kept for intent. jsDelivr in CSP `style-src` / `font-src`.
 
 ### Accessibility
 

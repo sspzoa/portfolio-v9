@@ -46,12 +46,10 @@ export default function PortfolioPage() {
       <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-x-spacing-850">
         <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
           <div className="flex flex-col gap-spacing-150">
-            <Link href="/" className="font-semibold text-content-standard-primary text-label tracking-tight">
-              Seungpyo Suh<span className="text-core-accent">.</span>
+            <Link href="/" className="font-bold text-content-standard-primary text-label">
+              Seungpyo Suh<span className="text-content-standard-quaternary">_</span>
             </Link>
-            <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-label-wide">
-              Product Engineer
-            </p>
+            <p className="font-mono text-content-standard-tertiary text-footnote">Product Engineer</p>
           </div>
 
           <SideNav items={navItems} />
@@ -72,7 +70,7 @@ export default function PortfolioPage() {
           className="flex min-w-0 max-w-content flex-col py-spacing-700 md:py-spacing-800">
           <Hero />
 
-          <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-900 md:gap-spacing-900">
+          <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-1000 md:gap-spacing-1000">
             {SECTIONS.map(({ id, Component }, i) => (
               <Component key={id} id={id} index={i + 1} />
             ))}

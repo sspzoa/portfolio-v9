@@ -91,24 +91,25 @@ export function SideNav({ items }: NavProps) {
               <a
                 href={`#${item.id}`}
                 aria-current={isActive ? "location" : undefined}
-                className="group flex items-center gap-spacing-300 rounded-radius-sm py-spacing-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+                className="group flex items-baseline gap-spacing-200 rounded-radius-sm py-spacing-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
                 <span
                   aria-hidden="true"
-                  className={`h-px shrink-0 transition-all duration-base ${
-                    isActive ? "w-6 bg-core-accent" : "w-3 bg-line-outline group-hover:w-5"
-                  }`}
-                />
+                  className={`shrink-0 select-none font-mono text-content-standard-primary text-footnote transition-opacity duration-fast ${
+                    isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40"
+                  }`}>
+                  {">"}
+                </span>
                 <span
                   aria-hidden="true"
                   className={`font-mono text-footnote tabular-nums transition-colors ${
-                    isActive ? "text-core-accent" : "text-content-standard-quaternary"
+                    isActive ? "text-content-standard-primary" : "text-content-standard-quaternary"
                   }`}>
                   {(i + 1).toString().padStart(2, "0")}
                 </span>
                 <span
                   className={`font-mono text-footnote transition-colors ${
                     isActive
-                      ? "text-content-standard-primary"
+                      ? "font-bold text-content-standard-primary"
                       : "text-content-standard-tertiary group-hover:text-content-standard-secondary"
                   }`}>
                   {item.label}
@@ -130,16 +131,16 @@ export function MobileHeader({ items, brandHref = "#top" }: MobileHeaderProps) {
   const activeItem = items[activeIndex];
 
   return (
-    <header className="sticky top-0 z-40 -mx-spacing-500 border-line-divider border-b bg-background-standard-primary/80 backdrop-blur-md md:-mx-spacing-700 lg:hidden">
+    <header className="sticky top-0 z-40 -mx-spacing-500 border-line-divider border-b bg-background-standard-primary md:-mx-spacing-700 lg:hidden">
       <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700">
         <Link
           href={brandHref}
-          className="font-semibold text-content-standard-primary text-label tracking-tight focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
-          Seungpyo Suh<span className="text-core-accent">.</span>
+          className="font-bold text-content-standard-primary text-label focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+          Seungpyo Suh<span className="text-content-standard-quaternary">_</span>
         </Link>
         {activeItem && (
           <span className="font-mono text-content-standard-tertiary text-footnote tabular-nums">
-            {(activeIndex + 1).toString().padStart(2, "0")} · {activeItem.label}
+            {`[${(activeIndex + 1).toString().padStart(2, "0")}] ${activeItem.label}`}
           </span>
         )}
       </div>

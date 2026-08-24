@@ -11,7 +11,7 @@ const parseInline = (text: string): React.ReactNode[] => {
   return text.split(pattern).map((part, i) => {
     if (part.startsWith("**") && part.endsWith("**") && part.length >= 4) {
       return (
-        <strong key={i} className="font-semibold text-content-standard-primary">
+        <strong key={i} className="font-bold text-content-standard-primary">
           {part.slice(2, -2)}
         </strong>
       );
@@ -25,7 +25,7 @@ const parseInline = (text: string): React.ReactNode[] => {
           href={url}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-core-accent-strong decoration-core-accent-strong/40 underline-offset-2 transition-colors hover:underline focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+          className="font-medium text-core-accent-strong underline decoration-core-accent-strong/40 underline-offset-2 transition-colors hover:decoration-core-accent-strong focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
           {linkText}
         </Link>
       );
@@ -75,12 +75,13 @@ export function renderMarkdown(text: string): React.ReactNode {
   return blocks.map((block, i) => {
     if (block.type === "list") {
       return (
-        <ul
-          key={i}
-          className="ml-spacing-400 flex list-disc flex-col gap-spacing-100 marker:text-content-standard-quaternary">
+        <ul key={i} className="flex list-none flex-col gap-spacing-100">
           {block.items.map((item, j) => (
-            <li key={j} className="pl-spacing-100">
-              {parseInline(item)}
+            <li key={j} className="flex items-baseline gap-spacing-200">
+              <span aria-hidden="true" className="shrink-0 select-none font-mono text-content-standard-quaternary">
+                [+]
+              </span>
+              <span className="min-w-0">{parseInline(item)}</span>
             </li>
           ))}
         </ul>

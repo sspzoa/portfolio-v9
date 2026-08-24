@@ -9,7 +9,7 @@ interface RecordGroupProps {
 export function RecordGroup({ title, children }: RecordGroupProps) {
   return (
     <div className="flex flex-col gap-spacing-400">
-      <h3 className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">{title}</h3>
+      <h3 className="font-bold font-mono text-content-standard-tertiary text-footnote">{`## ${title}`}</h3>
       {children}
     </div>
   );

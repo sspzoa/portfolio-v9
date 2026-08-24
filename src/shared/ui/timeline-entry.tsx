@@ -12,7 +12,7 @@ interface TimelineEntryProps {
 // Résumé-style entry: a fixed period column on the left, content on the right.
 export function TimelineEntry({ period, title, subtitle, logo, description }: TimelineEntryProps) {
   return (
-    <article className="grid grid-cols-1 gap-spacing-300 border-line-divider border-t pt-spacing-600 first:border-t-0 first:pt-0 md:grid-cols-[160px_1fr] md:gap-spacing-700">
+    <article className="grid grid-cols-1 gap-spacing-300 border-line-divider border-t pt-spacing-600 first:border-t-0 first:pt-0 md:grid-cols-[176px_1fr] md:gap-spacing-700">
       <time className="pt-spacing-50 font-mono text-content-standard-tertiary text-footnote tabular-nums">
         {period}
       </time>
@@ -20,7 +20,7 @@ export function TimelineEntry({ period, title, subtitle, logo, description }: Ti
         <div className="flex items-center gap-spacing-300">
           {logo && (
             <Image
-              className="h-8 w-8 shrink-0 rounded-radius-sm object-contain"
+              className="h-8 w-8 shrink-0 object-contain"
               width={32}
               height={32}
               src={logo}
@@ -30,7 +30,7 @@ export function TimelineEntry({ period, title, subtitle, logo, description }: Ti
             />
           )}
           <div className="flex min-w-0 flex-col">
-            <h3 className="font-semibold text-body text-content-standard-primary leading-snug">{title}</h3>
+            <h3 className="font-bold text-content-standard-primary text-heading">{title}</h3>
             {subtitle && <p className="text-content-standard-tertiary text-label">{subtitle}</p>}
           </div>
         </div>

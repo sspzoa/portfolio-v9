@@ -79,8 +79,8 @@ export function Collapsible({ children, maxHeight }: CollapsibleProps) {
             onClick={handleToggle}
             aria-expanded={isExpanded}
             aria-controls={contentId}
-            className="font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider transition-colors duration-fast hover:text-content-standard-primary focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
-            {isExpanded ? "접기 −" : "더보기 +"}
+            className="font-medium font-mono text-content-standard-tertiary text-footnote transition-colors duration-fast hover:text-content-standard-primary focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+            {isExpanded ? "[-] 접기" : "[+] 더보기"}
           </button>
         </div>
       )}

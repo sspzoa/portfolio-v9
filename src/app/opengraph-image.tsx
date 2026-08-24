@@ -18,7 +18,7 @@ export default function OpengraphImage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#fdfcfc",
       }}>
       <img src={logoSrc} width={320} height={320} alt="" />
     </div>,

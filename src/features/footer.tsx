@@ -3,7 +3,7 @@ export function Footer() {
 
   return (
     <footer className="flex w-full flex-col gap-spacing-150 border-line-divider border-t pt-spacing-700">
-      <p className="font-medium font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">
+      <p className="font-medium font-mono text-content-standard-tertiary text-footnote">
         Designed & built by Seungpyo Suh
       </p>
       <p className="font-mono text-content-standard-quaternary text-footnote">

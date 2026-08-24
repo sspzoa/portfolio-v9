@@ -25,9 +25,7 @@ export async function SkillsSection({ index, id }: SectionComponentProps) {
             <div
               key={category}
               className="grid grid-cols-1 items-baseline gap-x-spacing-700 gap-y-spacing-300 border-line-divider border-t py-spacing-500 first:border-t-0 first:pt-0 md:grid-cols-[160px_1fr]">
-              <p className="font-mono text-content-standard-tertiary text-footnote uppercase tracking-wider">
-                {category}
-              </p>
+              <p className="font-bold font-mono text-content-standard-tertiary text-footnote">{`## ${category}`}</p>
               <div className="flex flex-row flex-wrap gap-x-spacing-500 gap-y-spacing-300">
                 {categorySkills.map((skill) => (
                   <Tag key={skill.id} icon={skill.icon} name={skill.name} isMain={skill.isMain} />

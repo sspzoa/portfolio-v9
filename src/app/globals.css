@@ -1,75 +1,68 @@
-@import url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/split/WantedSansVariable.min.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5/400.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5/500.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/jetbrains-mono@5/700.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/nanum-gothic-coding@5/400.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/nanum-gothic-coding@5/700.css");
 @import "tailwindcss";
 
-/* Layer 1 primitives + Layer 2 semantic CSS vars (raw CSS + dark scheme). */
+/* Layer 1 primitives + Layer 2 semantic CSS vars (raw CSS + dark scheme).
+   Palette inspired by opencode.ai: warm cream canvas, near-black ink, hairlines. */
 :root {
   color-scheme: light dark;
 
-  --solid-red: rgba(255, 64, 53, 1);
-  --solid-orange: rgba(255, 154, 5, 1);
-  --solid-yellow: rgba(245, 201, 5, 1);
-  --solid-green: rgba(50, 204, 88, 1);
-  --solid-blue: rgba(5, 127, 255, 1);
-  --solid-indigo: rgba(91, 89, 222, 1);
-  --solid-purple: rgba(183, 86, 232, 1);
-  --solid-pink: rgba(255, 50, 90, 1);
-  --solid-brown: rgba(167, 137, 99, 1);
-  --solid-black: rgba(0, 0, 0, 1);
-  --solid-white: rgba(255, 255, 255, 1);
+  --solid-ink: rgba(32, 29, 29, 1);
+  --solid-ink-deep: rgba(15, 0, 0, 1);
+  --solid-charcoal: rgba(48, 44, 44, 1);
+  --solid-body: rgba(66, 66, 69, 1);
+  --solid-mute: rgba(100, 98, 98, 1);
+  --solid-stone: rgba(110, 110, 115, 1);
+  --solid-ash: rgba(154, 152, 152, 1);
+  --solid-cream: rgba(253, 252, 252, 1);
+  --solid-cream-soft: rgba(248, 247, 247, 1);
+  --solid-cream-card: rgba(241, 238, 238, 1);
 
-  --solid-translucent-red: rgba(255, 64, 53, 0.1);
-  --solid-translucent-orange: rgba(255, 154, 5, 0.1);
-  --solid-translucent-yellow: rgba(245, 201, 5, 0.1);
-  --solid-translucent-green: rgba(50, 204, 88, 0.1);
-  --solid-translucent-blue: rgba(5, 127, 255, 0.1);
-  --solid-translucent-indigo: rgba(91, 89, 222, 0.1);
-  --solid-translucent-purple: rgba(183, 86, 232, 0.1);
-  --solid-translucent-pink: rgba(255, 50, 90, 0.1);
-  --solid-translucent-brown: rgba(167, 137, 99, 0.1);
-  --solid-translucent-black: rgba(0, 0, 0, 0.1);
-  --solid-translucent-white: rgba(255, 255, 255, 0.1);
+  --background-standard-primary: var(--solid-cream);
+  --background-standard-secondary: var(--solid-cream-soft);
 
-  --background-standard-primary: var(--solid-white);
-  --background-standard-secondary: rgba(243, 244, 247, 1);
+  --background-inverted-primary: var(--solid-ink);
+  --background-inverted-secondary: var(--solid-charcoal);
 
-  --background-inverted-primary: var(--solid-black);
-  --background-inverted-secondary: rgba(14, 14, 15, 1);
+  --content-standard-primary: var(--solid-ink);
+  --content-standard-secondary: var(--solid-body);
+  --content-standard-tertiary: var(--solid-mute);
+  --content-standard-quaternary: var(--solid-ash);
 
-  --content-standard-primary: rgba(28, 29, 33, 1);
-  --content-standard-secondary: rgba(28, 29, 33, 0.78);
-  --content-standard-tertiary: rgba(28, 29, 33, 0.62);
-  --content-standard-quaternary: rgba(28, 29, 33, 0.34);
+  --content-inverted-primary: var(--solid-cream);
+  --content-inverted-secondary: rgba(253, 252, 252, 0.72);
+  --content-inverted-tertiary: var(--solid-ash);
+  --content-inverted-quaternary: rgba(253, 252, 252, 0.35);
 
-  --content-inverted-primary: rgba(244, 244, 245, 1);
-  --content-inverted-secondary: rgba(244, 244, 245, 0.6);
-  --content-inverted-tertiary: rgba(244, 244, 245, 0.4);
-  --content-inverted-quaternary: rgba(244, 244, 245, 0.2);
+  --line-divider: rgba(15, 0, 0, 0.12);
+  --line-outline: rgba(15, 0, 0, 0.16);
 
-  --line-divider: rgba(121, 123, 138, 0.16);
-  --line-outline: rgba(121, 123, 138, 0.18);
+  --components-fill-standard-primary: var(--solid-cream-soft);
+  --components-fill-standard-secondary: var(--solid-cream-card);
+  --components-fill-standard-tertiary: rgba(235, 231, 231, 1);
 
-  --components-fill-standard-primary: rgba(252, 252, 253, 1);
-  --components-fill-standard-secondary: rgba(247, 247, 248, 1);
-  --components-fill-standard-tertiary: rgba(241, 241, 244, 1);
+  --components-fill-inverted-primary: var(--solid-charcoal);
+  --components-fill-inverted-secondary: rgba(38, 35, 35, 1);
+  --components-fill-inverted-tertiary: rgba(58, 53, 53, 1);
 
-  --components-fill-inverted-primary: rgba(19, 19, 20, 1);
-  --components-fill-inverted-secondary: rgba(22, 22, 23, 1);
-  --components-fill-inverted-tertiary: rgba(27, 28, 29, 1);
+  --components-interactive-hover: rgba(15, 0, 0, 0.05);
+  --components-interactive-focused: rgba(15, 0, 0, 0.08);
+  --components-interactive-pressed: rgba(15, 0, 0, 0.12);
 
-  --components-interactive-hover: rgba(28, 29, 33, 0.06);
-  --components-interactive-focused: rgba(28, 29, 33, 0.1);
-  --components-interactive-pressed: rgba(28, 29, 33, 0.14);
+  --components-translucent-primary: rgba(15, 0, 0, 0.08);
+  --components-translucent-secondary: rgba(15, 0, 0, 0.06);
+  --components-translucent-tertiary: rgba(15, 0, 0, 0.04);
 
-  --components-translucent-primary: rgba(121, 124, 138, 0.1);
-  --components-translucent-secondary: rgba(121, 124, 138, 0.08);
-  --components-translucent-tertiary: rgba(121, 124, 138, 0.05);
+  --core-accent: var(--solid-ink);
+  --core-accent-strong: var(--solid-ink-deep);
+  --core-accent-translucent: rgba(15, 0, 0, 0.08);
+  --core-selection: rgba(32, 29, 29, 0.16);
 
-  --core-accent: rgba(85, 117, 158, 1);
-  --core-accent-strong: rgba(74, 101, 135, 1);
-  --core-accent-translucent: rgba(85, 117, 158, 0.1);
-  --core-selection: rgba(85, 117, 158, 0.2);
-
-  --font-mono-stack: ui-monospace, "SF Mono", "SFMono-Regular", "JetBrains Mono", "Menlo", "Consolas", monospace;
+  --font-mono-stack: "JetBrains Mono", "Nanum Gothic Coding", ui-monospace, "SF Mono", "SFMono-Regular",
+    "IBM Plex Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
 
   --content-max: 720px;
 
@@ -119,23 +112,21 @@
 
   --font-mono: var(--font-mono-stack);
 
-  --tracking-label-wide: 0.22em;
-
-  --text-hero: clamp(2.75rem, 2rem + 4vw, 4.5rem);
-  --text-hero--line-height: 1.02;
-  --text-hero--letter-spacing: -0.03em;
-  --text-title: 24px;
-  --text-title--line-height: 34px;
-  --text-title--letter-spacing: -0.02em;
-  --text-heading: 20px;
-  --text-heading--line-height: 28px;
-  --text-heading--letter-spacing: -0.02em;
+  --text-hero: clamp(1.75rem, 1.4rem + 1.75vw, 2.375rem);
+  --text-hero--line-height: 1.4;
+  --text-hero--letter-spacing: 0;
+  --text-title: 20px;
+  --text-title--line-height: 30px;
+  --text-title--letter-spacing: 0;
+  --text-heading: 16px;
+  --text-heading--line-height: 24px;
+  --text-heading--letter-spacing: 0;
   --text-body: 16px;
-  --text-body--line-height: 27px;
-  --text-body--letter-spacing: -0.01em;
+  --text-body--line-height: 26px;
+  --text-body--letter-spacing: 0;
   --text-label: 14px;
   --text-label--line-height: 22px;
-  --text-label--letter-spacing: -0.01em;
+  --text-label--letter-spacing: 0;
   --text-footnote: 12px;
   --text-footnote--line-height: 18px;
   --text-footnote--letter-spacing: 0;
@@ -159,9 +150,7 @@
 
   --container-content: var(--content-max);
 
-  --radius-radius-sm: 6px;
-  --radius-radius-md: 12px;
-  --radius-radius-lg: 20px;
+  --radius-radius-sm: 4px;
   --radius-radius-full: 9999px;
 
   --default-transition-duration: var(--motion-duration-base);
@@ -174,57 +163,45 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --solid-translucent-red: rgba(255, 64, 53, 0.2);
-    --solid-translucent-orange: rgba(255, 154, 5, 0.2);
-    --solid-translucent-yellow: rgba(245, 201, 5, 0.2);
-    --solid-translucent-green: rgba(50, 204, 88, 0.2);
-    --solid-translucent-blue: rgba(5, 127, 255, 0.2);
-    --solid-translucent-indigo: rgba(91, 89, 222, 0.2);
-    --solid-translucent-purple: rgba(183, 86, 232, 0.2);
-    --solid-translucent-pink: rgba(255, 50, 90, 0.2);
-    --solid-translucent-brown: rgba(167, 137, 99, 0.2);
-    --solid-translucent-black: rgba(0, 0, 0, 0.2);
-    --solid-translucent-white: rgba(255, 255, 255, 0.2);
+    --background-standard-primary: var(--solid-ink);
+    --background-standard-secondary: rgba(25, 23, 23, 1);
 
-    --background-standard-primary: rgba(10, 10, 11, 1);
-    --background-standard-secondary: rgba(6, 6, 7, 1);
+    --background-inverted-primary: var(--solid-cream);
+    --background-inverted-secondary: var(--solid-cream-card);
 
-    --background-inverted-primary: var(--solid-white);
-    --background-inverted-secondary: rgba(237, 238, 242, 1);
+    --content-standard-primary: var(--solid-cream);
+    --content-standard-secondary: rgba(253, 252, 252, 0.75);
+    --content-standard-tertiary: var(--solid-ash);
+    --content-standard-quaternary: rgba(253, 252, 252, 0.35);
 
-    --content-standard-primary: rgba(244, 244, 245, 1);
-    --content-standard-secondary: rgba(244, 244, 245, 0.75);
-    --content-standard-tertiary: rgba(244, 244, 245, 0.55);
-    --content-standard-quaternary: rgba(244, 244, 245, 0.34);
+    --content-inverted-primary: var(--solid-ink);
+    --content-inverted-secondary: var(--solid-body);
+    --content-inverted-tertiary: var(--solid-mute);
+    --content-inverted-quaternary: var(--solid-ash);
 
-    --content-inverted-primary: rgba(28, 29, 33, 1);
-    --content-inverted-secondary: rgba(28, 29, 33, 0.6);
-    --content-inverted-tertiary: rgba(28, 29, 33, 0.4);
-    --content-inverted-quaternary: rgba(28, 29, 33, 0.2);
+    --line-divider: rgba(253, 252, 252, 0.14);
+    --line-outline: rgba(253, 252, 252, 0.18);
 
-    --line-divider: rgba(121, 123, 138, 0.24);
-    --line-outline: rgba(121, 123, 138, 0.2);
+    --components-fill-standard-primary: rgba(38, 35, 35, 1);
+    --components-fill-standard-secondary: var(--solid-charcoal);
+    --components-fill-standard-tertiary: rgba(58, 53, 53, 1);
 
-    --components-fill-standard-primary: rgba(17, 17, 19, 1);
-    --components-fill-standard-secondary: rgba(22, 22, 24, 1);
-    --components-fill-standard-tertiary: rgba(27, 27, 30, 1);
+    --components-fill-inverted-primary: var(--solid-cream-soft);
+    --components-fill-inverted-secondary: var(--solid-cream-card);
+    --components-fill-inverted-tertiary: rgba(235, 231, 231, 1);
 
-    --components-fill-inverted-primary: rgba(254, 254, 255, 1);
-    --components-fill-inverted-secondary: rgba(250, 250, 250, 1);
-    --components-fill-inverted-tertiary: rgba(254, 254, 255, 1);
+    --components-interactive-hover: rgba(253, 252, 252, 0.06);
+    --components-interactive-focused: rgba(253, 252, 252, 0.1);
+    --components-interactive-pressed: rgba(253, 252, 252, 0.14);
 
-    --components-interactive-hover: rgba(244, 244, 245, 0.06);
-    --components-interactive-focused: rgba(244, 244, 245, 0.1);
-    --components-interactive-pressed: rgba(244, 244, 245, 0.14);
+    --components-translucent-primary: rgba(253, 252, 252, 0.1);
+    --components-translucent-secondary: rgba(253, 252, 252, 0.08);
+    --components-translucent-tertiary: rgba(253, 252, 252, 0.05);
 
-    --components-translucent-primary: rgba(121, 124, 138, 0.18);
-    --components-translucent-secondary: rgba(121, 124, 138, 0.14);
-    --components-translucent-tertiary: rgba(121, 124, 138, 0.08);
-
-    --core-accent: rgba(143, 175, 213, 1);
-    --core-accent-strong: rgba(165, 193, 226, 1);
-    --core-accent-translucent: rgba(143, 175, 213, 0.12);
-    --core-selection: rgba(143, 175, 213, 0.32);
+    --core-accent: var(--solid-cream);
+    --core-accent-strong: rgba(255, 255, 255, 1);
+    --core-accent-translucent: rgba(253, 252, 252, 0.1);
+    --core-selection: rgba(253, 252, 252, 0.28);
   }
 }
 
@@ -246,10 +223,7 @@
 body {
   background: var(--background-standard-primary);
   color: var(--content-standard-primary);
-  font-family:
-    "Wanted Sans Variable", "Wanted Sans", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI",
-    "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
-    "Segoe UI Symbol", sans-serif;
+  font-family: var(--font-mono-stack);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
