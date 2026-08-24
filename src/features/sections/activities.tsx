@@ -26,10 +26,14 @@ export async function ActivitiesSection({ index, id }: SectionComponentProps) {
                   [+]
                 </span>
                 <div className="min-w-0">
-                  <p className="break-keep font-medium text-content-standard-primary text-label">{activity.name}</p>
-                  {activity.role && (
-                    <p className="font-mono text-content-standard-tertiary text-footnote">{activity.role}</p>
-                  )}
+                  <p className="break-keep font-medium text-content-standard-primary text-label">
+                    {activity.name}
+                    {activity.role && (
+                      <span className="ml-spacing-200 font-mono font-normal text-content-standard-tertiary text-footnote">
+                        {activity.role}
+                      </span>
+                    )}
+                  </p>
                   {activity.hosts.length > 0 && (
                     <div className="mt-spacing-150 flex flex-row flex-wrap gap-x-spacing-300 gap-y-spacing-100">
                       {activity.hosts.map((host) => (
