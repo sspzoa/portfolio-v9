@@ -6,9 +6,9 @@ Guidance for coding agents working in this repository.
 
 `portfolio-v9` — personal portfolio / résumé for **Seungpyo Suh** (Product Engineer), deployed at **https://sspzoa.io** on Vercel.
 
-- Home (`/`) is a static centered entry (name, tagline, socials, link to the résumé).
+- Home (`/`) is a static manpage-style entry (name, affiliations, socials, link to the résumé).
 - `/portfolio` is the single-page editorial résumé. Content is live from **Notion** (headless CMS).
-- Design tokens drive all UI. Portfolio layout is a sticky sidebar + reading column on large screens.
+- Design tokens drive all UI. Home and `/portfolio` share a single reading column (`max-w-content`).
 - UI copy is Korean (`lang="ko"`). **Code, comments, identifiers, and commit messages are English.**
 
 ## Tech stack
@@ -21,7 +21,7 @@ Guidance for coding agents working in this repository.
 | Styling | **Tailwind CSS v4** | CSS-first `@theme` in `globals.css`; `@tailwindcss/postcss` |
 | Lint + format | **Biome 2.5** | No ESLint, no Prettier |
 | Validation | **Zod 4** | Env + Notion payloads |
-| Icons | **lucide-react** (+ inline brand SVGs) | Brand marks removed upstream in lucide 1.x |
+| Icons | ASCII brackets (`[+]`, `[01]`, `[tag]`) | No icon library in chrome |
 | Analytics | `@vercel/analytics`, `@vercel/speed-insights` | |
 | CMS | **Notion API** (`2025-09-03`) | One data source per section (IDs hardcoded) |
 | Package manager | **Bun** | `bun.lock` committed; Node ≥ 20.9 |
@@ -111,7 +111,7 @@ src/
 
 ## Home section order
 
-`SECTIONS` in `src/app/portfolio/page.tsx` drives the page, `SideNav`, and `MobileHeader`. Korean résumé-style order:
+`SECTIONS` in `src/app/portfolio/page.tsx` drives the page, `Contents`, and `MobileHeader`. Korean résumé-style order:
 
 **About → Awards → Certificates → Careers → Experiences → Skills → Education → Projects → Activities**
 
@@ -173,7 +173,7 @@ The visual system is a terminal/manpage aesthetic inspired by opencode.ai (see `
 - **Type:** `text-{hero,title,heading,body,label,footnote}` — `hero` is fluid `clamp()` (~28→38px). Letter-spacing is 0 everywhere; no `tracking-*` utilities, no `uppercase` labels. Section headers are `text-heading` + `font-bold`; use `font-bold` (700) / `font-medium` (500) — never `font-semibold` (600 is not loaded).
 - **Depth:** no shadows, no gradients, no blur, no inverted surface blocks. Everything sits flat on the canvas; separation comes from 1px `line-divider` hairlines only.
 - **Motion:** `duration-{fast,base,slow}` + `ease-standard`. State changes only (hover/focus/active/nav progress) — no scroll-reveal.
-- **Layout:** `max-w-content` (720px), shell `max-w-6xl`, sidebar `lg:grid-cols-[240px_minmax(0,1fr)]`.
+- **Layout:** single reading column `max-w-content` (720px) on `/` and `/portfolio`. No sidebar.
 
 ### Theming
 
@@ -246,3 +246,13 @@ Do **not** add comments unless asked. No drive-by README/docs unless requested. 
 - **`/design-system`** and **`/code-style`** permanently redirect to `/`. **`/machine-readable`**, **`/llms.txt`**, and **`/llms-full.txt`** permanently redirect to `/portfolio`.
 - **Stray dev server on :3000** breaks `bun start` (EADDRINUSE).
 - When updating conventions, keep **AGENTS.md** current.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

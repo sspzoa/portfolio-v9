@@ -33,7 +33,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
 
       <div className="flex items-baseline justify-between gap-spacing-400">
-        <h3 className="flex min-w-0 items-center gap-spacing-300 font-bold text-content-standard-primary text-heading">
+        <h3 className="flex min-w-0 items-center gap-spacing-200 font-bold text-content-standard-primary text-heading">
+          <span
+            aria-hidden="true"
+            className="shrink-0 select-none font-mono font-normal text-content-standard-quaternary text-label">
+            [+]
+          </span>
           {project.iconImage && (
             <span className="h-7 w-7 shrink-0 overflow-hidden">
               <Image

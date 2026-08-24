@@ -44,7 +44,7 @@ export function SideProjectToggle({ mainProjects, sideProjects }: SideProjectTog
 
           <div className="mt-spacing-700">
             <Button
-              text={showSideProjects ? "사이드 프로젝트 숨기기 −" : `사이드 프로젝트 ${sideProjects.length}개 더보기 +`}
+              text={showSideProjects ? "[-] 사이드 프로젝트" : `[+] 사이드 프로젝트 ${sideProjects.length}`}
               onClick={() => setShowSideProjects((prev) => !prev)}
               aria-expanded={showSideProjects}
               aria-controls={sideListId}

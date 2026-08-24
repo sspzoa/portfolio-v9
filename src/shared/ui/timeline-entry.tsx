@@ -9,14 +9,11 @@ interface TimelineEntryProps {
   description?: string | null;
 }
 
-// Résumé-style entry: a fixed period column on the left, content on the right.
 export function TimelineEntry({ period, title, subtitle, logo, description }: TimelineEntryProps) {
   return (
-    <article className="grid grid-cols-1 gap-spacing-300 border-line-divider border-t pt-spacing-600 first:border-t-0 first:pt-0 md:grid-cols-[176px_1fr] md:gap-spacing-700">
-      <time className="pt-spacing-50 font-mono text-content-standard-tertiary text-footnote tabular-nums">
-        {period}
-      </time>
-      <div className="flex flex-col gap-spacing-300">
+    <article className="grid grid-cols-1 items-baseline gap-x-spacing-700 gap-y-spacing-200 border-line-divider border-t py-spacing-500 first:border-t-0 first:pt-0 md:grid-cols-[160px_1fr]">
+      <time className="font-mono text-content-standard-tertiary text-footnote tabular-nums">{`## ${period}`}</time>
+      <div className="flex min-w-0 flex-col gap-spacing-300">
         <div className="flex items-center gap-spacing-300">
           {logo && (
             <Image
@@ -30,7 +27,14 @@ export function TimelineEntry({ period, title, subtitle, logo, description }: Ti
             />
           )}
           <div className="flex min-w-0 flex-col">
-            <h3 className="font-bold text-content-standard-primary text-heading">{title}</h3>
+            <h3 className="flex items-baseline gap-spacing-200 font-bold text-content-standard-primary text-heading">
+              <span
+                aria-hidden="true"
+                className="shrink-0 select-none font-mono font-normal text-content-standard-quaternary text-label">
+                [+]
+              </span>
+              {title}
+            </h3>
             {subtitle && <p className="text-content-standard-tertiary text-label">{subtitle}</p>}
           </div>
         </div>

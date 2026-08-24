@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Footer } from "@/features/footer";
 import { Hero } from "@/features/hero";
-import { MobileHeader, SideNav } from "@/features/nav";
+import { Contents, MobileHeader } from "@/features/nav";
 import { AboutMeSection } from "@/features/sections/aboutme";
 import { ActivitiesSection } from "@/features/sections/activities";
 import { AwardsSection } from "@/features/sections/awards";
@@ -38,49 +38,42 @@ const SECTIONS = [
 
 const navItems = SECTIONS.map(({ id, label }) => ({ id, label }));
 
+const focusRing =
+  "focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary";
+
 export default function PortfolioPage() {
   return (
-    <div className="mx-auto min-h-dvh w-full max-w-6xl px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+    <div className="mx-auto flex min-h-dvh w-full max-w-content flex-col px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
       <MobileHeader items={navItems} brandHref="/" />
 
-      <div className="lg:grid lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-x-spacing-850">
-        <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-dvh lg:flex-col lg:justify-between lg:py-spacing-800">
-          <div className="flex flex-col gap-spacing-150">
-            <Link href="/" className="font-bold text-content-standard-primary text-label">
-              Seungpyo Suh<span className="text-content-standard-quaternary">_</span>
-            </Link>
-            <p className="font-mono text-content-standard-tertiary text-footnote">Product Engineer</p>
-          </div>
+      <main id="main-content" tabIndex={-1} className="flex flex-1 flex-col py-spacing-700 md:py-spacing-800">
+        <Hero />
 
-          <SideNav items={navItems} />
+        <div className="mt-spacing-850 flex flex-col gap-spacing-400 md:mt-spacing-1000">
+          <Contents items={navItems} />
 
-          <div className="flex flex-col gap-spacing-400">
+          <nav aria-label="Links" className="border-line-divider border-t pt-spacing-600">
+            <p className="mb-spacing-400 font-mono text-content-standard-tertiary text-footnote">## links</p>
             <Socials />
-            <Link
-              href="mailto:me@sspzoa.io"
-              className="font-mono text-content-standard-tertiary text-footnote transition-colors hover:text-content-standard-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
-              me@sspzoa.io
-            </Link>
-          </div>
-        </aside>
+          </nav>
+        </div>
 
-        <main
-          id="main-content"
-          tabIndex={-1}
-          className="flex min-w-0 max-w-content flex-col py-spacing-700 md:py-spacing-800">
-          <Hero />
+        <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-1000 md:gap-spacing-1000">
+          {SECTIONS.map(({ id, Component }, i) => (
+            <Component key={id} id={id} index={i + 1} />
+          ))}
+        </div>
 
-          <div className="mt-spacing-850 flex flex-col gap-spacing-850 md:mt-spacing-1000 md:gap-spacing-1000">
-            {SECTIONS.map(({ id, Component }, i) => (
-              <Component key={id} id={id} index={i + 1} />
-            ))}
-          </div>
+        <Link
+          href="/"
+          className={`mt-spacing-800 inline-flex w-fit items-center rounded-radius-sm border border-line-outline px-spacing-500 py-spacing-150 font-medium font-mono text-content-standard-primary text-label transition-colors duration-fast hover:bg-components-interactive-hover ${focusRing}`}>
+          cd /
+        </Link>
 
-          <div className="mt-spacing-900">
-            <Footer />
-          </div>
-        </main>
-      </div>
+        <div className="mt-spacing-900">
+          <Footer />
+        </div>
+      </main>
     </div>
   );
 }

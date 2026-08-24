@@ -16,7 +16,9 @@ interface MobileHeaderProps extends NavProps {
   brandHref?: string;
 }
 
-// Tracks the topmost visible section via IntersectionObserver.
+const focusRing =
+  "focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary";
+
 function useActiveSection(items: NavItem[]): string {
   const [active, setActive] = useState<string>(items[0]?.id ?? "");
 
@@ -46,7 +48,6 @@ function useActiveSection(items: NavItem[]): string {
   return active;
 }
 
-// 0 → 1 page scroll progress, rAF-throttled.
 function useScrollProgress(): number {
   const [progress, setProgress] = useState(0);
 
@@ -76,41 +77,42 @@ function useScrollProgress(): number {
   return progress;
 }
 
-export function SideNav({ items }: NavProps) {
+export function Contents({ items }: NavProps) {
   const active = useActiveSection(items);
 
   if (items.length === 0) return null;
 
   return (
-    <nav aria-label="Sections">
-      <ul className="flex flex-col gap-spacing-50">
+    <nav aria-label="Sections" className="border-line-divider border-t pt-spacing-600">
+      <p className="font-mono text-content-standard-tertiary text-footnote">## contents</p>
+      <ul className="mt-spacing-400 flex flex-col">
         {items.map((item, i) => {
           const isActive = active === item.id;
+          const index = (i + 1).toString().padStart(2, "0");
           return (
-            <li key={item.id}>
+            <li key={item.id} className="border-line-divider border-t first:border-t-0">
               <a
                 href={`#${item.id}`}
                 aria-current={isActive ? "location" : undefined}
-                className="group flex items-baseline gap-spacing-200 rounded-radius-sm py-spacing-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
+                className={`flex items-baseline gap-spacing-200 py-spacing-200 ${focusRing}`}>
                 <span
                   aria-hidden="true"
-                  className={`shrink-0 select-none font-mono text-content-standard-primary text-footnote transition-opacity duration-fast ${
-                    isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40"
-                  }`}>
-                  {">"}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className={`font-mono text-footnote tabular-nums transition-colors ${
+                  className={`w-spacing-300 shrink-0 select-none font-mono text-footnote ${
                     isActive ? "text-content-standard-primary" : "text-content-standard-quaternary"
                   }`}>
-                  {(i + 1).toString().padStart(2, "0")}
+                  {isActive ? ">" : ""}
                 </span>
                 <span
-                  className={`font-mono text-footnote transition-colors ${
+                  className={`font-mono text-footnote tabular-nums ${
+                    isActive ? "text-content-standard-primary" : "text-content-standard-quaternary"
+                  }`}>
+                  {`[${index}]`}
+                </span>
+                <span
+                  className={`font-mono text-footnote ${
                     isActive
                       ? "font-bold text-content-standard-primary"
-                      : "text-content-standard-tertiary group-hover:text-content-standard-secondary"
+                      : "text-content-standard-tertiary hover:text-content-standard-secondary"
                   }`}>
                   {item.label}
                 </span>
@@ -123,20 +125,17 @@ export function SideNav({ items }: NavProps) {
   );
 }
 
-// Mobile-only sticky bar: identity, current section, scroll progress. (P2)
-export function MobileHeader({ items, brandHref = "#top" }: MobileHeaderProps) {
+export function MobileHeader({ items, brandHref = "/" }: MobileHeaderProps) {
   const active = useActiveSection(items);
   const progress = useScrollProgress();
   const activeIndex = items.findIndex((item) => item.id === active);
   const activeItem = items[activeIndex];
 
   return (
-    <header className="sticky top-0 z-40 -mx-spacing-500 border-line-divider border-b bg-background-standard-primary md:-mx-spacing-700 lg:hidden">
-      <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700">
-        <Link
-          href={brandHref}
-          className="font-bold text-content-standard-primary text-label focus-visible:rounded-radius-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-core-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background-standard-primary">
-          Seungpyo Suh<span className="text-content-standard-quaternary">_</span>
+    <header className="sticky top-0 z-40 -mx-spacing-500 border-line-divider border-b bg-background-standard-primary md:-mx-spacing-700 lg:-mx-spacing-800">
+      <div className="flex h-14 items-center justify-between px-spacing-500 md:px-spacing-700 lg:px-spacing-800">
+        <Link href={brandHref} className={`font-mono text-content-standard-primary text-footnote ${focusRing}`}>
+          cd /
         </Link>
         {activeItem && (
           <span className="font-mono text-content-standard-tertiary text-footnote tabular-nums">
@@ -146,7 +145,7 @@ export function MobileHeader({ items, brandHref = "#top" }: MobileHeaderProps) {
       </div>
       <div
         aria-hidden="true"
-        className="absolute bottom-0 left-0 h-px bg-core-accent transition-[width] duration-fast ease-standard"
+        className="absolute bottom-0 left-0 h-px bg-line-outline transition-[width] duration-fast ease-standard"
         style={{ width: `${progress * 100}%` }}
       />
     </header>
