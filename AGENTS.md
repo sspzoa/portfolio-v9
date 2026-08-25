@@ -24,7 +24,7 @@ Guidance for coding agents working in this repository.
 | Icons | ASCII brackets (`[+]`, `[01]`, `[tag]`) | No icon library in chrome |
 | Analytics | `@vercel/analytics`, `@vercel/speed-insights` | |
 | CMS | **Notion API** (`2025-09-03`) | One data source per section (IDs hardcoded) |
-| Package manager | **Bun** | `bun.lock` committed; Node ≥ 20.9 |
+| Package manager | **Bun** | `packageManager` in `package.json`, `bun.lock` committed; Bun ≥ 1.2, Node ≥ 20.9 |
 
 ## Commands
 
