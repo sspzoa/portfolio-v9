@@ -48,11 +48,6 @@ Always run `bun run lint` before considering a change complete. It is the projec
 | --- | --- | --- |
 | `/` | Page | Static profile-card entry |
 | `/portfolio` | Page | Editorial résumé; `dynamic = "force-dynamic"` |
-| `/design-system` | Redirect | Permanent → `/` (removed page) |
-| `/code-style` | Redirect | Permanent → `/` (removed page) |
-| `/machine-readable` | Redirect | Permanent → `/portfolio` (removed page) |
-| `/llms.txt` | Redirect | Permanent → `/portfolio` (removed page) |
-| `/llms-full.txt` | Redirect | Permanent → `/portfolio` (removed page) |
 
 `sitemap.ts` includes `/` and `/portfolio`.
 
@@ -243,7 +238,6 @@ Do **not** add comments unless asked. No drive-by README/docs unless requested. 
 - **CSP is strict** (`next.config.ts`). New external script/style/font/img/connect targets need matching `*-src`.
 - **Security headers** (HSTS, `X-Frame-Options: DENY`, `nosniff`, Referrer-Policy, Permissions-Policy) — preserve them.
 - **`dangerouslySetInnerHTML`** — only hardcoded JSON-LD `Person` in `layout.tsx`. Do not add more.
-- **`/design-system`** and **`/code-style`** permanently redirect to `/`. **`/machine-readable`**, **`/llms.txt`**, and **`/llms-full.txt`** permanently redirect to `/portfolio`.
 - **Stray dev server on :3000** breaks `bun start` (EADDRINUSE).
 - When updating conventions, keep **AGENTS.md** current.
 

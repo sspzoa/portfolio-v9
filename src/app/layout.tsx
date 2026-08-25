@@ -7,7 +7,7 @@ import { Providers } from "@/shared/lib/provider";
 
 const SITE_URL = "https://sspzoa.io";
 const SITE_TITLE = "Seungpyo Suh";
-const SITE_DESCRIPTION = "Seungpyo Suh - Product Engineer";
+const SITE_DESCRIPTION = "Seungpyo Suh — Product Engineer at HORANG EDU Corp.";
 
 export const metadata: Metadata = {
   title: SITE_TITLE,
@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    url: SITE_URL,
     siteName: SITE_TITLE,
     locale: "ko_KR",
     type: "website",
@@ -55,8 +56,17 @@ export default function RootLayout({
     name: "Seungpyo Suh",
     alternateName: "서승표",
     jobTitle: "Product Engineer",
+    email: "me@sspzoa.io",
     url: SITE_URL,
     image: `${SITE_URL}/photo.jpg`,
+    worksFor: {
+      "@type": "Organization",
+      name: "HORANG EDU Corp.",
+    },
+    alumniOf: [
+      { "@type": "CollegeOrUniversity", name: "Dongguk University" },
+      { "@type": "HighSchool", name: "Korea Digital Media High School" },
+    ],
     sameAs: ["https://github.com/sspzoa", "https://linkedin.com/in/seungpyosuh", "https://www.instagram.com/seuungpyo"],
   };
 

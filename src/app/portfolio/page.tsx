@@ -16,11 +16,21 @@ import { Socials } from "@/features/socials";
 
 export const dynamic = "force-dynamic";
 
+const PORTFOLIO_URL = "https://sspzoa.io/portfolio";
+const PORTFOLIO_TITLE = "Portfolio · Seungpyo Suh";
+const PORTFOLIO_DESCRIPTION =
+  "Résumé of Seungpyo Suh — careers, projects, awards, certificates, education, and activities.";
+
 export const metadata: Metadata = {
-  title: "Portfolio · Seungpyo Suh",
-  description: "Seungpyo Suh - Product Engineer",
+  title: PORTFOLIO_TITLE,
+  description: PORTFOLIO_DESCRIPTION,
+  openGraph: {
+    title: PORTFOLIO_TITLE,
+    description: PORTFOLIO_DESCRIPTION,
+    url: PORTFOLIO_URL,
+  },
   alternates: {
-    canonical: "https://sspzoa.io/portfolio",
+    canonical: PORTFOLIO_URL,
   },
 };
 

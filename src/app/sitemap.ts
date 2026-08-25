@@ -1,19 +1,20 @@
 import type { MetadataRoute } from "next";
 
-// Update this date when the résumé content changes meaningfully.
-const LAST_MODIFIED = "2026-08-16";
+const SITE_URL = "https://sspzoa.io";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+
   return [
     {
-      url: "https://sspzoa.io",
-      lastModified: LAST_MODIFIED,
-      changeFrequency: "weekly",
+      url: SITE_URL,
+      lastModified: now,
+      changeFrequency: "monthly",
       priority: 1,
     },
     {
-      url: "https://sspzoa.io/portfolio",
-      lastModified: LAST_MODIFIED,
+      url: `${SITE_URL}/portfolio`,
+      lastModified: now,
       changeFrequency: "weekly",
       priority: 0.9,
     },

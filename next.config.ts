@@ -12,35 +12,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: "/design-system",
-        destination: "/",
-        permanent: true,
-      },
-      {
-        source: "/code-style",
-        destination: "/",
-        permanent: true,
-      },
-      {
-        source: "/machine-readable",
-        destination: "/portfolio",
-        permanent: true,
-      },
-      {
-        source: "/llms.txt",
-        destination: "/portfolio",
-        permanent: true,
-      },
-      {
-        source: "/llms-full.txt",
-        destination: "/portfolio",
-        permanent: true,
-      },
-    ];
-  },
   async headers() {
     return [
       {
