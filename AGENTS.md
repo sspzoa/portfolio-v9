@@ -185,7 +185,7 @@ Always `next/image` with `width` / `height` / `sizes`, `draggable={false}`; deco
 
 ### Fonts
 
-All-monospace: **JetBrains Mono** (400/500/700, Latin) with **Nanum Gothic Coding** (400/700, Hangul) fallback, both via jsDelivr Fontsource CSS in `globals.css`. `body` and `--font-mono` share the same stack, so `font-mono` is a no-op kept for intent. jsDelivr in CSP `style-src` / `font-src`.
+Latin stays monospaced **JetBrains Mono** (400/500/700) via jsDelivr Fontsource. Hangul falls through to **Pretendard Variable** (dynamic subset, `pretendard@1.3.9` on jsDelivr) so Korean body copy is not forced onto a coding-font grid. `body` and `--font-mono` share the same stack, so `font-mono` is a no-op kept for intent. jsDelivr in CSP `style-src` / `font-src`.
 
 ### Accessibility
 
