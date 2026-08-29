@@ -8,7 +8,7 @@ export function Hero() {
         Seungpyo Suh<span className="text-content-standard-quaternary">_</span>
       </h1>
       <p className="mt-spacing-300 text-body text-content-standard-secondary">
-        Product Engineer crafting experiences that feel like home.
+        Product Engineer who decides what to build, then refines it until it's good.
       </p>
     </header>
   );
