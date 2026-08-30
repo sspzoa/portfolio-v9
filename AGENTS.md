@@ -106,9 +106,9 @@ src/
 
 ## Home section order
 
-`SECTIONS` in `src/app/portfolio/page.tsx` drives the page, `Contents`, and `MobileHeader`. Korean résumé-style order:
+`SECTIONS` in `src/app/portfolio/page.tsx` drives the page, `Contents`, and `MobileHeader`.
 
-**About → Awards → Certificates → Careers → Experiences → Skills → Education → Projects → Activities**
+**About → Careers → Projects → Experiences → Education → Skills → Awards → Certificates → Activities**
 
 Awards / Certificates / Education are **separate sections** (not a single Records block).
 
