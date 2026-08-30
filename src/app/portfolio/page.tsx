@@ -36,13 +36,13 @@ export const metadata: Metadata = {
 
 const SECTIONS = [
   { id: "about", label: "About", Component: AboutMeSection },
+  { id: "careers", label: "Careers", Component: CareersSection },
+  { id: "projects", label: "Projects", Component: ProjectsSection },
+  { id: "experiences", label: "Experiences", Component: ExperiencesSection },
+  { id: "education", label: "Education", Component: EducationsSection },
+  { id: "skills", label: "Skills", Component: SkillsSection },
   { id: "awards", label: "Awards", Component: AwardsSection },
   { id: "certificates", label: "Certificates", Component: CertificatesSection },
-  { id: "careers", label: "Careers", Component: CareersSection },
-  { id: "experiences", label: "Experiences", Component: ExperiencesSection },
-  { id: "skills", label: "Skills", Component: SkillsSection },
-  { id: "education", label: "Education", Component: EducationsSection },
-  { id: "projects", label: "Projects", Component: ProjectsSection },
   { id: "activities", label: "Activities", Component: ActivitiesSection },
 ] as const;
 
