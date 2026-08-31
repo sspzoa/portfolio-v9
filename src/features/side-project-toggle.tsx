@@ -14,9 +14,11 @@ export function SideProjectToggle({ mainProjects, sideProjects }: SideProjectTog
   const [showSideProjects, setShowSideProjects] = useState(false);
   const sideListId = useId();
 
+  const listClassName = "grid grid-cols-1 gap-spacing-800 lg:grid-cols-2 lg:gap-x-spacing-600 lg:gap-y-spacing-800";
+
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-spacing-800">
+      <div className={listClassName}>
         {mainProjects.map((project) => (
           <ProjectCard key={`main-${project.id}`} project={project} />
         ))}
@@ -32,7 +34,7 @@ export function SideProjectToggle({ mainProjects, sideProjects }: SideProjectTog
             inert={showSideProjects ? undefined : true}>
             <div className="min-h-0 overflow-hidden">
               <div
-                className={`flex flex-col gap-spacing-800 pt-spacing-800 transition-opacity duration-slow ease-standard ${
+                className={`${listClassName} pt-spacing-800 transition-opacity duration-slow ease-standard ${
                   showSideProjects ? "opacity-100" : "opacity-0"
                 }`}>
                 {sideProjects.map((project) => (
